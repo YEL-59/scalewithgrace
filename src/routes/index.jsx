@@ -5,35 +5,42 @@ import SignIn from '@/pages/auth/sign-in';
 import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
+import RootLayout from '../layouts/root-layout';
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <CommonLayout />,
+    element: <RootLayout />,
     children: [
       {
-        index: true,
-        element: <Home />,
+        path: '/',
+        element: <CommonLayout />,
+        children: [
+          {
+            index: true,
+            element: <Home />,
+          },
+        ],
       },
-    ],
-  },
-  {
-    path: '/',
-    element: <AuthLayout />,
-    children: [
       {
-        path: 'sign-in',
-        element: <SignIn />,
+        path: '/',
+        element: <AuthLayout />,
+        children: [
+          {
+            path: 'sign-in',
+            element: <SignIn />,
+          },
+        ],
       },
-    ],
-  },
-  {
-    path: '/dashboard',
-    element: <DashboardLayout />,
-    children: [
       {
-        index: true,
-        element: <Dashboard />,
+        path: '/dashboard',
+        element: <DashboardLayout />,
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+        ],
       },
     ],
   },

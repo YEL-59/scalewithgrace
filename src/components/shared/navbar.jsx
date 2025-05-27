@@ -13,7 +13,7 @@ export default function Navbar() {
       >
         Home
       </NavLink>
-      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium">
         About Us
       </NavLink>
       <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
@@ -41,7 +41,7 @@ export default function Navbar() {
         </div>
 
        
-        <div className="flex items-center gap-4 ">
+        <div className="flex items-center gap-2 ">
 
          {/* hamberger while mobile device */}
           <div className="relative menu-show group">

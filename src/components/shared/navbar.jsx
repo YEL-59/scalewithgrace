@@ -1,5 +1,78 @@
-import React from 'react';
+import React from "react";
+import { Link, NavLink } from "react-router";
+import logo from "../../assets/images/logo.svg"
+import { IoMenu } from "react-icons/io5";
+import "./shared.css";
 
 export default function Navbar() {
-  return <nav>Navbar</nav>;
+  const Links = (
+    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-[52px] text-[#191919] text-sm md:text-base lg:text-lg">
+      <NavLink
+        to="/"
+        className="bg-white py-2 px-6 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px] hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium "
+      >
+        Home
+      </NavLink>
+      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+        About Us
+      </NavLink>
+      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+        Features
+      </NavLink>
+      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+        Pricing
+      </NavLink>
+      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+        Contact
+      </NavLink>
+    </div>
+  );
+  return (
+    <nav className="bg-[#F1F4FF] w-full text-sm md:text-base">
+      <div className="w-11/12 mx-auto py-3 md:py-6 lg:py-[30px] flex items-center justify-between gap-2">
+        {/* logo */}
+        <div>
+          <img className="w-14  h-14 md:w-20 md:h-20" src={logo}></img>
+        </div>
+
+        {/* menu */}
+        <div className="bg-white py-1 px-1 rounded-[48px] lg:rounded-[100px] hidden md:block">
+          {Links}
+        </div>
+
+       
+        <div className="flex items-center gap-4 ">
+
+         {/* hamberger while mobile device */}
+          <div className="relative menu-show group">
+            <IoMenu className="text-3xl block md:hidden hover:cursor-pointer " />
+
+            <div className="bg-white py-3 px-[6px] rounded-2xl z-10 absolute top-7 right-2 invisible group-hover:visible">
+              {Links}
+            </div>
+          </div>
+
+          {/* login button */}
+          <Link className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary">
+            <button> Login</button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+            >
+              <path
+                d="M13.0013 7L18.0013 12M18.0013 12L13.0013 17M18.0013 12H2.66797"
+                stroke="white"
+                stroke-width="1.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
 }

@@ -1,12 +1,12 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
-import logo from "../../assets/images/logo.svg"
+import logo from '../../assets/images/logosvg.svg'
 import { IoMenu } from "react-icons/io5";
 import "./shared.css";
 
 export default function Navbar() {
   const Links = (
-    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-[52px] text-[#191919] text-sm md:text-base lg:text-lg">
+    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-[52px] text-[#191919] text-sm xl:text-lg">
       <NavLink
         to="/"
         className="bg-white py-2 px-6 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
@@ -32,11 +32,11 @@ export default function Navbar() {
       <div className="w-11/12 mx-auto py-3 md:py-6 lg:py-[30px] flex items-center justify-between gap-2">
         {/* logo */}
         <div>
-          <img className="w-14  h-14 md:w-20 md:h-20" src={logo}></img>
+          <img className="w-20 h-20 lg:w-24 lg:h-24 xl:w-32 xl:h-32" src={logo} alt="logo"></img>
         </div>
        
         {/* menu */}
-        <div className="bg-white py-1 px-1 rounded-[48px] lg:rounded-[100px] hidden md:block">
+        <div className="bg-white py-1 px-1 rounded-[36px] xl:rounded-[48px] lg:rounded-[100px] hidden md:block">
           {Links}
         </div>
 

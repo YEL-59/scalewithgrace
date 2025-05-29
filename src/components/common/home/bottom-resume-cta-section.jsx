@@ -4,7 +4,7 @@ import resumeBottom from "../../../assets/images/resume-bottom.svg";
 
 export default function BottomResumeCTASection() {
   return (
-    <section className="w-full bg-gradient-to-r from-primary to-secondary md:pt-20 lg:pt-32 font-poppins">
+    <section className="w-full bg-gradient-to-r from-primary to-secondary md:pt-20 lg:pt-32 font-read">
       <div className="container w-11/12 mx-auto flex flex-col md:flex-row gap-7">
         {/* left side content section */}
         <div className="flex-1 flex justify-center items-center pt-10 md:py-3 md:pb-12 lg:pb-32  xl:pb-40 mb-30 md:mb-0">

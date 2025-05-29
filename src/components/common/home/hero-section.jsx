@@ -15,25 +15,25 @@ export default function HeroSection() {
 
         {/* image showing with shadcn ui blocks */}
         <div className="flex items-center justify-center mx-auto text-center">
-          <Avatar className="-ml-2 first:ml-0 cursor-pointer border-2 border-white">
+          <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
             <AvatarImage src={image4} alt="@shadcn" />
             <AvatarFallback className="bg-indigo-500 text-white">
               CN
             </AvatarFallback>
           </Avatar>
-          <Avatar className="-ml-2 first:ml-0 cursor-pointer border-2 border-white">
+          <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
             <AvatarImage src={image3} alt="@shadcn" />
             <AvatarFallback className="bg-green-600 text-white">
               CN
             </AvatarFallback>
           </Avatar>
-          <Avatar className="-ml-2 first:ml-0 cursor-pointer border-2 border-white">
+          <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
             <AvatarImage src={image2} alt="@shadcn" />
             <AvatarFallback className="bg-red-500 text-white">
               AB
             </AvatarFallback>
           </Avatar>
-          <Avatar className="-ml-2 first:ml-0 cursor-pointer border-2 border-white">
+          <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
             <AvatarImage src={image1} alt="@shadcn" />
             <AvatarFallback className="bg-indigo-500 text-white">
               VK

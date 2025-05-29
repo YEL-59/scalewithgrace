@@ -2,7 +2,7 @@ import React from "react";
 
 export default function WhyChooseUsSection() {
   return (
-    <section className="w-full bg-[#F7F7F8]">
+    <section className="w-full bg-[#F7F7F8] font-poppins">
       <div className="container w-11/12 mx-auto py-16 md:py-24 lg:py-32 xl:py-40">
         <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
           Why Choose Us

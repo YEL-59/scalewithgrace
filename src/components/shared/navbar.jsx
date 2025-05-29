@@ -9,20 +9,20 @@ export default function Navbar() {
     <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-[52px] text-[#191919] text-sm md:text-base lg:text-lg">
       <NavLink
         to="/"
-        className="bg-white py-2 px-6 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px] hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium "
+        className="bg-white py-2 px-6 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         Home
       </NavLink>
-      <NavLink to='/aboutUs' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium">
+      <NavLink to='/aboutUs' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px">
         About Us
       </NavLink>
-      <NavLink to='/features' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+      <NavLink to='/features' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px ">
         Features
       </NavLink>
-      <NavLink to='/pricing' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+      <NavLink to='/pricing' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px ">
         Pricing
       </NavLink>
-      <NavLink to='/footer' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+      <NavLink to='/contact' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px ">
         Contact
       </NavLink>
     </div>
@@ -34,7 +34,7 @@ export default function Navbar() {
         <div>
           <img className="w-14  h-14 md:w-20 md:h-20" src={logo}></img>
         </div>
-
+       
         {/* menu */}
         <div className="bg-white py-1 px-1 rounded-[48px] lg:rounded-[100px] hidden md:block">
           {Links}
@@ -43,14 +43,7 @@ export default function Navbar() {
        
         <div className="flex items-center gap-2 ">
 
-         {/* hamberger while mobile device */}
-          <div className="relative menu-show group">
-            <IoMenu className="text-3xl block md:hidden hover:cursor-pointer " />
-
-            <div className="bg-white py-3 px-[6px] rounded-2xl z-10 absolute top-7 right-2 invisible group-hover:visible">
-              {Links}
-            </div>
-          </div>
+         
 
           {/* login button */}
           <Link to='sign-in' className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary">
@@ -71,6 +64,15 @@ export default function Navbar() {
               />
             </svg>
           </Link>
+
+          {/* hamberger while mobile device */}
+          <div className="relative menu-show group">
+            <IoMenu className="text-3xl block md:hidden hover:cursor-pointer " />
+
+            <div className="bg-white py-3 px-[6px] rounded-2xl z-10 absolute top-7 right-1 invisible group-hover:visible shadow-xl">
+              {Links}
+            </div>
+          </div>
         </div>
       </div>
     </nav>

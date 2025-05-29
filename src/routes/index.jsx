@@ -9,6 +9,7 @@ import RootLayout from '../layouts/root-layout';
 import OurFeaturesSection from '@/components/common/home/our-features-section';
 import ShowcaseSection from '@/components/common/home/showcase-section';
 import PricingPlanSection from '@/components/common/home/pricing-plan-section';
+import FAQSection from '@/components/common/home/faq-section';
 
 export const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ export const router = createBrowserRouter([
           {
             path: '/pricing',
             element: <PricingPlanSection></PricingPlanSection>
+          },
+          {
+            path: '/contact',
+            element: <FAQSection></FAQSection>
           },
           {
             path: '/footer',

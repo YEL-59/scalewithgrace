@@ -81,11 +81,11 @@ export default function HeroSection() {
         {/* hero content */}
         
         <div className="text-center pb-6">
-           <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-[64px] font-medium text-center leading-11 md:leading-12 lg:leading-16 xl:leading-20 mt-2 mb-[26px]">Your next career move shouldn’t be a guess <br></br> <span className=" text-transparent bg-gradient-to-r from-primary via-secondary to-secondary bg-clip-text">Karially gives you the plan</span> </h1>
+           <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-[64px] font-medium text-center leading-11 md:leading-12 lg:leading-16 xl:leading-20 mt-2 mb-[26px]">Your next career move shouldn’t be a guess <br></br> <span className=" text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">Karially gives you the plan</span> </h1>
 
            <p className=" text-[#6C6C6C] text-lg md:text-xl lg:text-2xl leading-[34px] ">Karially helps you get clarity on where you’re going, how to get there, and what to do next, <br className="hidden lg:block" ></br> without overwhelm. We’re not a job board. Not a resume builder. We’re your career ally.</p>
 
-           <button className="flex mx-auto items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10  lg:mt-[45px] text-white bg-gradient-to-r  from-primary to-secondary">
+           <button className="font-read flex mx-auto items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10  lg:mt-[45px] text-white bg-gradient-to-r  from-primary to-secondary">
             <button> Start a free trial</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

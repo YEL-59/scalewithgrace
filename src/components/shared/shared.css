@@ -6,8 +6,8 @@ NavLink .active-nav{
 }
 
 
-NavLink .active-nav:hover {
-  background-image: linear-gradient(to right, #504999, #504999);
+.active{
+  background-image: linear-gradient(to right, #44A199, #504999);
   color: white;
   font-weight: 500;
 }

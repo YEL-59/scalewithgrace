@@ -30,7 +30,7 @@ const items = [
       "Yes. It's animated by default, but you can disable it if you prefer.",
   },
   {
-    title: "CCan I create a cover letter with Karially AI?",
+    title: "Can I create a cover letter with Karially AI?",
     content:
       "Yes. It's animated by default, but you can disable it if you prefer.",
   },
@@ -56,7 +56,7 @@ export default function FAQSection() {
             creating and optimizing resumes with Resumate AI.
           </p>
 
-          <button className="rounded-[100px] text-sm md:text-bas text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10">
+          <button className="rounded-[100px] text-sm md:text-base text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10">
             Contact Us
           </button>
         </div>
@@ -72,7 +72,7 @@ export default function FAQSection() {
               <AccordionItem
                 key={index}
                 value={`item-${index}`}
-                className="border-none bg-[#F7F7F8] rounded-[100px] py-2 px-4 md:px-8"
+                className="border-none bg-[#F7F7F8] rounded-[100px] py-1 md:py-2 px-4 md:px-8"
               >
                 <AccordionTrigger className="text-base md:text-xl lg:text-2xl xl:text-[26px] flex items-center font-normal">{title}</AccordionTrigger>
                 <AccordionContent className="text-sm md:text-base lg:text-lg">{content}</AccordionContent>

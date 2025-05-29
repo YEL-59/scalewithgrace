@@ -1,6 +1,6 @@
 import React from "react";
 import footerLogo from "../../assets/images/footer-logo.svg";
-import { Link, NavLink } from "react-router";
+import { Link } from "react-router";
 
 export default function Footer() {
   return (
@@ -28,11 +28,11 @@ export default function Footer() {
             <div className="">
               <h6 className="font-medium">Company</h6>
               <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
-                <NavLink to='/'>Home</NavLink>
-                <NavLink to='#'>About Us</NavLink>
-                <NavLink to="#">Features</NavLink>
-                <NavLink to='#'>Pricing</NavLink>
-                <NavLink to='#'>Contact</NavLink>
+                <Link to='/'>Home</Link>
+                <Link to='#'>About Us</Link>
+                <Link to="#">Features</Link>
+                <Link to='#'>Pricing</Link>
+                <Link to='#'>Contact</Link>
               </div>
             </div>
 
@@ -40,9 +40,9 @@ export default function Footer() {
             <div className="">
               <h6 className="font-medium">Others</h6>
               <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
-                <NavLink>Privacy policy</NavLink>
-                <NavLink>Terms of policies</NavLink>
-                <NavLink>Cookies settings</NavLink>
+                <Link>Privacy policy</Link>
+                <Link>Terms of policies</Link>
+                <Link>Cookies settings</Link>
               </div>
             </div>
 

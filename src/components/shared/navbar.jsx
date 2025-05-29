@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
-import logo from '../../assets/images/logosvg.svg'
+import logo from '@/assets/images/logosvg.svg'
 import { IoMenu } from "react-icons/io5";
 import "./shared.css";
 
@@ -46,7 +46,7 @@ export default function Navbar() {
          
 
           {/* login button */}
-          <Link to='sign-in' className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary">
+          <Link to='/comming' className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary">
             <button> Login</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

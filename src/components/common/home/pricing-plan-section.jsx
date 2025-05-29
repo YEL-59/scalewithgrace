@@ -1,5 +1,6 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link } from "react-router";
 
 const tabs = [
   {
@@ -78,9 +79,11 @@ export default function PricingPlanSection() {
                   /mo
                 </span>
               </p>
-              <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
-                Get started for free
-              </button>
+              <Link to="/comming">
+                <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
+                  Get started for free
+                </button>
+              </Link>
             </div>
 
             <div className="space-y-3 my-[22px] md:my-[26px] lg:my-[30px] xl:my-[35px]">
@@ -172,9 +175,11 @@ export default function PricingPlanSection() {
                   /mo
                 </span>
               </p>
-              <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
-                Get started
-              </button>
+              <Link to="/comming">
+                <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
+                  Get started
+                </button>
+              </Link>
             </div>
 
             <div className="space-y-3 my-[22px] md:my-[26px] lg:my-[30px] xl:my-[35px]">
@@ -263,9 +268,11 @@ export default function PricingPlanSection() {
                   /mo
                 </span>
               </p>
-              <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
-                Get started
-              </button>
+              <Link to='/comming'>
+                <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
+                  Get started
+                </button>
+              </Link>
             </div>
 
             <div className="space-y-3 my-[22px] md:my-[26px] lg:my-[30px] xl:my-[35px]">

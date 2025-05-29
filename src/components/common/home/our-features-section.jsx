@@ -1,9 +1,10 @@
 import React from "react";
-import feature from "../../../assets/images/root.svg";
-// import feature1 from "../../../assets/images/feature1.svg";
-// import feature1top from "../../../assets/images/feature1top.svg";
-import feature2 from "../../../assets/images/feature2.svg";
-import feature3 from "../../../assets/images/feature3.svg";
+import feature from "@/assets/images/root.svg";
+// import feature1 from "@/assets/images/feature1.svg";
+// import feature1top from "@/assets/images/feature1top.svg";
+import feature2 from "@/assets/images/feature2.svg";
+import feature3 from "@/assets/images/feature3.svg";
+import { Link } from "react-router";
 
 export default function OurFeaturesSection() {
   return (
@@ -143,9 +144,11 @@ export default function OurFeaturesSection() {
                 </p>
               </div>
 
-              <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
-                Try for free
-              </button>
+              <Link to="/comming">
+                <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
+                  Try for free
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -162,9 +165,8 @@ export default function OurFeaturesSection() {
           {/* optional */}
           <div className="flex-1">
             <img src={feature}></img>
-            
+
             <div className="mt-20 border-b-2 xl:hidden"></div>
-            
           </div>
         </div>
 
@@ -174,10 +176,12 @@ export default function OurFeaturesSection() {
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
               <h2 className="text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
-               Custom options for your experience
+                Custom options for your experience
               </h2>
               <p className="text-[#61656B]">
-                Customize every detail to perfectly reflect your style, from the vibrant color palette to the unique décor elements that tell your story.
+                Customize every detail to perfectly reflect your style, from the
+                vibrant color palette to the unique décor elements that tell
+                your story.
               </p>
 
               <div className="flex gap-4 items-center mt-5 md:mt-6 lg:mt-8 xl:mt-10">
@@ -212,7 +216,8 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Edit sections, rearrange layouts, and adjust fonts to suit your style.
+                  Edit sections, rearrange layouts, and adjust fonts to suit
+                  your style.
                 </p>
               </div>
 
@@ -248,7 +253,8 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                 Add personalized details to align with specific job roles or industries.
+                  Add personalized details to align with specific job roles or
+                  industries.
                 </p>
               </div>
 
@@ -284,20 +290,23 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Include custom sections like certifications, portfolios, or achievements.
+                  Include custom sections like certifications, portfolios, or
+                  achievements.
                 </p>
               </div>
 
-              <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
-                Customize for Free
-              </button>
+              <Link to='/comming'>
+                <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
+                  Customize for Free
+                </button>
+              </Link>
             </div>
           </div>
 
           {/* right part */}
           <div className="flex-1">
             <img src={feature2}></img>
-             <div className="mt-20 border-b-2 xl:hidden"></div>
+            <div className="mt-20 border-b-2 xl:hidden"></div>
           </div>
         </div>
 
@@ -307,10 +316,11 @@ export default function OurFeaturesSection() {
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
               <h2 className="text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
-               ATS compatibility to attract recruiters
+                ATS compatibility to attract recruiters
               </h2>
               <p className="text-[#61656B]">
-                Craft ATS-optimized resumes that showcase your skills and experience, helping your application stand out to recruiters.
+                Craft ATS-optimized resumes that showcase your skills and
+                experience, helping your application stand out to recruiters.
               </p>
 
               <div className="flex gap-4 items-center mt-5 md:mt-6 lg:mt-8 xl:mt-10">
@@ -345,7 +355,7 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                 Formats resumes to pass Applicant Tracking Systems with ease.
+                  Formats resumes to pass Applicant Tracking Systems with ease.
                 </p>
               </div>
 
@@ -417,22 +427,26 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Ensures the design and structure are compliant with ATS standards.
+                  Ensures the design and structure are compliant with ATS
+                  standards.
                 </p>
               </div>
 
-              <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
-                Try for free
-              </button>
+              <Link to="/comming">
+                <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
+                  Try for free
+                </button>
+              </Link>
             </div>
           </div>
 
           {/* right part */}
           <div className="flex-1">
             <img src={feature3}></img>
-             <div className="mt-20 border-b-2 xl:hidden"></div>
+            <div className="mt-20 border-b-2 xl:hidden"></div>
           </div>
         </div>
+
       </div>
     </section>
   );

@@ -10,6 +10,7 @@ import OurFeaturesSection from '@/components/common/home/our-features-section';
 import ShowcaseSection from '@/components/common/home/showcase-section';
 import PricingPlanSection from '@/components/common/home/pricing-plan-section';
 import FAQSection from '@/components/common/home/faq-section';
+import ComingSoon from '@/components/shared/CommingSoon/CommingSoon';
 
 export const router = createBrowserRouter([
   {
@@ -43,7 +44,11 @@ export const router = createBrowserRouter([
           {
             path: '/footer',
             element: <footer></footer>
-          }
+          },
+          {
+            path: '/comming',
+            element: <ComingSoon></ComingSoon>
+          },
         ],
       },
       {

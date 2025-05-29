@@ -1,6 +1,7 @@
 import React from "react";
-// import resume from "../../../assets/images/topresume.svg";
-import resumeTop from '../../../assets/images/resume-top-cta.png';
+// import resume from ".@/assets/images/topresume.svg";
+import resumeTop from ".@/assets/images/resume-top-cta.png";
+import { Link } from "react-router";
 
 export default function TopResumeCTASection() {
   return (
@@ -17,10 +18,9 @@ export default function TopResumeCTASection() {
 
         <div className="relative">
           <img src={resumeTop}></img>
-           <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
+          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
         </div>
-      
-      
+
         {/* right side content section */}
         <div className="flex-1 flex justify-center items-center py-5">
           <div className="relative">
@@ -33,9 +33,11 @@ export default function TopResumeCTASection() {
               you noticed.
             </p>
 
-            <button className="rounded-[100px] text-sm md:text-bas text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-8">
-              Start winning jobs today
-            </button>
+            <Link to='/comming'>
+              <button className="rounded-[100px] text-sm md:text-bas text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-8">
+                Start winning jobs today
+              </button>
+            </Link>
 
             {/* <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div> */}
           </div>

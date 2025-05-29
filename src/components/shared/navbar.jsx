@@ -13,16 +13,16 @@ export default function Navbar() {
       >
         Home
       </NavLink>
-      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium">
+      <NavLink to='/aboutUs' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium">
         About Us
       </NavLink>
-      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+      <NavLink to='/features' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
         Features
       </NavLink>
-      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+      <NavLink to='/pricing' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
         Pricing
       </NavLink>
-      <NavLink className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
+      <NavLink to='/footer' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px hover:bg-gradient-to-r  from-primary to-secondary hover:text-white hover:font-medium ">
         Contact
       </NavLink>
     </div>
@@ -53,7 +53,7 @@ export default function Navbar() {
           </div>
 
           {/* login button */}
-          <Link className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary">
+          <Link to='sign-in' className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary">
             <button> Login</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

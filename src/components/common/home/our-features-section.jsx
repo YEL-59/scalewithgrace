@@ -174,11 +174,10 @@ export default function OurFeaturesSection() {
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
               <h2 className="text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
-                Using an AI-powered resume writing
+               Custom options for your experience
               </h2>
               <p className="text-[#61656B]">
-                Utilizes AI technology to create customized resumes that align
-                with specific industry requirements and job positions.
+                Customize every detail to perfectly reflect your style, from the vibrant color palette to the unique décor elements that tell your story.
               </p>
 
               <div className="flex gap-4 items-center mt-5 md:mt-6 lg:mt-8 xl:mt-10">
@@ -213,8 +212,7 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Generates resumes tailored to your desired job title and
-                  industry.
+                  Edit sections, rearrange layouts, and adjust fonts to suit your style.
                 </p>
               </div>
 
@@ -250,7 +248,7 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Uses AI to craft concise, impactful summaries.
+                 Add personalized details to align with specific job roles or industries.
                 </p>
               </div>
 
@@ -286,13 +284,12 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Saves time by automating content creation without sacrificing
-                  quality.
+                  Include custom sections like certifications, portfolios, or achievements.
                 </p>
               </div>
 
               <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
-                Try for free
+                Customize for Free
               </button>
             </div>
           </div>
@@ -310,11 +307,10 @@ export default function OurFeaturesSection() {
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
               <h2 className="text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
-                Using an AI-powered resume writing
+               ATS compatibility to attract recruiters
               </h2>
               <p className="text-[#61656B]">
-                Utilizes AI technology to create customized resumes that align
-                with specific industry requirements and job positions.
+                Craft ATS-optimized resumes that showcase your skills and experience, helping your application stand out to recruiters.
               </p>
 
               <div className="flex gap-4 items-center mt-5 md:mt-6 lg:mt-8 xl:mt-10">
@@ -349,8 +345,7 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Generates resumes tailored to your desired job title and
-                  industry.
+                 Formats resumes to pass Applicant Tracking Systems with ease.
                 </p>
               </div>
 
@@ -386,7 +381,7 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Uses AI to craft concise, impactful summaries.
+                  Optimizes keywords based on your target job description.
                 </p>
               </div>
 
@@ -422,8 +417,7 @@ export default function OurFeaturesSection() {
                   </div>
                 </div>
                 <p className="text-[#61656B]">
-                  Saves time by automating content creation without sacrificing
-                  quality.
+                  Ensures the design and structure are compliant with ATS standards.
                 </p>
               </div>
 

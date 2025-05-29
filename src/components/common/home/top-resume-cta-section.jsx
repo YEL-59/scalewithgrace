@@ -1,17 +1,23 @@
 import React from "react";
-import resume from "../../../assets/images/topresume.svg";
+// import resume from "../../../assets/images/topresume.svg";
+import resumeTop from '../../../assets/images/resume-top-cta.png';
 
 export default function TopResumeCTASection() {
   return (
     <section className="w-full bg-[#0D1117]  md:pt-20 lg:pt-32 font-poppins">
       <div className="container w-11/12 mx-auto flex flex-col-reverse md:flex-row">
         {/* left side resume image */}
-        <div className="flex-1 flex max-h-[550] relative">
+        {/* <div className="flex-1 flex max-h-[550] relative">
           <div className="bg-[#FCF7F7] md:w-[380px] md:h-[380px] lg:h-[500px] xl:w-[534px] xl:h-[550px] transform md:-rotate-[14deg] xl:-rotate-[18deg] md:mt-16 lg:mt-24 xl:mt-28"></div>
           <div className="bg-white md:w-[380px] md:h-[380px] lg:h-[500px] xl:w-[534px] xl:h-[550px] transform md:-rotate-[14deg]  xl:-rotate-[18deg] md:mt-16 lg:mt-[70px] xl:mt-20 -ml-[520px] z-10 hidden md:block"></div>
           <img className="lg:-ml-[300px] xl:-ml-[600px] z-20 w-full" src={resume}></img>
 
           <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
+        </div> */}
+
+        <div className="relative">
+          <img src={resumeTop}></img>
+           <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
         </div>
       
       

@@ -14,17 +14,16 @@ export default function Footer() {
               Join our newsletter to stay up to date on features and releases.
             </p>
 
-            <div className="mt-5 flex gap-3 md:gap-5">
-              <button className="border border-[#717171] rounded-[133px] py-4 px-5 w-full text-start">
-                Enter Your Email
-              </button>
-              <button className="bg-gradient-to-r border-black from-primary to-secondary py-4 px-8 rounded-[133px]">
+            <div className="mt-5 flex gap-3 lg:gap-4 xl:gap-5">
+              <input placeholder="Enter Your Mail" className="border border-[#717171] rounded-[133px] py-3 px-4 md:py-4 md:px-5 w-full text-start">
+              </input>
+              <button className="bg-gradient-to-r border-black from-primary to-secondary py-3 px-4 md:py-4 md:px-8 rounded-[133px]">
                 Subscribe
               </button>
             </div>
           </div>
 
-          <div className="flex-3/5 text-[15px] md:text-[17.5px] lg:text-[19.5px] xl:text-[21.5px] grid grid-cols-3 gap-4 md:gap-10 lg:gap-12  xl:gap-[53px]">
+          <div className="flex-3/5 text-sm md:text-[17.5px] lg:text-[19.5px] xl:text-[21.5px] grid grid-cols-3 gap-4 md:gap-10 lg:gap-12  xl:gap-[53px]">
             {/* Company List */}
             <div className="">
               <h6 className="font-medium">Company</h6>
@@ -52,8 +51,9 @@ export default function Footer() {
               <h6 className="font-medium">Follow Us</h6>
               <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
                 {/* facebook */}
-                <Link className="flex items-center gap-2">
+                <Link className="flex items-center gap-1 md:gap-2">
                   <svg
+                    className="size-5 md:size-6 xl:size-8"
                     xmlns="http://www.w3.org/2000/svg"
                     width="33"
                     height="33"
@@ -69,8 +69,9 @@ export default function Footer() {
                 </Link>
 
                 {/* instagram */}
-                <Link className="flex items-center gap-2">
+                <Link className="flex items-center gap-1 md:gap-2">
                   <svg
+                  className="size-5 md:size-6 xl:size-8"
                     xmlns="http://www.w3.org/2000/svg"
                     width="33"
                     height="33"
@@ -88,8 +89,9 @@ export default function Footer() {
                 </Link>
 
                 {/* LinkedIn */}
-                <Link className="flex items-center gap-2">
+                <Link className="flex items-center gap-1 md:gap-2">
                   <svg
+                   className="size-5 md:size-6 xl:size-8"
                     xmlns="http://www.w3.org/2000/svg"
                     width="33"
                     height="32"
@@ -107,8 +109,9 @@ export default function Footer() {
                 </Link>
 
                 {/*Youtube  */}
-                <Link className="flex items-center gap-2">
+                <Link className="flex items-center gap-1 md:gap-2">
                   <svg
+                    className="size-5 md:size-6 xl:size-8"
                     xmlns="http://www.w3.org/2000/svg"
                     width="33"
                     height="33"

@@ -7,6 +7,8 @@ import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
 import RootLayout from '../layouts/root-layout';
 import OurFeaturesSection from '@/components/common/home/our-features-section';
+import ShowcaseSection from '@/components/common/home/showcase-section';
+import PricingPlanSection from '@/components/common/home/pricing-plan-section';
 
 export const router = createBrowserRouter([
   {
@@ -22,8 +24,20 @@ export const router = createBrowserRouter([
             element: <Home />,
           },
           {
+            path: '/aboutUs',
+            element: <ShowcaseSection></ShowcaseSection>
+          },
+          {
             path: '/features',
             element: <OurFeaturesSection></OurFeaturesSection>
+          },
+          {
+            path: '/pricing',
+            element: <PricingPlanSection></PricingPlanSection>
+          },
+          {
+            path: '/footer',
+            element: <footer></footer>
           }
         ],
       },

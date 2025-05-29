@@ -1,15 +1,15 @@
+import FAQSection from '@/components/common/home/faq-section';
+import OurFeaturesSection from '@/components/common/home/our-features-section';
+import PricingPlanSection from '@/components/common/home/pricing-plan-section';
+import ShowcaseSection from '@/components/common/home/showcase-section';
 import AuthLayout from '@/layouts/auth-layout';
 import CommonLayout from '@/layouts/common-layout';
 import DashboardLayout from '@/layouts/dashboard-layout';
+import RootLayout from '@/layouts/root-layout';
 import SignIn from '@/pages/auth/sign-in';
 import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
-import RootLayout from '../layouts/root-layout';
-import OurFeaturesSection from '@/components/common/home/our-features-section';
-import ShowcaseSection from '@/components/common/home/showcase-section';
-import PricingPlanSection from '@/components/common/home/pricing-plan-section';
-import FAQSection from '@/components/common/home/faq-section';
 
 export const router = createBrowserRouter([
   {
@@ -26,24 +26,24 @@ export const router = createBrowserRouter([
           },
           {
             path: '/aboutUs',
-            element: <ShowcaseSection></ShowcaseSection>
+            element: <ShowcaseSection></ShowcaseSection>,
           },
           {
             path: '/features',
-            element: <OurFeaturesSection></OurFeaturesSection>
+            element: <OurFeaturesSection></OurFeaturesSection>,
           },
           {
             path: '/pricing',
-            element: <PricingPlanSection></PricingPlanSection>
+            element: <PricingPlanSection></PricingPlanSection>,
           },
           {
             path: '/contact',
-            element: <FAQSection></FAQSection>
+            element: <FAQSection></FAQSection>,
           },
           {
             path: '/footer',
-            element: <footer></footer>
-          }
+            element: <footer></footer>,
+          },
         ],
       },
       {

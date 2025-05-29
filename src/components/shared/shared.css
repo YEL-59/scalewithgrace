@@ -1,17 +1,16 @@
-NavLink .active-nav{
-    background-color: white;
-    padding: 20px 45px;
-    border-radius: 100px;
-    color: black;
+NavLink .active-nav {
+  background-color: white;
+  padding: 20px 45px;
+  border-radius: 100px;
+  color: black;
 }
 
-
-.active{
-  background-image: linear-gradient(to right, #44A199, #504999);
+.active {
+  background-image: linear-gradient(to right, #44a199, #504999);
   color: white;
   font-weight: 500;
 }
 
-.menu-show:hover{
-    display: block;
+.menu-show:hover {
+  display: block;
 }

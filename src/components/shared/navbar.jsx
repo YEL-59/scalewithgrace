@@ -1,8 +1,7 @@
-import React from "react";
-import { Link, NavLink } from "react-router";
-import logo from '../../assets/images/logosvg.svg'
-import { IoMenu } from "react-icons/io5";
-import "./shared.css";
+import logo from '@/assets/images/logosvg.svg';
+import { IoMenu } from 'react-icons/io5';
+import { Link, NavLink } from 'react-router';
+import './shared.css';
 
 export default function Navbar() {
   const Links = (
@@ -13,16 +12,28 @@ export default function Navbar() {
       >
         Home
       </NavLink>
-      <NavLink to='/aboutUs' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px">
+      <NavLink
+        to="/aboutUs"
+        className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px"
+      >
         About Us
       </NavLink>
-      <NavLink to='/features' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px ">
+      <NavLink
+        to="/features"
+        className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px "
+      >
         Features
       </NavLink>
-      <NavLink to='/pricing' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px ">
+      <NavLink
+        to="/pricing"
+        className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px "
+      >
         Pricing
       </NavLink>
-      <NavLink to='/contact' className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px ">
+      <NavLink
+        to="/contact"
+        className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px "
+      >
         Contact
       </NavLink>
     </div>
@@ -32,21 +43,24 @@ export default function Navbar() {
       <div className="w-11/12 mx-auto py-3 md:py-6 lg:py-[30px] flex items-center justify-between gap-2">
         {/* logo */}
         <div>
-          <img className="w-20 h-20 lg:w-24 lg:h-24 xl:w-32 xl:h-32" src={logo} alt="logo"></img>
+          <img
+            className="w-20 h-20 lg:w-24 lg:h-24 xl:w-32 xl:h-32"
+            src={logo}
+            alt="logo"
+          ></img>
         </div>
-       
+
         {/* menu */}
         <div className="bg-white py-1 px-1 rounded-[36px] xl:rounded-[48px] lg:rounded-[100px] hidden md:block">
           {Links}
         </div>
 
-       
         <div className="flex items-center gap-2 ">
-
-         
-
           {/* login button */}
-          <Link to='sign-in' className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary">
+          <Link
+            to="sign-in"
+            className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary"
+          >
             <button> Login</button>
             <svg
               xmlns="http://www.w3.org/2000/svg"

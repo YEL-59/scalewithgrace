@@ -1,10 +1,9 @@
-import React from "react";
-import resumeTop from "../../../assets/images/resume-top.svg";
-import resumeBottom from "../../../assets/images/resume-bottom.svg";
+import resumeBottom from '@/assets/images/resume-bottom.svg';
+import resumeTop from '@/assets/images/resume-top.svg';
 
 export default function BottomResumeCTASection() {
   return (
-    <section className="w-full bg-gradient-to-r from-primary to-secondary md:pt-20 lg:pt-32 font-read">
+    <section className="w-full bg-gradient-to-r from-primary to-secondary md:pt-20 lg:pt-32 font-poppins">
       <div className="container w-11/12 mx-auto flex flex-col md:flex-row gap-7">
         {/* left side content section */}
         <div className="flex-1 flex justify-center items-center pt-10 md:py-3 md:pb-12 lg:pb-32  xl:pb-40 mb-30 md:mb-0">
@@ -28,10 +27,16 @@ export default function BottomResumeCTASection() {
         {/* right side resume image */}
         <div className="flex-1 mt-5 md:mt-0 flex relative">
           <div>
-            <img src={resumeBottom} className="absolute bottom-0 md:max-w-[770px] md:max-h-[1020px] md:w-full md:h-full"></img>
+            <img
+              src={resumeBottom}
+              className="absolute bottom-0 md:max-w-[770px] md:max-h-[1020px] md:w-full md:h-full"
+            ></img>
           </div>
           <div className="">
-            <img className="absolute bottom-0 -ml-4 md:max-w-[770px] md:max-h-[1020px] md:w-full md:h-full" src={resumeTop}></img>
+            <img
+              className="absolute bottom-0 -ml-4 md:max-w-[770px] md:max-h-[1020px] md:w-full md:h-full"
+              src={resumeTop}
+            ></img>
           </div>
           {/* <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div> */}
         </div>

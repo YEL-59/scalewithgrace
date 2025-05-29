@@ -1,6 +1,5 @@
-import React from "react";
-// import resume from "../../../assets/images/topresume.svg";
-import resumeTop from '../../../assets/images/resume-top-cta.png';
+// import resume from "@/assets/images/topresume.svg";
+import resumeTop from '@/assets/images/resume-top-cta.png';
 
 export default function TopResumeCTASection() {
   return (
@@ -17,10 +16,9 @@ export default function TopResumeCTASection() {
 
         <div className="relative">
           <img src={resumeTop}></img>
-           <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
+          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
         </div>
-      
-      
+
         {/* right side content section */}
         <div className="flex-1 flex justify-center items-center py-5">
           <div className="relative">

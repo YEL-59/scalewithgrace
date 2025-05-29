@@ -1,19 +1,18 @@
-import React from "react";
 // import { motion } from "motion/react"
 // import { motion } from 'framer-motion';
-import Marquee from "react-fast-marquee";
-import background from "../../../assets/images/background-hero.svg";
-import homepageImg from "../../../assets/images/homepageImg.svg";
-import vectorBottom from "../../../assets/images/vectorbottom.svg";
-import circle from "../../../assets/images/dot.svg";
+import background from '@/assets/images/background-hero.svg';
+import circle from '@/assets/images/dot.svg';
+import homepageImg from '@/assets/images/homepageImg.svg';
+import vectorBottom from '@/assets/images/vectorbottom.svg';
+import Marquee from 'react-fast-marquee';
 
 export default function ShowcaseSection() {
   return (
     <section
       style={{
         backgroundImage: `url(${background})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
       }}
       className="bg-[#F1F4FF] w-full"
     >

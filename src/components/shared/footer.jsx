@@ -1,13 +1,11 @@
-import React from "react";
-import footerLogo from "../../assets/images/footer-logo.svg";
-import { Link } from "react-router";
+import footerLogo from '@/assets/images/footer-logo.svg';
+import { Link } from 'react-router';
 
 export default function Footer() {
   return (
     <footer className="bg-[#191919] text-white font-read">
       <div className="w-11/12 mx-auto py-6 md:py-8 lg:py-12 xl:py-16">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 xl:gap-40 border-b border-[#45494F] py-16">
-
           <div className="flex-2/5 text-sm md:text-[16.5px] lg:text-[18.5px] xl:text-[19px]">
             <img src={footerLogo}></img>
             <p className="mt-6 md:mt-9 lg:mt-11  xl:mt-[52px]">
@@ -15,8 +13,10 @@ export default function Footer() {
             </p>
 
             <div className="mt-5 flex gap-3 lg:gap-4 xl:gap-5 font-poppins">
-              <input placeholder="Enter Your Mail" className="border border-[#717171] rounded-[133px] py-3 px-4 md:py-4 md:px-5 w-full text-start">
-              </input>
+              <input
+                placeholder="Enter Your Mail"
+                className="border border-[#717171] rounded-[133px] py-3 px-4 md:py-4 md:px-5 w-full text-start"
+              ></input>
               <button className="bg-gradient-to-r border-black from-primary to-secondary py-3 px-4 md:py-4 md:px-8 rounded-[133px]">
                 Subscribe
               </button>
@@ -28,11 +28,11 @@ export default function Footer() {
             <div className="">
               <h6 className="font-medium">Company</h6>
               <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
-                <Link to='/'>Home</Link>
-                <Link to='#'>About Us</Link>
+                <Link to="/">Home</Link>
+                <Link to="#">About Us</Link>
                 <Link to="#">Features</Link>
-                <Link to='#'>Pricing</Link>
-                <Link to='#'>Contact</Link>
+                <Link to="#">Pricing</Link>
+                <Link to="#">Contact</Link>
               </div>
             </div>
 
@@ -71,7 +71,7 @@ export default function Footer() {
                 {/* instagram */}
                 <Link className="flex items-center gap-1 md:gap-2">
                   <svg
-                  className="size-5 md:size-6 xl:size-8"
+                    className="size-5 md:size-6 xl:size-8"
                     xmlns="http://www.w3.org/2000/svg"
                     width="33"
                     height="33"
@@ -91,7 +91,7 @@ export default function Footer() {
                 {/* LinkedIn */}
                 <Link className="flex items-center gap-1 md:gap-2">
                   <svg
-                   className="size-5 md:size-6 xl:size-8"
+                    className="size-5 md:size-6 xl:size-8"
                     xmlns="http://www.w3.org/2000/svg"
                     width="33"
                     height="32"
@@ -130,7 +130,9 @@ export default function Footer() {
           </div>
         </div>
 
-        <p className="text-center text-sm md:text-[16.5px] lg:text-[18.5px] mt-7 md:mt-8 lg:mt-9 xl:mt-[42px]">© 2025 Karially. All Rights Reserved.</p>
+        <p className="text-center text-sm md:text-[16.5px] lg:text-[18.5px] mt-7 md:mt-8 lg:mt-9 xl:mt-[42px]">
+          © 2025 Karially. All Rights Reserved.
+        </p>
       </div>
     </footer>
   );

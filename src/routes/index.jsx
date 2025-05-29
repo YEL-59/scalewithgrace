@@ -6,6 +6,7 @@ import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
 import RootLayout from '../layouts/root-layout';
+import OurFeaturesSection from '@/components/common/home/our-features-section';
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
             index: true,
             element: <Home />,
           },
+          {
+            path: '/features',
+            element: <OurFeaturesSection></OurFeaturesSection>
+          }
         ],
       },
       {

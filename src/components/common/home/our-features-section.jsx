@@ -1,5 +1,5 @@
 import React from "react";
-import feature from "../../../assets/images/feature.svg";
+import feature from "../../../assets/images/root.svg";
 // import feature1 from "../../../assets/images/feature1.svg";
 // import feature1top from "../../../assets/images/feature1top.svg";
 import feature2 from "../../../assets/images/feature2.svg";

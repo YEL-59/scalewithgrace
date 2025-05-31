@@ -22,7 +22,7 @@ export default function OurFeaturesSection() {
         </div>
 
         {/* features div 1*/}
-        <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-12 lg:py-16 xl:py-24">
+        <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-10 lg:py-12 xl:py-24">
           {/* left part */}
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
@@ -171,7 +171,7 @@ export default function OurFeaturesSection() {
         </div>
 
         {/* features div 2*/}
-        <div className="flex flex-col md:flex-row-reverse  gap-5 xl:gap-20 py-7 md:py-12 lg:py-16 xl:py-24">
+        <div className="flex flex-col md:flex-row-reverse gap-5 md:gap-10 lg:gap-16 xl:gap-20 py-7 md:py-10 xl:py-24">
           {/* left part */}
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
@@ -311,7 +311,7 @@ export default function OurFeaturesSection() {
         </div>
 
         {/* features div 3*/}
-        <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-12 lg:py-16 xl:py-24">
+        <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-10 lg:py-12 xl:py-24">
           {/* left part */}
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">

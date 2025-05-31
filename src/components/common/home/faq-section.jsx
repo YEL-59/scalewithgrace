@@ -73,12 +73,12 @@ export default function FAQSection() {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="border-none bg-[#F7F7F8] rounded-[100px] py-1 md:py-2 px-4 md:px-8"
+              className="border-none bg-[#F7F7F8] rounded-[100px] py-3 md:py-2 px-6 md:px-8"
             >
-              <AccordionTrigger className="text-base md:text-xl lg:text-2xl xl:text-[26px] flex items-center font-normal">
+              <AccordionTrigger className="text-sm md:text-xl lg:text-2xl xl:text-[26px] flex items-center font-normal">
                 {title}
               </AccordionTrigger>
-              <AccordionContent className="text-sm md:text-base lg:text-lg">
+              <AccordionContent className="text-xs md:text-base lg:text-lg">
                 {content}
               </AccordionContent>
             </AccordionItem>

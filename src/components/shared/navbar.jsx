@@ -6,7 +6,7 @@ import "./shared.css";
 
 export default function Navbar() {
   const Links = (
-    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-[52px] text-[#191919] text-sm xl:text-lg">
+    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-4 xl:gap-[52px] text-[#191919] text-sm xl:text-lg">
       <NavLink
         to="/"
         className="bg-white py-2 px-6 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"

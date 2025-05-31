@@ -35,8 +35,8 @@ export default function PricingPlanSection() {
           defaultValue={tabs[0].value}
           className="flex items-center justify-center mt-10 md:lg-[50px] lg:mt-[60px] xl:mt-[70px]"
         >
-          <div className="flex gap-4 items-center">
-            <TabsList className="flex gap-2">
+          <div className="flex gap-2 md:gap-4 items-center">
+            <TabsList className="flex gap-0.5 md:gap-2">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
@@ -47,7 +47,7 @@ export default function PricingPlanSection() {
                 </TabsTrigger>
               ))}
             </TabsList>
-            <div className="border rounded-[100px] py-3 px-6 bg-[#C5C3DC] font-medium">
+            <div className="border rounded-4xl  text-sm md:text-base md:rounded-[100px] px-3 py-3 md:px-6 bg-[#C5C3DC] font-medium">
               {tabs.map((tab) => (
                 <TabsContent key={tab.value} value={tab.value} className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent font-semibold">
                   {tab.value}% OFF

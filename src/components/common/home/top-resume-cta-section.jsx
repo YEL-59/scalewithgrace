@@ -6,7 +6,7 @@ import { Link } from "react-router";
 export default function TopResumeCTASection() {
   return (
     <section className="w-full bg-[#0D1117]  md:pt-20 lg:pt-32 font-poppins">
-      <div className="container w-11/12 mx-auto flex flex-col-reverse md:flex-row">
+      <div className="container w-11/12 max-h-screen mx-auto flex flex-col-reverse md:flex-row gap-5">
         {/* left side resume image */}
         {/* <div className="flex-1 flex max-h-[550] relative">
           <div className="bg-[#FCF7F7] md:w-[380px] md:h-[380px] lg:h-[500px] xl:w-[534px] xl:h-[550px] transform md:-rotate-[14deg] xl:-rotate-[18deg] md:mt-16 lg:mt-24 xl:mt-28"></div>
@@ -16,16 +16,18 @@ export default function TopResumeCTASection() {
           <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
         </div> */}
 
-        <div className="relative">
-          <img src={resumeTop}></img>
-          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
+        <div className="relative flex-1">
+          <div className="">
+            <img className="md:absolute bottom-0" src={resumeTop}></img>
+          </div>
+          {/* <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div> */}
           <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div>
         </div>
 
 
         {/* right side content section */}
-        <div className="flex-1 flex justify-center items-center py-5">
-          <div className="relative">
+        <div className="flex-1 flex justify-center items-center py-5 xl:pb-48">
+          <div className="">
             <h3 className="text-[#F7F7F8] text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16">
               Struggling to write a standout resume? You’re not alone.
             </h3>

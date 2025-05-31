@@ -1,6 +1,6 @@
 import React from "react";
 // import resume from ".@/assets/images/topresume.svg";
-import resumeTop from ".@/assets/images/resume-top-cta.png";
+import resumeTop from "@/assets/images/resume-top-cta.png";
 import { Link } from "react-router";
 
 export default function TopResumeCTASection() {

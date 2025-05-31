@@ -18,11 +18,11 @@ const tabs = [
 
 export default function PricingPlanSection() {
   return (
-    <section className="w-full bg-[#F7F7F8] font-poppins pb-7">
+    <section id="pricing" className="w-full bg-[#F7F7F8] font-poppins pb-7">
       <div className="container w-11/12 mx-auto py-7 md:py-9 lg:py-12 xl:py-16">
         {/* title of choose us section */}
         <div className="text-center">
-          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
+          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 font-semibold">
             Pricing Plan
           </h2>
           <p className="text-[#61656B] text-sm md:text-base lg:text-lg leading-5 md:leading-6 lg:leading-8">

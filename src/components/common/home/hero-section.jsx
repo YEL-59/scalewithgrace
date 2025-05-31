@@ -10,7 +10,7 @@ import { Link } from "react-router";
 
 export default function HeroSection() {
   return (
-    <section className="w-full bg-[#F1F4FF] pt-7   md:pt-10  lg:pt-16 xl:pt-[106px] font-poppins">
+    <section id='hero' className="w-full bg-[#F1F4FF] pt-7   md:pt-10  lg:pt-16 xl:pt-[106px] font-poppins">
       <div className="container mx-auto">
         {/* image showing with shadcn ui blocks */}
         <div className="flex items-center justify-center mx-auto text-center">

@@ -5,51 +5,44 @@ import { IoMenu } from "react-icons/io5";
 import "./shared.css";
 
 import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-// import { BookOpen, Home, Rss } from "lucide-react";
-// import Link from "next/link";
-
-const navigationMenuItems = [
-  { title: "Home", href: "hero", isActive: true },
-  { title: "Blog", href: "pricing" },
-  { title: "Docs", href: "#docs" },
-];
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 export default function Navbar() {
   const Links = (
-    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-[52px] text-[#191919] text-sm xl:text-lg">
+    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-[52px] text-[#191919] text-lg md:text-sm xl:text-lg">
       <NavLink
         to="/"
-        className="bg-white py-2 px-6 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
+        className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         Home
       </NavLink>
       <NavLink
         to="/aboutUs"
-        className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
+        className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         About Us
       </NavLink>
       <NavLink
         to="/features"
-        className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
+        className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         Features
       </NavLink>
       <NavLink
         to="/pricing"
-        className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
+        className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         Pricing
       </NavLink>
       <NavLink
         to="/contact"
-        className="bg-white py-2 px-3 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
+        className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         Contact
       </NavLink>
@@ -67,8 +60,6 @@ export default function Navbar() {
             alt="logo"
           ></img>
         </div>
-
-       
 
         {/* menu */}
         <div className="bg-white py-1 px-1 rounded-[36px] xl:rounded-[48px] lg:rounded-[100px] hidden md:block">
@@ -99,14 +90,24 @@ export default function Navbar() {
             </svg>
           </Link>
 
+          <Sheet>
+            <SheetTrigger>
+               <IoMenu className="text-3xl block md:hidden" />
+            </SheetTrigger>
+            <SheetContent className="py-5 md:hidden">
+              <SheetHeader className="w-full md:hidden">
+                <div>{Links}</div>
+              </SheetHeader>
+            </SheetContent>
+          </Sheet>
           {/* hamberger while mobile device */}
-          <div className="relative menu-show group">
+          {/* <div className="relative menu-show group">
             <IoMenu className="text-3xl block md:hidden hover:cursor-pointer group" />
 
-            <div className="bg-white py-3 px-[6px] rounded-2xl z-10 absolute top-7 right-1 hidden group-active:block shadow-xl">
+            <div className="bg-white py-3 px-[6px] rounded-2xl z-10 absolute top-7 right-1 hidden group-hover:block shadow-xl">
               {Links}
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </nav>

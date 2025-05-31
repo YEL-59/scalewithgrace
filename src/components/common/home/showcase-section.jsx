@@ -1,4 +1,3 @@
-import React from "react";
 // import { motion } from "motion/react"
 // import { motion } from 'framer-motion';
 import Marquee from "react-fast-marquee";
@@ -12,8 +11,8 @@ export default function ShowcaseSection() {
     <section
       style={{
         backgroundImage: `url(${background})`,
-        backgroundSize: "cover",
-        backgroundRepeat: "no-repeat",
+        backgroundSize: 'cover',
+        backgroundRepeat: 'no-repeat',
       }}
       className="bg-[#F1F4FF] w-full"
     >

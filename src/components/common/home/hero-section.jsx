@@ -78,6 +78,7 @@ export default function HeroSection() {
 
         {/* hero content */}
 
+
         <div className="text-center pb-6">
           <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-[64px] font-medium text-center leading-11 md:leading-12 lg:leading-16 xl:leading-20 mt-2 mb-[26px]">
             Your next career move shouldn’t be a guess <br></br>{" "}

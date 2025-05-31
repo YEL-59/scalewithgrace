@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function WhyChooseUsSection() {
   return (
     <section className="w-full bg-[#F7F7F8] font-poppins">
@@ -115,7 +113,8 @@ export default function WhyChooseUsSection() {
               Personalized to you
             </h5>
             <p className="text-[#61656B] text-base lg:text-lg xl:text-xl">
-              Tailored resumes that highlight your goals, skills, and achievements to help you shine.
+              Tailored resumes that highlight your goals, skills, and
+              achievements to help you shine.
             </p>
           </div>
         </div>

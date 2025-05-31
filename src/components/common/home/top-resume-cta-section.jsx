@@ -7,7 +7,7 @@ export default function TopResumeCTASection() {
   return (
     <section className="w-full bg-[#0D1117]  md:pt-20 lg:pt-32 font-poppins">
       <div className="container w-11/12 mx-auto flex flex-col-reverse md:flex-row gap-5">
-        <div className="md:relative flex-1">
+        <div className="relative flex-1">
           <div className="">
             <img className="md:absolute bottom-0" src={resumeTop}></img>
           </div>
@@ -32,8 +32,7 @@ export default function TopResumeCTASection() {
                 Start winning jobs today
               </button>
             </Link>
-
-            {/* <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div> */}
+         
           </div>
         </div>
       </div>

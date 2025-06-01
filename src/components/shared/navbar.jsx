@@ -69,7 +69,7 @@ export default function Navbar() {
         <div className="flex items-center gap-2 ">
           {/* login button */}
           <Link
-            to="/comming"
+            to="sign-in"
             className="flex items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium text-white bg-gradient-to-r  from-primary to-secondary"
           >
             <button> Login</button>

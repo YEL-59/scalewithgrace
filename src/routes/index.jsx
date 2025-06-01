@@ -10,6 +10,7 @@ import SignIn from '@/pages/auth/sign-in';
 import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
+import ComingSoon from '@/components/shared/CommingSoon/CommingSoon';
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +43,11 @@ export const router = createBrowserRouter([
           },
           {
             path: '/footer',
-            element: <footer></footer>,
+            element: <footer></footer>
+          },
+          {
+            path: '/comming',
+            element: <ComingSoon></ComingSoon>
           },
         ],
       },

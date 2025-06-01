@@ -1,5 +1,6 @@
-import footerLogo from '@/assets/images/footer-logo.svg';
-import { Link } from 'react-router';
+import React from "react";
+import footerLogo from "@/assets/images/footer-logo.svg";
+import { Link } from "react-router";
 
 export default function Footer() {
   return (

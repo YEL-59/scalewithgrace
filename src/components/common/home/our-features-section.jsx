@@ -1,8 +1,10 @@
-import feature from '@/assets/images/root.svg';
+import React from "react";
+import feature from "@/assets/images/root.svg";
 // import feature1 from "@/assets/images/feature1.svg";
 // import feature1top from "@/assets/images/feature1top.svg";
-import feature2 from '@/assets/images/feature2.svg';
-import feature3 from '@/assets/images/feature3.svg';
+import feature2 from "@/assets/images/feature2.svg";
+import feature3 from "@/assets/images/feature3.svg";
+import { Link } from "react-router";
 
 export default function OurFeaturesSection() {
   return (
@@ -20,7 +22,7 @@ export default function OurFeaturesSection() {
         </div>
 
         {/* features div 1*/}
-        <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-12 lg:py-16 xl:py-24">
+        <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-10 lg:py-12 xl:py-24">
           {/* left part */}
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
@@ -142,9 +144,11 @@ export default function OurFeaturesSection() {
                 </p>
               </div>
 
-              <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
-                Try for free
-              </button>
+              <Link to="/comming">
+                <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
+                  Try for free
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -167,7 +171,7 @@ export default function OurFeaturesSection() {
         </div>
 
         {/* features div 2*/}
-        <div className="flex flex-col md:flex-row-reverse  gap-5 xl:gap-20 py-7 md:py-12 lg:py-16 xl:py-24">
+        <div className="flex flex-col md:flex-row-reverse gap-5 md:gap-10 lg:gap-16 xl:gap-20 py-7 md:py-10 xl:py-24">
           {/* left part */}
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
@@ -291,9 +295,11 @@ export default function OurFeaturesSection() {
                 </p>
               </div>
 
-              <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
-                Customize for Free
-              </button>
+              <Link to='/comming'>
+                <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
+                  Customize for Free
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -305,7 +311,7 @@ export default function OurFeaturesSection() {
         </div>
 
         {/* features div 3*/}
-        <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-12 lg:py-16 xl:py-24">
+        <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-10 lg:py-12 xl:py-24">
           {/* left part */}
           <div className="flex-1">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
@@ -426,9 +432,11 @@ export default function OurFeaturesSection() {
                 </p>
               </div>
 
-              <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
-                Try for free
-              </button>
+              <Link to="/comming">
+                <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
+                  Try for free
+                </button>
+              </Link>
             </div>
           </div>
 
@@ -438,6 +446,7 @@ export default function OurFeaturesSection() {
             <div className="mt-20 border-b-2 xl:hidden"></div>
           </div>
         </div>
+
       </div>
     </section>
   );

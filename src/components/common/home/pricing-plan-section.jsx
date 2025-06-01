@@ -1,26 +1,28 @@
 import React from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Link } from "react-router";
+// import { Bot, Home, Settings, User } from "lucide-react";
 
 const tabs = [
   {
     name: "Monthly",
-    value: "Monthly",
-    price: "20",
+    value: "20",
+    // icon: Home,
   },
   {
-    name: "Yarly",
-    value: "Yarly",
-    price: "30",
+    name: "Yearly",
+    value: "30",
+    // icon: User,
   },
 ];
 
 export default function PricingPlanSection() {
   return (
-    <section className="w-full bg-[#F7F7F8] font-poppins pb-7">
+    <section id="pricing" className="w-full bg-[#F7F7F8] font-poppins pb-7">
       <div className="container w-11/12 mx-auto py-7 md:py-9 lg:py-12 xl:py-16">
         {/* title of choose us section */}
         <div className="text-center">
-          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
+          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 font-semibold">
             Pricing Plan
           </h2>
           <p className="text-[#61656B] text-sm md:text-base lg:text-lg leading-5 md:leading-6 lg:leading-8">
@@ -33,26 +35,22 @@ export default function PricingPlanSection() {
           defaultValue={tabs[0].value}
           className="flex items-center justify-center mt-10 md:lg-[50px] lg:mt-[60px] xl:mt-[70px]"
         >
-          <div className="flex gap-5">
-            <TabsList className="gap-2">
+          <div className="flex gap-2 md:gap-4 items-center">
+            <TabsList className="flex gap-0.5 md:gap-2">
               {tabs.map((tab) => (
                 <TabsTrigger
                   key={tab.value}
                   value={tab.value}
-                  className="text-black hover:text-white hover:bg-gradient-to-r from-primary to-secondary rounded-[110px] py-3 px-5 "
+                  className="data-[state=active]:bg-gradient-to-r from-primary to-secondary  data-[state=active]:text-primary-foreground justify-start px-5 py-5 rounded-[100px]"
                 >
-                  {tab.name}
+                  <tab /> {tab.name}
                 </TabsTrigger>
               ))}
             </TabsList>
-            <div>
+            <div className="border rounded-4xl  text-sm md:text-base md:rounded-[100px] px-3 py-3 md:px-6 bg-[#C5C3DC] font-medium">
               {tabs.map((tab) => (
-                <TabsContent
-                  className="bg-[#C5C3DC] py-2 px-3 rounded-[110px] inline-block"
-                  key={tab.value}
-                  value={tab.value}
-                >
-                  {tab.price} % off
+                <TabsContent key={tab.value} value={tab.value} className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent font-semibold">
+                  {tab.value}% OFF
                 </TabsContent>
               ))}
             </div>
@@ -62,7 +60,7 @@ export default function PricingPlanSection() {
         {/* pricing plan cards */}
         <div className="mt-6 md:mt-9 lg:mt-11 xl:mt-[50px] grid grid-cols-1 md:grid-cols-3 gap-[22px] md:gap-[26px] lg:gap-[30px] xl:gap-[35px] ">
           {/* 1st card */}
-          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150">
+          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150">
             <h6 className="text-[#0D1117] text-lg md:text-xl lg:text-2xl xl:text-[28px]">
               Free Plan
             </h6>
@@ -78,9 +76,11 @@ export default function PricingPlanSection() {
                   /mo
                 </span>
               </p>
-              <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
-                Get started for free
-              </button>
+              <Link to="/comming">
+                <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
+                  Get started for free
+                </button>
+              </Link>
             </div>
 
             <div className="space-y-3 my-[22px] md:my-[26px] lg:my-[30px] xl:my-[35px]">
@@ -156,7 +156,7 @@ export default function PricingPlanSection() {
           </div>
 
           {/* 2nd card */}
-          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150">
+          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150">
             <h6 className="text-[#0D1117] text-lg md:text-xl lg:text-2xl xl:text-[28px]">
               Standard Plan
             </h6>
@@ -172,9 +172,11 @@ export default function PricingPlanSection() {
                   /mo
                 </span>
               </p>
-              <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
-                Get started
-              </button>
+              <Link to="/comming">
+                <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
+                  Get started
+                </button>
+              </Link>
             </div>
 
             <div className="space-y-3 my-[22px] md:my-[26px] lg:my-[30px] xl:my-[35px]">
@@ -247,7 +249,7 @@ export default function PricingPlanSection() {
           </div>
 
           {/* 3rd card */}
-          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150">
+          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150">
             <h6 className="text-[#0D1117] text-lg md:text-xl lg:text-2xl xl:text-[28px]">
               Premium
             </h6>
@@ -263,9 +265,11 @@ export default function PricingPlanSection() {
                   /mo
                 </span>
               </p>
-              <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
-                Get started
-              </button>
+              <Link to="/comming">
+                <button className="text-[12.5px] md:text-[15.5px] lg:text-[17.5px] py-[13px] px-[17px] rounded-[110px] bg-[#1B1F25] w-full text-white group-hover:bg-gradient-to-r from-primary to-secondary">
+                  Get started
+                </button>
+              </Link>
             </div>
 
             <div className="space-y-3 my-[22px] md:my-[26px] lg:my-[30px] xl:my-[35px]">

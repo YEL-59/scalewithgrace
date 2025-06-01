@@ -5,7 +5,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
+import { Link } from "react-router";
 
 // for accrodian
 const items = [
@@ -45,7 +45,6 @@ export default function FAQSection() {
   return (
     <section className="w-full py-16 md:py-24 lg:py-32 font-poppins">
       <div className="container w-11/12 mx-auto flex flex-col lg:flex-row gap-7 lg:gap-10 xl:gap-20">
-
         {/* FAQ title */}
         <div className="flex-2/5 ">
           <h2 className="font-read text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-3">
@@ -56,29 +55,35 @@ export default function FAQSection() {
             creating and optimizing resumes with Resumate AI.
           </p>
 
-          <button className="rounded-[100px] text-sm md:text-base text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10 font-read">
-            Contact Us
-          </button>
+          <Link to='/comming'>
+            <button className="rounded-[100px] text-sm md:text-base text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10 font-read">
+              Contact Us
+            </button>
+          </Link>
         </div>
 
         {/* accrodian part */}
         {/* <div > */}
-          <Accordion
-            type="single"
-            collapsible
-            className="my-4 w-full space-y-4 md:space-y-6 xl:space-y-8 flex-2/3 "
-          >
-            {items.map(({ title, content }, index) => (
-              <AccordionItem
-                key={index}
-                value={`item-${index}`}
-                className="border-none bg-[#F7F7F8] rounded-[100px] py-1 md:py-2 px-4 md:px-8"
-              >
-                <AccordionTrigger className="text-base md:text-xl lg:text-2xl xl:text-[26px] flex items-center font-normal">{title}</AccordionTrigger>
-                <AccordionContent className="text-sm md:text-base lg:text-lg">{content}</AccordionContent>
-              </AccordionItem>
-            ))}
-          </Accordion>
+        <Accordion
+          type="single"
+          collapsible
+          className="my-4 w-full space-y-4 md:space-y-6 xl:space-y-8 flex-2/3 "
+        >
+          {items.map(({ title, content }, index) => (
+            <AccordionItem
+              key={index}
+              value={`item-${index}`}
+              className="border-none bg-[#F7F7F8] rounded-[100px] py-3 md:py-2 px-6 md:px-8"
+            >
+              <AccordionTrigger className="text-sm md:text-xl lg:text-2xl xl:text-[26px] flex items-center font-normal">
+                {title}
+              </AccordionTrigger>
+              <AccordionContent className="text-xs md:text-base lg:text-lg">
+                {content}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
         {/* </div> */}
       </div>
     </section>

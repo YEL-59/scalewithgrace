@@ -1,5 +1,7 @@
-import resumeBottom from '@/assets/images/resume-bottom.svg';
-import resumeTop from '@/assets/images/resume-top.svg';
+import React from "react";
+import resumeTop from "@/assets/images/resume-top.svg";
+import resumeBottom from "@/assets/images/resume-bottom.svg";
+import { Link } from "react-router";
 
 export default function BottomResumeCTASection() {
   return (
@@ -16,9 +18,9 @@ export default function BottomResumeCTASection() {
               standout resumes.
             </p>
 
-            <button className="rounded-[100px] text-sm md:text-base bg-white py-3 px-5 mt-8">
+            <Link to='/comming'><button className="rounded-[100px] text-sm md:text-base bg-white py-3 px-5 mt-8">
               Start for Free
-            </button>
+            </button></Link>
 
             {/* <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-black z-30 "></div> */}
           </div>

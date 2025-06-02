@@ -118,7 +118,7 @@ function SignUp() {
               remember me
             </label>
             
-            <Link to='/forgot-password'> <button>Forget Password?</button></Link>
+            <Link to='#'> <button>Forget Password?</button></Link>
            
           </div>
 

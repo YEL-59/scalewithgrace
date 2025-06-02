@@ -37,7 +37,7 @@ export default function ShowcaseSection() {
         {/* trusted brands */}
         <div className="pt-12 md:pt-20 lg:pt-[115px] text-center">
           <img src={vectorBottom}></img>
-          <h3 className="text-2xl leading-8 font-medium font-read ">
+          <h3 className="text-2xl leading-8 font-medium font-read " data-aos="zoom-out-down">
             We are trusted by
           </h3>
 

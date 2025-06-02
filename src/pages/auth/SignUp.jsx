@@ -11,6 +11,7 @@ import { Link } from "react-router";
 
 // form validation using zod
 const signInSchema = z.object({
+  name: z.string().nonempty("name is required"),
   email: z.string().nonempty("email is required").email("Give proper email"),
   password: z.string().nonempty("password is required").min(6, "password shoulb be at least 6 characters"),
 });
@@ -19,23 +20,22 @@ const signInSchema = z.object({
 function SignUp() {
 
   const [showPassword, setShowPassword] = useState(false);
-    const togglePasswordVisibility = () => {
-      setShowPassword(!showPassword);
-    };
-  
-    const {
-      register,
-      formState: { errors },
-      handleSubmit,
-    } = useForm({
-      resolver: zodResolver(signInSchema)
-    });
-    const onSubmit = (data) => console.log(data);
-  
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    resolver: zodResolver(signInSchema)
+  });
+  const onSubmit = (data) => console.log(data);
+
   return (
     <div className="font-poppins w-11/12 lg:w-3/4 xl:w-1/2 mx-auto">
       <img className="mx-auto" src={logo}></img>
-
       {/* Sign-in form */}
       <div className="mx-auto my-4 md:my-5 lg:my-6 xl:my-[30px]">
         <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center">
@@ -49,21 +49,43 @@ function SignUp() {
           onSubmit={handleSubmit(onSubmit)}
           className="my-8 md:my-10 lg:my-12  xl:my-[54px]"
         >
-          <label>
-            <span>Email</span>
-            <input
-              className="bg-[#EDFCFF] p-4 rounded-md w-full focus-visible:ring-0 shadow-none mt-2"
-              placeholder="Enter your mail"
-              {...register("email")}
-              // aria-invalid={errors.email ? "true" : "false"}
-            />
 
-            {errors.email && (
-              <p role="alert" className="text-sm text-red-600">
-                {errors.email.message}
-              </p>
-            )}
-          </label>
+          <div className="mb-3">
+            <label>
+              <span>Name</span>
+              <input
+                className="bg-[#EDFCFF] p-4 rounded-md w-full focus-visible:ring-0 shadow-none mt-2"
+                placeholder="Enter your Name"
+                {...register("name")}
+              // aria-invalid={errors.email ? "true" : "false"}
+              />
+
+              {errors.name && (
+                <p role="alert" className="text-sm text-red-600">
+                  {errors.name.message}
+                </p>
+              )}
+            </label>
+          </div>
+
+
+          <div className="mt-3">
+            <label>
+              <span>Email</span>
+              <input
+                className="bg-[#EDFCFF] p-4 rounded-md w-full focus-visible:ring-0 shadow-none mt-2"
+                placeholder="Enter your mail"
+                {...register("email")}
+              // aria-invalid={errors.email ? "true" : "false"}
+              />
+
+              {errors.email && (
+                <p role="alert" className="text-sm text-red-600">
+                  {errors.email.message}
+                </p>
+              )}
+            </label>
+          </div>
 
           <div className="mt-5">
             <p>Password</p>
@@ -95,8 +117,9 @@ function SignUp() {
               <input type="checkbox"></input>
               remember me
             </label>
-
-            <button>Forget Password?</button>
+            
+            <Link to='#'> <button>Forget Password?</button></Link>
+           
           </div>
 
           <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-md py-4 text-white text-base lg:text-lg mt-[54px]">

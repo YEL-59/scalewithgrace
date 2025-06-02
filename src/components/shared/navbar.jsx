@@ -15,7 +15,7 @@ import {
 
 export default function Navbar() {
   const Links = (
-    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-[52px] text-[#191919] text-lg md:text-sm xl:text-lg">
+    <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-4  2xl:gap-[52px] text-[#191919] text-lg md:text-sm xl:text-lg">
       <NavLink
         to="/"
         className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
@@ -51,7 +51,7 @@ export default function Navbar() {
 
   return (
     <nav className="bg-[#F1F4FF] w-full text-sm md:text-base">
-      <div className="w-11/12 mx-auto py-3 md:py-6 lg:py-[30px] flex items-center justify-between gap-2">
+      <div className="w-11/12 mx-auto flex items-center justify-between gap-2">
         {/* logo */}
         <div>
           <img

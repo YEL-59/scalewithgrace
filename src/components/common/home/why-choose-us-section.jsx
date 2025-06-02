@@ -2,7 +2,7 @@ export default function WhyChooseUsSection() {
   return (
     <section className="w-full bg-[#F7F7F8] font-poppins">
       <div className="container w-11/12 mx-auto py-16 md:py-24 lg:py-32 xl:py-40">
-        <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
+        <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2"  data-aos="zoom-out-down">
           Why Choose Us
         </h2>
         <p className="text-[#61656B] text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8">
@@ -13,7 +13,7 @@ export default function WhyChooseUsSection() {
         {/* why choose content */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 xl:gap-16 mt-9 lg:mt-14">
           {/* first div */}
-          <div className="border border-[#E0E2E6] p-8 md:p-3 lg:p-6 xl:p-10 rounded-[36px] bg-white">
+          <div className="border border-[#E0E2E6] p-8 md:p-3 lg:p-6 xl:p-10 rounded-[36px] bg-white" data-aos="zoom-out-left">
             <div className=" border border-[#DAE9FD] rounded-full p-5 inline-block mt-3 mb-5 lg:mb-7 xl:mb-11">
               <svg
                 className=""
@@ -41,7 +41,7 @@ export default function WhyChooseUsSection() {
           </div>
 
           {/* second div */}
-          <div className="border border-[#E0E2E6] p-8 md:p-3 lg:p-6 xl:p-10 rounded-[36px] bg-white">
+          <div className="border border-[#E0E2E6] p-8 md:p-3 lg:p-6 xl:p-10 rounded-[36px] bg-white" data-aos="zoom-out-down">
             <div className=" border border-[#DAE9FD] rounded-full p-5 inline-block mt-3 mb-5 lg:mb-7 xl:mb-11">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@ export default function WhyChooseUsSection() {
           </div>
 
           {/* 3rd div */}
-          <div className="border border-[#E0E2E6] p-8 md:p-3 lg:p-6 xl:p-10 rounded-[36px] bg-white">
+          <div className="border border-[#E0E2E6] p-8 md:p-3 lg:p-6 xl:p-10 rounded-[36px] bg-white" data-aos="zoom-out-right">
             <div className=" border border-[#DAE9FD] rounded-full p-5 inline-block mt-3 mb-5 lg:mb-7 xl:mb-11">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

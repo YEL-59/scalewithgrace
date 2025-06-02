@@ -12,7 +12,7 @@ export default function OurFeaturesSection() {
       <div className="container mx-auto space-y-10 md:space-y-16 lg:space-y-[70px] xl:space-y-[85px]">
         {/* feature title */}
         <div className="text-center">
-          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
+          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2" data-aos="zoom-out-down">
             Our features
           </h2>
           <p className="text-[#61656B] text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8">
@@ -24,7 +24,7 @@ export default function OurFeaturesSection() {
         {/* features div 1*/}
         <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-10 lg:py-12 xl:py-24">
           {/* left part */}
-          <div className="flex-1">
+          <div className="flex-1" data-aos="flip-right">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
               <h2 className="text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
                 Using an AI-powered resume writing
@@ -163,7 +163,7 @@ export default function OurFeaturesSection() {
           </div> */}
 
           {/* optional */}
-          <div className="flex-1">
+          <div className="flex-1" data-aos="zoom-out-left">
             <img src={feature}></img>
 
             <div className="mt-20 border-b-2 xl:hidden"></div>
@@ -173,7 +173,7 @@ export default function OurFeaturesSection() {
         {/* features div 2*/}
         <div className="flex flex-col md:flex-row-reverse gap-5 md:gap-10 lg:gap-16 xl:gap-20 py-7 md:py-10 xl:py-24">
           {/* left part */}
-          <div className="flex-1">
+          <div className="flex-1" data-aos="flip-left">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
               <h2 className="text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
                 Custom options for your experience
@@ -304,7 +304,7 @@ export default function OurFeaturesSection() {
           </div>
 
           {/* right part */}
-          <div className="flex-1">
+          <div className="flex-1" data-aos="zoom-out-right">
             <img src={feature2}></img>
             <div className="mt-20 border-b-2 xl:hidden"></div>
           </div>
@@ -313,7 +313,7 @@ export default function OurFeaturesSection() {
         {/* features div 3*/}
         <div className="flex flex-col md:flex-row gap-5 xl:gap-10 py-7 md:py-10 lg:py-12 xl:py-24">
           {/* left part */}
-          <div className="flex-1">
+          <div className="flex-1" data-aos="flip-left">
             <div className="text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8 w-full md:w-11/12 lg:w-3/4">
               <h2 className="text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2">
                 ATS compatibility to attract recruiters
@@ -441,7 +441,7 @@ export default function OurFeaturesSection() {
           </div>
 
           {/* right part */}
-          <div className="flex-1">
+          <div className="flex-1" data-aos="zoom-out-left">
             <img src={feature3}></img>
             <div className="mt-20 border-b-2 xl:hidden"></div>
           </div>

@@ -18,7 +18,7 @@ export default function TopResumeCTASection() {
         {/* right side content section */}
         <div className="flex-1 flex justify-center items-center py-5 xl:pb-48">
           <div className="">
-            <h3 className="text-[#F7F7F8] text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16">
+            <h3 className="text-[#F7F7F8] text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16" data-aos="fade-right">
               Struggling to write a standout resume? You’re not alone.
             </h3>
             <p className="text-[#C9CCD2] my-2 max-w-[560px] leading-4 md:leading-5 lg:leading-6">
@@ -28,7 +28,7 @@ export default function TopResumeCTASection() {
             </p>
 
             <Link to="/comming">
-              <button className="rounded-[100px] text-sm md:text-bas text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-8">
+              <button className="rounded-[100px] text-sm md:text-bas text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-8" data-aos="zoom-in">
                 Start winning jobs today
               </button>
             </Link>

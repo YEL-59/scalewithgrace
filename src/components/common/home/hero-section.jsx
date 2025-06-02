@@ -13,7 +13,7 @@ export default function HeroSection() {
     <section id='hero' className="w-full bg-[#F1F4FF] pt-7   md:pt-10  lg:pt-16 xl:pt-[106px] font-poppins">
       <div className="container mx-auto">
         {/* image showing with shadcn ui blocks */}
-        <div className="flex items-center justify-center mx-auto text-center">
+        <div className="flex items-center justify-center mx-auto text-center" data-aos="fade-down">
           <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
             <AvatarImage src={image4} alt="@shadcn" />
             <AvatarFallback className="bg-indigo-500 text-white">
@@ -80,14 +80,14 @@ export default function HeroSection() {
 
 
         <div className="text-center pb-6">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-[64px] font-medium text-center leading-11 md:leading-12 lg:leading-16 xl:leading-20 mt-2 mb-[26px]">
-            Your next career move shouldn’t be a guess <br></br>{" "}
-            <span className=" text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-[64px] font-medium text-center leading-11 md:leading-12 lg:leading-16 xl:leading-20 mt-2" data-aos="fade-left">
+            Your next career move shouldn’t be a guess</h1>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl xl:text-[64px] font-medium text-center leading-11 md:leading-12 lg:leading-16 xl:leading-20 mb-[26px] text-transparent bg-gradient-to-r from-primary to-secondary bg-clip-text" data-aos="fade-right">
               Karially gives you the plan
-            </span>{" "}
-          </h1>
+            </h2>{" "}
+         
 
-          <p className=" text-[#6C6C6C] text-lg md:text-xl lg:text-2xl leading-[34px] ">
+          <p className=" text-[#6C6C6C] text-lg md:text-xl lg:text-2xl leading-[34px]">
             Karially helps you get clarity on where you’re going, how to get
             there, and what to do next, <br className="hidden lg:block"></br>{" "}
             without overwhelm. We’re not a job board. Not a resume builder.
@@ -95,7 +95,7 @@ export default function HeroSection() {
           </p>
 
           <Link to='/comming'>
-            <button className="font-read flex mx-auto items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10  lg:mt-[45px] text-white bg-gradient-to-r  from-primary to-secondary">
+            <button className="font-read flex mx-auto items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10  lg:mt-[45px] text-white bg-gradient-to-r  from-primary to-secondary" data-aos="zoom-in">
               <button> Start a free trial</button>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

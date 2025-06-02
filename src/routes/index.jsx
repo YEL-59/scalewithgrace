@@ -12,6 +12,7 @@ import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
 import ComingSoon from '@/components/shared/CommingSoon/CommingSoon';
 import SignUp from '@/pages/auth/SignUp';
+import ForgotPassword from '@/pages/auth/ForgotPassword';
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
           {
             path: '/sign-up',
             element: <SignUp></SignUp>
+          },
+          {
+            path: '/forgot-password',
+            element: <ForgotPassword></ForgotPassword>
           }
         ],
       },

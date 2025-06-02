@@ -16,6 +16,7 @@ import { createBrowserRouter } from 'react-router';
 
 export const PRODUCTION_READY_PATHS = [
   '/',
+  '/coming',
   '/aboutUs',
   '/features',
   '/pricing',

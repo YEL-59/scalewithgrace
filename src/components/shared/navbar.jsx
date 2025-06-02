@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "@/assets/images/logosvg.svg";
 import { IoMenu } from "react-icons/io5";
@@ -14,6 +14,16 @@ import {
 } from "@/components/ui/sheet";
 
 export default function Navbar() {
+  const [open, setOpen] = useState(false);
+
+  const linksRef = useRef(null);
+
+  const handleClick = (e) => {
+    if (linksRef.current && !linksRef.current.contains(e.target)) {
+      setOpen(false);
+    }
+  };
+
   const Links = (
     <div className="flex flex-col md:flex-row items-center gap-2 md:gap-4 lg:gap-6 xl:gap-4  2xl:gap-[52px] text-[#191919] text-lg md:text-sm xl:text-lg">
       <NavLink
@@ -90,13 +100,16 @@ export default function Navbar() {
             </svg>
           </Link>
 
-          <Sheet>
+          <Sheet className="w-2/3" open={open} onOpenChange={setOpen}>
             <SheetTrigger>
-               <IoMenu className="text-3xl block md:hidden" />
+              <IoMenu className="text-3xl block md:hidden" />
             </SheetTrigger>
-            <SheetContent className="py-5 md:hidden">
-              <SheetHeader className="w-full md:hidden">
-                <div>{Links}</div>
+            <SheetContent
+              className="py-5 md:hidden content-baseline"
+              onClick={handleClick}
+            >
+              <SheetHeader className="md:hidden">
+                <div ref={linksRef} className="w-fit flex items-start">{Links}</div>
               </SheetHeader>
             </SheetContent>
           </Sheet>

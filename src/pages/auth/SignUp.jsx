@@ -1,14 +1,13 @@
-import React from "react";
-// import { useForm } from "react-hook-form";
-import logo from "../../assets/images/logosvg.svg";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button } from "@/components/ui/button";
+import { z } from "zod";
 import { Input } from "@/components/ui/input";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
-import { useState } from "react";
+import logo from '@/assets/images/logosvg.svg'
 import { Link } from "react-router";
-import { z } from "zod";
+
+
 
 // form validation using zod
 const signInSchema = z.object({
@@ -16,21 +15,23 @@ const signInSchema = z.object({
   password: z.string().nonempty("password is required").min(6, "password shoulb be at least 6 characters"),
 });
 
-export default function SignIn() {
+
+function SignUp() {
+
   const [showPassword, setShowPassword] = useState(false);
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    resolver: zodResolver(signInSchema)
-  });
-  const onSubmit = (data) => console.log(data);
-
+    const togglePasswordVisibility = () => {
+      setShowPassword(!showPassword);
+    };
+  
+    const {
+      register,
+      formState: { errors },
+      handleSubmit,
+    } = useForm({
+      resolver: zodResolver(signInSchema)
+    });
+    const onSubmit = (data) => console.log(data);
+  
   return (
     <div className="font-poppins w-11/12 lg:w-3/4 xl:w-1/2 mx-auto">
       <img className="mx-auto" src={logo}></img>
@@ -57,9 +58,11 @@ export default function SignIn() {
               // aria-invalid={errors.email ? "true" : "false"}
             />
 
-            {
-              errors.email && <p role="alert" className="text-sm text-red-600">{errors.email.message}</p>
-            }
+            {errors.email && (
+              <p role="alert" className="text-sm text-red-600">
+                {errors.email.message}
+              </p>
+            )}
           </label>
 
           <div className="mt-5">
@@ -79,9 +82,12 @@ export default function SignIn() {
                 )}
               </button>
             </label>
-           
 
-            {errors.password && <p role="alert" className="text-sm text-red-600">{errors.password.message}</p>}
+            {errors.password && (
+              <p role="alert" className="text-sm text-red-600">
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
           <div className="font-medium flex items-center justify-between mt-3">
@@ -127,9 +133,11 @@ export default function SignIn() {
         </form>
 
         <p className="text-[#959595] text-base lg:text-lg text-center">
-          Don't have an account? <Link to="/sign-up" className="text-[#1E1E1E]">Sign Up</Link>
+          Don't have an account? <Link className="text-[#1E1E1E]">Sign Up</Link>
         </p>
       </div>
     </div>
   );
 }
+
+export default SignUp;

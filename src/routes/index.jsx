@@ -11,6 +11,7 @@ import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
 import ComingSoon from '@/components/shared/CommingSoon/CommingSoon';
+import SignUp from '@/pages/auth/SignUp';
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +60,10 @@ export const router = createBrowserRouter([
             path: 'sign-in',
             element: <SignIn />,
           },
+          {
+            path: '/sign-up',
+            element: <SignUp></SignUp>
+          }
         ],
       },
       {

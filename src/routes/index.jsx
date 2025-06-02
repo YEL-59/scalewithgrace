@@ -14,6 +14,9 @@ import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
 // import ForgotPassword from '@/pages/auth/ForgotPassword';
 
+// List of routes that are considered ready for production deployment.
+// These paths correspond to pages that are presentable for client feedback.
+// Used to control which pages are exposed in the production environment.
 export const PRODUCTION_READY_PATHS = [
   '/',
   '/coming',

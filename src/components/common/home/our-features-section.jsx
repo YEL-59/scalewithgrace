@@ -1,10 +1,9 @@
-import React from "react";
-import feature from "@/assets/images/root.svg";
+import feature from '@/assets/images/root.svg';
 // import feature1 from "@/assets/images/feature1.svg";
 // import feature1top from "@/assets/images/feature1top.svg";
-import feature2 from "@/assets/images/feature2.svg";
-import feature3 from "@/assets/images/feature3.svg";
-import { Link } from "react-router";
+import feature2 from '@/assets/images/feature2.svg';
+import feature3 from '@/assets/images/feature3.svg';
+import { Link } from 'react-router';
 
 export default function OurFeaturesSection() {
   return (
@@ -12,7 +11,10 @@ export default function OurFeaturesSection() {
       <div className="container mx-auto space-y-10 md:space-y-16 lg:space-y-[70px] xl:space-y-[85px]">
         {/* feature title */}
         <div className="text-center">
-          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2" data-aos="zoom-out-down">
+          <h2
+            className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2"
+            data-aos="zoom-out-down"
+          >
             Our features
           </h2>
           <p className="text-[#61656B] text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8">
@@ -144,7 +146,7 @@ export default function OurFeaturesSection() {
                 </p>
               </div>
 
-              <Link to="/comming">
+              <Link to="/coming">
                 <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
                   Try for free
                 </button>
@@ -295,7 +297,7 @@ export default function OurFeaturesSection() {
                 </p>
               </div>
 
-              <Link to='/comming'>
+              <Link to="/coming">
                 <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
                   Customize for Free
                 </button>
@@ -432,7 +434,7 @@ export default function OurFeaturesSection() {
                 </p>
               </div>
 
-              <Link to="/comming">
+              <Link to="/coming">
                 <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
                   Try for free
                 </button>
@@ -446,7 +448,6 @@ export default function OurFeaturesSection() {
             <div className="mt-20 border-b-2 xl:hidden"></div>
           </div>
         </div>
-
       </div>
     </section>
   );

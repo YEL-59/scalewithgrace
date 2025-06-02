@@ -7,10 +7,20 @@ import AuthLayout from '@/layouts/auth-layout';
 import CommonLayout from '@/layouts/common-layout';
 import DashboardLayout from '@/layouts/dashboard-layout';
 import RootLayout from '@/layouts/root-layout';
+import SignIn from '@/pages/auth/sign-in';
+import SignUp from '@/pages/auth/SignUp';
 import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
 // import ForgotPassword from '@/pages/auth/ForgotPassword';
+
+export const readyForProduction = [
+  '/',
+  '/aboutUs',
+  '/features',
+  '/pricing',
+  '/contact',
+];
 
 export const router = createBrowserRouter([
   {
@@ -42,11 +52,7 @@ export const router = createBrowserRouter([
             element: <FAQSection></FAQSection>,
           },
           {
-            path: '/footer',
-            element: <footer></footer>,
-          },
-          {
-            path: '/comming',
+            path: '/coming',
             element: <ComingSoon></ComingSoon>,
           },
         ],
@@ -57,11 +63,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'sign-in',
-            element: <ComingSoon />,
+            element: <SignIn />,
           },
           {
             path: '/sign-up',
-            element: <ComingSoon />,
+            element: <SignUp />,
           },
           // {
           //   path: '/forgot-password',

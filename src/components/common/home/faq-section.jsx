@@ -1,41 +1,40 @@
-import React from "react";
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Link } from "react-router";
+} from '@/components/ui/accordion';
+import { Link } from 'react-router';
 
 // for accrodian
 const items = [
   {
-    title: "Is Karially AI free to use?",
-    content: "Yes. It adheres to the WAI-ARIA design pattern.",
+    title: 'Is Karially AI free to use?',
+    content: 'Yes. It adheres to the WAI-ARIA design pattern.',
   },
   {
-    title: "Are the resumes created ATS-compatible?",
+    title: 'Are the resumes created ATS-compatible?',
     content:
       "Yes. It comes with default styles that matches the other components' aesthetic.",
   },
   {
-    title: "Can I customize my resume with Karially AI?",
+    title: 'Can I customize my resume with Karially AI?',
     content:
       "Yes. It's animated by default, but you can disable it if you prefer.",
   },
 
   {
-    title: "What makes Karially AI different from other resume builders?",
+    title: 'What makes Karially AI different from other resume builders?',
     content:
       "Yes. It's animated by default, but you can disable it if you prefer.",
   },
   {
-    title: "Can I create a cover letter with Karially AI?",
+    title: 'Can I create a cover letter with Karially AI?',
     content:
       "Yes. It's animated by default, but you can disable it if you prefer.",
   },
   {
-    title: "Is my data safe with Karially AI?",
+    title: 'Is my data safe with Karially AI?',
     content:
       "Yes. It's animated by default, but you can disable it if you prefer.",
   },
@@ -47,7 +46,10 @@ export default function FAQSection() {
       <div className="container w-11/12 mx-auto flex flex-col lg:flex-row gap-7 lg:gap-10 xl:gap-20">
         {/* FAQ title */}
         <div className="flex-2/5 ">
-          <h2 className="font-read text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-3" data-aos="zoom-out-down">
+          <h2
+            className="font-read text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-3"
+            data-aos="zoom-out-down"
+          >
             FAQs
           </h2>
           <p className="text-[#61656B] text-sm md:text-base lg:text-lg leading-5 md:leading-6 lg:leading-8">
@@ -55,8 +57,11 @@ export default function FAQSection() {
             creating and optimizing resumes with Resumate AI.
           </p>
 
-          <Link to='/comming'>
-            <button className="rounded-[100px] text-sm md:text-base text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10 font-read" data-aos="zoom-in">
+          <Link to="/coming">
+            <button
+              className="rounded-[100px] text-sm md:text-base text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10 font-read"
+              data-aos="zoom-in"
+            >
               Contact Us
             </button>
           </Link>

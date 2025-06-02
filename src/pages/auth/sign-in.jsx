@@ -32,7 +32,7 @@ export default function SignIn() {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <div className="font-poppins w-11/12 lg:w-1/2 mx-auto">
+    <div className="font-poppins w-11/12 lg:w-3/4 xl:w-1/2 mx-auto">
       <img className="mx-auto" src={logo}></img>
 
       {/* Sign-in form */}

@@ -14,7 +14,7 @@ import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
 // import ForgotPassword from '@/pages/auth/ForgotPassword';
 
-export const readyForProduction = [
+export const PRODUCTION_READY_PATHS = [
   '/',
   '/aboutUs',
   '/features',

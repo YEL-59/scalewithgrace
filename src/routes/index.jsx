@@ -2,16 +2,14 @@ import FAQSection from '@/components/common/home/faq-section';
 import OurFeaturesSection from '@/components/common/home/our-features-section';
 import PricingPlanSection from '@/components/common/home/pricing-plan-section';
 import ShowcaseSection from '@/components/common/home/showcase-section';
+import ComingSoon from '@/components/shared/CommingSoon/CommingSoon';
 import AuthLayout from '@/layouts/auth-layout';
 import CommonLayout from '@/layouts/common-layout';
 import DashboardLayout from '@/layouts/dashboard-layout';
 import RootLayout from '@/layouts/root-layout';
-import SignIn from '@/pages/auth/sign-in';
 import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
-import ComingSoon from '@/components/shared/CommingSoon/CommingSoon';
-import SignUp from '@/pages/auth/SignUp';
 // import ForgotPassword from '@/pages/auth/ForgotPassword';
 
 export const router = createBrowserRouter([
@@ -45,11 +43,11 @@ export const router = createBrowserRouter([
           },
           {
             path: '/footer',
-            element: <footer></footer>
+            element: <footer></footer>,
           },
           {
             path: '/comming',
-            element: <ComingSoon></ComingSoon>
+            element: <ComingSoon></ComingSoon>,
           },
         ],
       },
@@ -59,11 +57,11 @@ export const router = createBrowserRouter([
         children: [
           {
             path: 'sign-in',
-            element: <SignIn />,
+            element: <ComingSoon />,
           },
           {
             path: '/sign-up',
-            element: <SignUp></SignUp>
+            element: <ComingSoon />,
           },
           // {
           //   path: '/forgot-password',

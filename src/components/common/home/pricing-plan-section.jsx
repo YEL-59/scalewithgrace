@@ -22,7 +22,7 @@ export default function PricingPlanSection() {
       <div className="container w-11/12 mx-auto py-7 md:py-9 lg:py-12 xl:py-16">
         {/* title of choose us section */}
         <div className="text-center">
-          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 font-semibold">
+          <h2 className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 font-semibold" data-aos="zoom-out-down">
             Pricing Plan
           </h2>
           <p className="text-[#61656B] text-sm md:text-base lg:text-lg leading-5 md:leading-6 lg:leading-8">
@@ -60,7 +60,7 @@ export default function PricingPlanSection() {
         {/* pricing plan cards */}
         <div className="mt-6 md:mt-9 lg:mt-11 xl:mt-[50px] grid grid-cols-1 md:grid-cols-3 gap-[22px] md:gap-[26px] lg:gap-[30px] xl:gap-[35px] ">
           {/* 1st card */}
-          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150">
+          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150" data-aos="zoom-out-left">
             <h6 className="text-[#0D1117] text-lg md:text-xl lg:text-2xl xl:text-[28px]">
               Free Plan
             </h6>
@@ -156,7 +156,7 @@ export default function PricingPlanSection() {
           </div>
 
           {/* 2nd card */}
-          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150">
+          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150" data-aos="zoom-out-down">
             <h6 className="text-[#0D1117] text-lg md:text-xl lg:text-2xl xl:text-[28px]">
               Standard Plan
             </h6>
@@ -249,7 +249,7 @@ export default function PricingPlanSection() {
           </div>
 
           {/* 3rd card */}
-          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150">
+          <div className="p-[22px] lg:p-[30px] xl:p-[35px] border border-[#E0E2E6] rounded-[17.5px] bg-white hover:bg-gradient-to-r from-[#D0E1E4] via-[#D1D9E3] to-[#D2D5E4] group hover:transition hover:scale-y-105 hover:scale-x-95 transition duration-150 delay-150" data-aos="zoom-out-right">
             <h6 className="text-[#0D1117] text-lg md:text-xl lg:text-2xl xl:text-[28px]">
               Premium
             </h6>

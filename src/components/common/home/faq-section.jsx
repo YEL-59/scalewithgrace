@@ -47,7 +47,7 @@ export default function FAQSection() {
       <div className="container w-11/12 mx-auto flex flex-col lg:flex-row gap-7 lg:gap-10 xl:gap-20">
         {/* FAQ title */}
         <div className="flex-2/5 ">
-          <h2 className="font-read text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-3">
+          <h2 className="font-read text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-3" data-aos="zoom-out-down">
             FAQs
           </h2>
           <p className="text-[#61656B] text-sm md:text-base lg:text-lg leading-5 md:leading-6 lg:leading-8">
@@ -56,7 +56,7 @@ export default function FAQSection() {
           </p>
 
           <Link to='/comming'>
-            <button className="rounded-[100px] text-sm md:text-base text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10 font-read">
+            <button className="rounded-[100px] text-sm md:text-base text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10 font-read" data-aos="zoom-in">
               Contact Us
             </button>
           </Link>

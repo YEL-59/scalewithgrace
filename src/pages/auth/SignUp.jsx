@@ -115,15 +115,13 @@ function SignUp() {
           <div className="font-medium flex items-center justify-between mt-3">
             <label className="flex items-center gap-3">
               <input type="checkbox"></input>
-              remember me
+              <p className="text-[#717171] text-xs lg:text-sm">I have read an agree to Karially <span className="text-[#191919]">Terms</span> and  <span className="text-[#191919]">Privacy Policy</span></p>
             </label>
-            
-            <Link to='#'> <button>Forget Password?</button></Link>
            
           </div>
 
           <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-md py-4 text-white text-base lg:text-lg mt-[54px]">
-            <input type="submit" />
+            <input type="submit" value="Sign Up"/>
           </button>
 
           <button className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-md py-3 text-center justify-center text-base lg:text-lg">
@@ -156,7 +154,7 @@ function SignUp() {
         </form>
 
         <p className="text-[#959595] text-base lg:text-lg text-center">
-          Don't have an account? <Link className="text-[#1E1E1E]">Sign Up</Link>
+         Already have an account? <Link to='/sign-in' className="text-[#1E1E1E]">Sign In</Link>
         </p>
       </div>
     </div>

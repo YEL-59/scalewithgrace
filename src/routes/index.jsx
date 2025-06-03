@@ -12,7 +12,9 @@ import SignUp from '@/pages/auth/SignUp';
 import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
-// import ForgotPassword from '@/pages/auth/ForgotPassword';
+import ForgotPassword from '@/pages/auth/ForgotPassword';
+import CheckMail from '@/pages/auth/CheckMail';
+import OtpVarification from '@/pages/auth/OtpVarification';
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -73,10 +75,18 @@ export const router = createBrowserRouter([
             path: '/sign-up',
             element: <SignUp />,
           },
-          // {
-          //   path: '/forgot-password',
-          //   element: <ForgotPassword></ForgotPassword>
-          // }
+          {
+            path: '/forgot-password',
+            element: <ForgotPassword></ForgotPassword>
+          },
+          {
+            path:'/check-mail',
+            element: <CheckMail></CheckMail>
+          },
+          {
+            path: '/otp',
+            element: <OtpVarification></OtpVarification>
+          }
         ],
       },
       {

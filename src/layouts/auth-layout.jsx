@@ -6,7 +6,7 @@ import authexpand from "@/assets/images/authexpanded.svg";
 export default function AuthLayout() {
   return (
     <div className="py-10 md:py-12 lg-py-14 xl:py-16 grid grid-cols-1 md:grid-cols-2">
-      <div>
+      <div className="flex items-center justify-center">
         <Outlet />
       </div>
 

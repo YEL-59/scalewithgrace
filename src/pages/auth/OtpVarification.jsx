@@ -27,7 +27,7 @@ function OtpVarification() {
         updatedOtp[index] = value;
         setOtp(updatedOtp);
 
-        setValue(`digit${index}`, value); 
+        setValue(`digit${index}`, value);
         if (value && index < 3) {
             const nextInput = document.getElementById(`otp-${index + 1}`);
             if (nextInput) nextInput.focus();
@@ -43,7 +43,7 @@ function OtpVarification() {
 
             {/* Sign-in form */}
             <div className="mx-auto my-4 md:my-5 lg:my-6 xl:my-[30px]">
-                <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center">
+                <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center font-bold">
                     OTP varification
                 </h2>
                 <p className="text-[#959595] text-xs md:text-sm lg:text-base text-center">
@@ -74,8 +74,8 @@ function OtpVarification() {
                         ))}
                     </div>
 
-                    <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-md py-4 text-white text-base lg:text-lg mt-[54px]">
-                        <input type="submit" />
+                    <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-[60px] py-4 text-white text-base lg:text-lg mt-[54px]">
+                        <Link to='/confirm-password'>  <input type="submit" /></Link>
                     </button>
                 </form>
 

@@ -33,7 +33,7 @@ function ForgotPassword() {
             <img className="mx-auto" src={logo}></img>
             {/* Sign-in form */}
             <div className="mx-auto my-4 md:my-5 lg:my-6 xl:my-[30px]">
-                <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center">
+                <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center font-bold">
                     Forget Password
                 </h2>
                 <p className="text-[#959595] text-xs md:text-sm lg:text-base xl:text-lg text-center">
@@ -64,13 +64,13 @@ function ForgotPassword() {
                         </label>
                     </div>
 
-                    <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-md py-4 text-white text-base lg:text-lg mt-[54px]">
+                    <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-[60px] py-4 text-white text-base lg:text-lg mt-[54px]">
                        <Link to='/check-mail'> <input type="submit" value="Forgot Password" /></Link>
                     </button>
 
                 </form>
 
-                <button onClick={handleSignIn} className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-md py-3 text-center justify-center text-base lg:text-lg">
+                <button onClick={handleSignIn} className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-[60px] py-3 text-center justify-center text-base lg:text-lg">
                     <Link to='/forgot-password/sign-in'> Back To Sign In</Link>
                 </button>
             </div>

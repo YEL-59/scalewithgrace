@@ -15,6 +15,8 @@ import { createBrowserRouter } from 'react-router';
 import ForgotPassword from '@/pages/auth/ForgotPassword';
 import CheckMail from '@/pages/auth/CheckMail';
 import OtpVarification from '@/pages/auth/OtpVarification';
+import ConfirmPassword from '@/pages/auth/ConfirmPassword';
+import Confirmation from '@/pages/auth/Confirmation';
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -86,6 +88,14 @@ export const router = createBrowserRouter([
           {
             path: '/otp',
             element: <OtpVarification></OtpVarification>
+          },
+          {
+            path: '/confirm-password',
+            element: <ConfirmPassword></ConfirmPassword>
+          },
+          {
+            path: '/confirmation',
+            element: <Confirmation></Confirmation>
           }
         ],
       },

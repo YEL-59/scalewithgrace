@@ -37,7 +37,7 @@ export default function SignIn() {
 
       {/* Sign-in form */}
       <div className="mx-auto my-4 md:my-5 lg:my-6 xl:my-[30px]">
-        <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center">
+        <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center font-bold">
           Welcome Back
         </h2>
         <p className="text-[#959595] text-xs md:text-sm lg:text-base xl:text-lg text-center">
@@ -93,11 +93,11 @@ export default function SignIn() {
             <button><Link to='/forgot-password'>Forget Password?</Link></button>
           </div>
 
-          <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-md py-4 text-white text-base lg:text-lg mt-[54px]">
+          <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-[60px] py-4 text-white text-base lg:text-lg mt-[54px]">
             <input type="submit" value="Sign In" />
           </button>
         </form>
-        <button className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-md py-3 text-center justify-center text-base lg:text-lg mb-8 md:mb-10 lg:mb-12  xl:mb-[54px]">
+        <button className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-[60px] py-3 text-center justify-center text-base lg:text-lg mb-8 md:mb-10 lg:mb-12  xl:mb-[54px]">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="33"

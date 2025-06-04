@@ -1,3 +1,5 @@
 export default function Dashboard() {
-  return <div>Dashboard</div>;
+  return <div className="bg-[#F9F9F9]">
+
+  </div>;
 }

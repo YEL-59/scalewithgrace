@@ -49,37 +49,7 @@ export default function HeroSection() {
           </p>
         </div>
 
-        {/* image showing manually */}
-        {/* <div className="flex justify-center items-center">
-          <div className="">
-            <img
-              className="w-8 h-8  rounded-full border-2 border-white "
-              src={image4}
-            ></img>
-          </div>
-          <div className="-ml-3">
-            <img
-              className="w-8 h-8  rounded-full border-2 border-white "
-              src={image3}
-            ></img>
-          </div>
-          <div className="-ml-3">
-            <img
-              className="w-8 h-8  rounded-full border-2 border-white "
-              src={image2}
-            ></img>
-          </div>
-          <div className="-ml-3">
-            <img
-              className="w-8 h-8  rounded-full border-2 border-white "
-              src={image1}
-            ></img>
-          </div>
-
-          <p className="ml-1 font-read text-[#0D1117]">
-            10k+ people using Karially ai
-          </p>
-        </div> */}
+        
 
         {/* hero content */}
 
@@ -102,11 +72,11 @@ export default function HeroSection() {
             without overwhelm. We’re not a job board. Not a resume builder.
             We’re your career ally.
           </p>
-          <Link to="/coming">
+          <Link to="/dashboard">
             <button
               className="font-read flex mx-auto items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10  lg:mt-[45px] text-white bg-gradient-to-r  from-primary to-secondary"
               data-aos="zoom-in"
-            >
+            >  
               <button> Start a free trial</button>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

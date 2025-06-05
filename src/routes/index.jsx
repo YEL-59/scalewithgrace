@@ -7,16 +7,16 @@ import AuthLayout from '@/layouts/auth-layout';
 import CommonLayout from '@/layouts/common-layout';
 import DashboardLayout from '@/layouts/dashboard-layout';
 import RootLayout from '@/layouts/root-layout';
+import CheckMail from '@/pages/auth/CheckMail';
+import Confirmation from '@/pages/auth/Confirmation';
+import ConfirmPassword from '@/pages/auth/ConfirmPassword';
+import ForgotPassword from '@/pages/auth/ForgotPassword';
+import OtpVarification from '@/pages/auth/OtpVarification';
 import SignIn from '@/pages/auth/sign-in';
 import SignUp from '@/pages/auth/SignUp';
 import Home from '@/pages/common/home';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
-import ForgotPassword from '@/pages/auth/ForgotPassword';
-import CheckMail from '@/pages/auth/CheckMail';
-import OtpVarification from '@/pages/auth/OtpVarification';
-import ConfirmPassword from '@/pages/auth/ConfirmPassword';
-import Confirmation from '@/pages/auth/Confirmation';
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -28,6 +28,13 @@ export const PRODUCTION_READY_PATHS = [
   '/features',
   '/pricing',
   '/contact',
+  '/sign-in',
+  '/sign-up',
+  '/forgot-password',
+  '/check-mail',
+  '/otp',
+  '/confirm-password',
+  '/confirmation',
 ];
 
 export const router = createBrowserRouter([
@@ -70,7 +77,7 @@ export const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [
           {
-            path: 'sign-in',
+            path: '/sign-in',
             element: <SignIn />,
           },
           {
@@ -79,24 +86,24 @@ export const router = createBrowserRouter([
           },
           {
             path: '/forgot-password',
-            element: <ForgotPassword></ForgotPassword>
+            element: <ForgotPassword></ForgotPassword>,
           },
           {
-            path:'/check-mail',
-            element: <CheckMail></CheckMail>
+            path: '/check-mail',
+            element: <CheckMail></CheckMail>,
           },
           {
             path: '/otp',
-            element: <OtpVarification></OtpVarification>
+            element: <OtpVarification></OtpVarification>,
           },
           {
             path: '/confirm-password',
-            element: <ConfirmPassword></ConfirmPassword>
+            element: <ConfirmPassword></ConfirmPassword>,
           },
           {
             path: '/confirmation',
-            element: <Confirmation></Confirmation>
-          }
+            element: <Confirmation></Confirmation>,
+          },
         ],
       },
       {

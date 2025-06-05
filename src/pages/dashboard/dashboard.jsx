@@ -1,77 +1,93 @@
-import React, { useState } from "react";
+import React from "react";
 import { Progress } from "@/components/ui/progress";
-import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import StepContent from '@mui/material/StepContent';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
-// import { Slider } from "@/components/ui/slider";
-// import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils";
+import { Link } from "react-router";
 
 
-// import {
-//   Box,
-//   Stepper,
-//   Step,
-//   StepLabel,
-//   Button,
-//   Typography,
-//   Paper,
-// } from '@mui/material';
 
-const steps = ['Update LinkedIn profile', 'Complete online course', 'Attend industry event'];
 
+const CircularProgress = ({
+  value,
+  renderLabel,
+  className,
+  progressClassName,
+  labelClassName,
+  showLabel,
+  shape = "round",
+  size = 100,
+  strokeWidth,
+  circleStrokeWidth = 10,
+  progressStrokeWidth = 10
+}) => {
+  const radius = size / 2 - 10;
+  const circumference = Math.ceil(3.14 * radius * 2);
+  const percentage = Math.ceil(circumference * ((100 - value) / 100));
+
+  const viewBox = `-${size * 0.125} -${size * 0.125} ${size * 1.25} ${size * 1.25
+    }`;
+
+  return (
+    <div className="relative">
+      <svg
+        width={size}
+        height={size}
+        viewBox={viewBox}
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        style={{ transform: "rotate(-90deg)" }}
+        className="relative">
+        {/* Base Circle */}
+        <circle
+          r={radius}
+          cx={size / 2}
+          cy={size / 2}
+          fill="transparent"
+          strokeWidth={strokeWidth ?? circleStrokeWidth}
+          strokeDasharray={circumference}
+          strokeDashoffset="0"
+          className={cn("stroke-[#E9E9EA]", className)} />
+
+        {/* Progress */}
+        <circle
+          r={radius}
+          cx={size / 2}
+          cy={size / 2}
+          strokeWidth={strokeWidth ?? progressStrokeWidth}
+          strokeLinecap={shape}
+          strokeDashoffset={percentage}
+          fill="transparent"
+          strokeDasharray={circumference}
+          className={cn("stroke-high-progress", progressClassName)} />
+      </svg>
+      {showLabel && (
+        <div
+          className={cn(
+            "absolute inset-0 flex items-center justify-center text-md",
+            labelClassName
+          )}>
+          {renderLabel ? renderLabel(value) : value}
+        </div>
+      )}
+    </div>
+  );
+};
 
 export default function Dashboard() {
 
-  const [progress, setProgress] = React.useState(13);
-  const [activeStep, setActiveStep] = React.useState(0);
-   const [completed, setCompleted] = useState({});
-
+  const [progress2, setProgress2] = React.useState(13);
+  const [progress, ] = React.useState([84]);
+  const [progress3,] = React.useState([46]);
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setProgress(33), 500);
+    const timer = setTimeout(() => setProgress2(33), 500);
     return () => clearTimeout(timer);
   }, []);
 
 
-  // for stepper
-
-  const totalSteps = () => steps.length;
-  const completedSteps = () => Object.keys(completed).length;
-  const isLastStep = () => activeStep === totalSteps() - 1;
-  const allStepsCompleted = () => completedSteps() === totalSteps();
-
-  const handleNext = () => {
-    const newActiveStep =
-      isLastStep() && !allStepsCompleted()
-        ? steps.findIndex((_, i) => !(i in completed))
-        : activeStep + 1;
-    setActiveStep(newActiveStep);
-  };
-
-  const handleStep = (step) => () => {
-    setActiveStep(step);
-  };
-
-  const handleComplete = () => {
-    const newCompleted = { ...completed };
-    newCompleted[activeStep] = true;
-    setCompleted(newCompleted);
-    handleNext();
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-    setCompleted({});
-  };
 
   return <div className="bg-[#F9F9F9] font-poppins">
     <div className="w-11/12 mx-auto py-8">
-      <h1 className="font-semibold text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 text-[#191919]">Welcome back, Scarlet</h1>
+      <h1 className="font-semibold text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 text-[#191919]" data-aos="fade-right">Welcome back, Scarlet</h1>
       <p className="text-[#717171] text-base md:text-lg lg:text-xl xl:text-2xl">Let’s take the next step in your career today</p>
 
 
@@ -109,7 +125,7 @@ export default function Dashboard() {
         <div>
           <div className="w-full">
             <Progress value={progress} className="w-full bg-gray-100 [&>div]:bg-gradient-to-r [&>div]:from-primary [&>div]:to-secondary [&>div]:rounded-l-full" />
-            <span className="text-sm">{progress}%</span>
+            <span className="text-sm">{progress2}%</span>
           </div>
 
           <div className="text-xs md:text-sm my-6 flex items-center justify-around">
@@ -230,7 +246,7 @@ export default function Dashboard() {
           <p className="ext-[#4B5563] font-read">Talk to a real coach who’s here to help you grow.</p>
 
           <div className="mt-6 bg-gradient-to-r from-primary to-secondary rounded-[100px] py-[10px] px-4 my-2 flex gap-4 items-center w-fit">
-            <p className="text-sm md:text-base lg:text-lg font-medium text-white">Try for free</p>
+            <Link className="text-sm md:text-base lg:text-lg font-medium text-white">Try for free</Link>
             <button className="bg-white rounded-full p-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                 <path d="M3.375 14.6309L14.625 3.38086M14.625 3.38086V11.2559M14.625 3.38086H6.75" stroke="url(#paint0_linear_8836_6925)" stroke-width="1.6875" stroke-linecap="round" stroke-linejoin="round" />
@@ -383,59 +399,98 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="my-3">
-        <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-[40px] font-medium text-[#191919]">This Week’s Tasks</h3>
-        <p className="text-[#717171] text-base md:text-lg lg:text-xl xl:text-2xl my-3">Let’s take the next step.</p>
 
-        <div>
 
-          {/* stepper */}
-          <div>
-            <Paper elevation={3} sx={{ p: 4, borderRadius: 3, maxWidth: 500, mx: 'auto', mt: 5 }}>
-              <Stepper activeStep={activeStep}>
-                {steps.map((label, index) => (
-                  <Step key={label} completed={completed[index]}>
-                    <StepLabel onClick={handleStep(index)} style={{ cursor: 'pointer' }}>{label}</StepLabel>
-                  </Step>
-                ))}
-              </Stepper>
-              <Box sx={{ mt: 2, mb: 1 }}>
-                {allStepsCompleted() ? (
-                  <>
-                    <Typography sx={{ mt: 2, mb: 1 }}>All goals completed – well done!</Typography>
-                    <Button onClick={handleReset}>Reset</Button>
-                  </>
-                ) : (
-                  <>
-                    <Typography sx={{ mt: 2, mb: 1 }}>
-                      {steps[activeStep]}
-                    </Typography>
-                    <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                      <Box sx={{ flex: '1 1 auto' }} />
-                      <Button onClick={handleComplete} variant="contained">
-                        {completed[activeStep] ? 'Completed' : 'Mark Complete'}
-                      </Button>
-                    </Box>
-                  </>
-                )}
-              </Box>
-              <Box sx={{ mt: 4 }}>
-                <Button variant="outlined" fullWidth onClick={() => alert('Add new goal functionality')}>
-                  Add new goal
-                </Button>
-              </Box>
-            </Paper>
-          </div>
-        </div>
+      <div className="my-3 grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
 
-        <div >
-          <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px]">Task Status</h3>
-          <div className="bg-white rounded-2xl p-4 mt-4">
-
-            <div>
-             
+        {/* stepper but functionality stillhave to implement */}
+        <div className="col-span-1 lg:col-span-2">
+          <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-[40px] font-medium text-[#191919]">This Week’s Tasks</h3>
+          <p className="text-[#717171] text-base md:text-lg lg:text-xl xl:text-2xl my-3">Let’s take the next step.</p>
+          <div className="font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white space-y-6 text-[#717171] font-medium">
+            <div className="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
+              </svg>
+              <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Update LinkedIn Profile</p>
             </div>
 
+            <div className="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
+              </svg>
+              <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Complete Online Course</p>
+            </div>
+
+
+            <div className="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
+              </svg>
+              <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Attend industry event</p>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
+              </svg>
+              <p className="bg-gradient-to-r from-primary to-secondary text-white w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Add New Goal</p>
+            </div>
+          </div>
+
+        </div>
+
+
+        {/* progress circle  */}
+        <div className="col-span-1 mt-10">
+          <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">Task Status</h3>
+          <div className="w-full flex items-center justify-center gap-6 font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
+            <div>
+              <CircularProgress
+                value={progress[0]}
+                size={140}
+                strokeWidth={14}
+                showLabel
+                labelClassName="text-xl font-bold"
+                renderLabel={(progress) => `${progress}%`}
+                style={{ color: "#3BB515" }}
+              />
+              <div className="flex gap-2 items-center text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
+                  <circle cx="6.44594" cy="6.74379" r="5.87025" fill="#3BB515" />
+                </svg>
+                Complete
+              </div>
+            </div>
+
+            <div>
+              <CircularProgress
+                value={progress3[0]}
+                size={140}
+                strokeWidth={14}
+                showLabel
+                labelClassName="text-xl font-bold"
+                progressClassName={cn("stroke-secondary")}
+                renderLabel={(progress3) => `${progress3}%`} />
+              <div className="flex gap-2 items-center text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+                <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
+                  <circle cx="6.50167" cy="6.17111" r="5.70773" fill="url(#paint0_linear_8836_7043)" />
+                  <defs>
+                    <linearGradient id="paint0_linear_8836_7043" x1="14.842" y1="6.1946" x2="-0.741896" y2="6.96159" gradientUnits="userSpaceOnUse">
+                      <stop stop-color="#504999" />
+                      <stop offset="1" stop-color="#44A199" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                In progress
+              </div>
+            </div>
+            {/* <Slider
+                defaultValue={progress}
+                max={100}
+                step={1}
+                onValueChange={setProgress}
+                className="mt-6" /> */}
           </div>
         </div>
       </div>

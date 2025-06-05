@@ -7,7 +7,7 @@ export default function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false);
   return ( 
     <div className='w-full'>
-      <div className='w-11/12 mx-auto flex'>
+      <div className='w-full flex'>
         <aside className='w-fit'>
           <DashAside collapsed={collapsed} setCollapsed={setCollapsed}></DashAside>
         </aside>

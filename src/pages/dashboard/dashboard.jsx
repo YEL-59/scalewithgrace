@@ -2,6 +2,7 @@ import React from "react";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router";
+import ProgressTracker from "./DashprogressTracker";
 
 
 
@@ -74,13 +75,13 @@ const CircularProgress = ({
 
 export default function Dashboard() {
 
-  const [progress2, setProgress2] = React.useState(13);
-  const [progress, ] = React.useState([84]);
+  // const [progress2, setProgress2] = React.useState(13);
+  const [progress,] = React.useState([84]);
   const [progress3,] = React.useState([46]);
 
   React.useEffect(() => {
-    const timer = setTimeout(() => setProgress2(33), 500);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(() => setProgress2(33), 500);
+    // return () => clearTimeout(timer);
   }, []);
 
 
@@ -92,7 +93,7 @@ export default function Dashboard() {
 
 
       {/* progressing div */}
-      <div className="bg-white my-9 mb-9 rounded-4xl p-6 shadow-sm">
+      {/* <div className="bg-white my-9 mb-9 rounded-4xl p-6 shadow-sm">
         <h5 className="text-[#0A0A0A] text-base md:text-lg lg:text-xl xl:text-2xl font-medium">Your Progress</h5>
 
         <div className="flex gap-4 items-center my-4">
@@ -191,7 +192,12 @@ export default function Dashboard() {
           </div>
         </div>
 
-      </div>
+      </div> */}
+
+
+
+      <ProgressTracker currentStage={2} overallProgress={33} />
+
 
 
       {/* upgrade cards part-1*/}
@@ -455,11 +461,11 @@ export default function Dashboard() {
                 renderLabel={(progress) => `${progress}%`}
                 style={{ color: "#3BB515" }}
               />
-              <div className="flex gap-2 items-center text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+              <div className="flex gap-2 items-center text-base md:text-lg xl:text-2xl font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13" fill="none">
                   <circle cx="6.44594" cy="6.74379" r="5.87025" fill="#3BB515" />
                 </svg>
-                Complete
+                <span className="text-sm md:text-base xl:text-xl">Complete</span>
               </div>
             </div>
 
@@ -472,7 +478,7 @@ export default function Dashboard() {
                 labelClassName="text-xl font-bold"
                 progressClassName={cn("stroke-secondary")}
                 renderLabel={(progress3) => `${progress3}%`} />
-              <div className="flex gap-2 items-center text-base md:text-lg lg:text-xl xl:text-2xl font-medium">
+              <div className="flex gap-2 items-center font-medium">
                 <svg xmlns="http://www.w3.org/2000/svg" width="13" height="12" viewBox="0 0 13 12" fill="none">
                   <circle cx="6.50167" cy="6.17111" r="5.70773" fill="url(#paint0_linear_8836_7043)" />
                   <defs>
@@ -482,7 +488,7 @@ export default function Dashboard() {
                     </linearGradient>
                   </defs>
                 </svg>
-                In progress
+                <span className="text-sm md:text-base xl:text-xl">In Progress</span>
               </div>
             </div>
             {/* <Slider

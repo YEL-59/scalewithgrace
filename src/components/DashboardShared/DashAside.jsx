@@ -85,7 +85,7 @@ function DashAside({collapsed, setCollapsed}) {
     return (
         <div className={`bg-[#FFF] min-h-screen w-full text-sm md:text-base flex flex-col sticky top-0 z-50 ${collapsed? 'flex flex-col justify-center items-center p-2' : 'py-7 px-4'}`}>
             {/* div for logo and arrow */}
-            <div className='flex items-center gap-12 justify-between mb-8'>
+            <div className='flex items-center gap-12 justify-between mb-10'>
                 {!collapsed && <img className='hidden md:block h-24 w-24 xl:h-32 xl:w-32' src={logo} alt="karially" />}
                 {
                     <button onClick={() => setCollapsed(!collapsed)}><img src={arrow} alt="karially" className={`transition-transform duration-300 w-full ${collapsed ? 'rotate-180' : ''

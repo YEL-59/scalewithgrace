@@ -413,12 +413,12 @@ export default function Dashboard() {
         <div className="col-span-1 lg:col-span-2">
           <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-[40px] font-medium text-[#191919]">This Week’s Tasks</h3>
           <p className="text-[#717171] text-base md:text-lg lg:text-xl xl:text-2xl my-3">Let’s take the next step.</p>
-          <div className="font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white space-y-6 text-[#717171] font-medium">
+          <div className="font-read shadow-lg my-4 rounded-[36px] p-11  bg-white space-y-6 text-[#717171] font-medium">
             <div className="flex items-center gap-4">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
               </svg>
-              <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Update LinkedIn Profile</p>
+              <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 font-medium">Update LinkedIn Profile</p>
             </div>
 
             <div className="flex items-center gap-4">
@@ -440,7 +440,7 @@ export default function Dashboard() {
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
                 <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
               </svg>
-              <p className="bg-gradient-to-r from-primary to-secondary text-white w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Add New Goal</p>
+              <p className="bg-gradient-to-r from-primary to-secondary text-white w-full text-center border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Add New Goal</p>
             </div>
           </div>
 
@@ -450,11 +450,11 @@ export default function Dashboard() {
         {/* progress circle  */}
         <div className="col-span-1 mt-10">
           <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">Task Status</h3>
-          <div className="w-full flex items-center justify-center gap-6 font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
+          <div className="w-full flex items-center justify-center font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
             <div>
               <CircularProgress
                 value={progress[0]}
-                size={140}
+                size={150}
                 strokeWidth={14}
                 showLabel
                 labelClassName="text-xl font-bold"
@@ -472,7 +472,7 @@ export default function Dashboard() {
             <div>
               <CircularProgress
                 value={progress3[0]}
-                size={140}
+                size={150}
                 strokeWidth={14}
                 showLabel
                 labelClassName="text-xl font-bold"

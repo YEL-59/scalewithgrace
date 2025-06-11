@@ -100,7 +100,7 @@ function DashAside({collapsed, setCollapsed}) {
             }
 
             {
-                !collapsed && <div className='w-[280px] relative mt-auto hidden md:block'>
+                !collapsed && <div className='w-[200px] xl:w-[280px] relative mt-auto hidden md:block'>
                     <div className='bg-gradient-to-r from-primary to-secondary border-1 border-[#504999] rounded-[37px]'>
                         <p className='text-[#F6F8FE] font-medium text-xs text-center mt-20'>You are now in Free Trial</p>
                         <div className='bg-white rounded-[100px] py-[10px] px-5 m-[10px] flex justify-center items-center'>
@@ -111,7 +111,7 @@ function DashAside({collapsed, setCollapsed}) {
                     </div>
 
                     <div className='absolute top-0 right-1/2 transform -translate-y-13 translate-x-1/2'>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 110 110" fill="none">
+                        <svg className='' xmlns="http://www.w3.org/2000/svg" width="110" height="110" viewBox="0 0 110 110" fill="none">
                             <g clip-path="url(#clip0_8836_7017)">
                                 <g filter="url(#filter0_d_8836_7017)">
                                     <path d="M62.8375 105H47.1625L40.8547 92.2852L35.533 90.1784L21.653 94.9136L10.5669 84.3312L15.5276 71.0819L13.3203 66.0023L0 59.9813V45.0187L13.3203 38.9977L15.5274 33.9179L10.5667 20.6688L21.653 10.0866L35.5405 14.8249L40.8515 12.7245L47.1625 0H62.8375L69.1485 12.7245L74.4595 14.8249L88.347 10.0866L99.4331 20.6688L94.4724 33.9181L96.6797 38.9977L110 45.0185V59.981L96.6797 66.0021L94.4726 71.0819L99.4333 84.331L88.347 94.9132L74.4668 90.178L69.1453 92.2852L62.8375 105Z" fill="url(#paint0_linear_8836_7017)" />

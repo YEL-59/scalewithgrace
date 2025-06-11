@@ -3,6 +3,7 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router";
 import ProgressTracker from "./DashprogressTracker";
+import Stepper from "./Stepper";
 
 
 
@@ -83,6 +84,10 @@ export default function Dashboard() {
     // const timer = setTimeout(() => setProgress2(33), 500);
     // return () => clearTimeout(timer);
   }, []);
+
+  // const calculateWidth = () =>{
+  //   console.log('called');
+  // }
 
 
 
@@ -405,56 +410,80 @@ export default function Dashboard() {
         </div>
       </div>
 
+      <div className="my-3 grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
+
+        <div className="col-span-1 lg:col-span-2">
+          <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-[40px] font-medium text-[#191919] mb-3">This Week’s Tasks</h3>
+          <p className="text-[#717171] text-base md:text-lg lg:text-xl xl:text-2xl">Let’s take the next step.</p>
+        </div>
+
+        <div className="col-span-1 mt-10">
+          <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">Task Status</h3>
+        </div>
+
+      </div>
+
+      
 
 
       <div className="my-3 grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
 
         {/* stepper but functionality stillhave to implement */}
         <div className="col-span-1 lg:col-span-2">
-          <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-[40px] font-medium text-[#191919]">This Week’s Tasks</h3>
-          <p className="text-[#717171] text-base md:text-lg lg:text-xl xl:text-2xl my-3">Let’s take the next step.</p>
-          <div className="font-read shadow-lg my-4 rounded-[36px] p-11  bg-white space-y-6 text-[#717171] font-medium">
-            <div className="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
-              </svg>
-              <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 font-medium">Update LinkedIn Profile</p>
-            </div>
+         
+          {/* <div className="font-read shadow-lg my-4 rounded-[36px] p-[46px]  bg-white text-[#717171] font-medium">
+            <div className="relative space-y-6">
+              <div className="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
+                </svg>
+                <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 font-medium">Update LinkedIn Profile</p>
+              </div>
 
-            <div className="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
-              </svg>
-              <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Complete Online Course</p>
-            </div>
+              <div className="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
+                </svg>
+                <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Complete Online Course</p>
+              </div>
 
 
-            <div className="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
-              </svg>
-              <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Attend industry event</p>
-            </div>
+              <div className="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
+                </svg>
+                <p className="bg-[#F6F8FE] w-full text-center text-[#717171] border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Attend industry event</p>
+              </div>
 
-            <div className="flex items-center gap-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
-              </svg>
-              <p className="bg-gradient-to-r from-primary to-secondary text-white w-full text-center border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Add New Goal</p>
+              <div className="flex items-center gap-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                  <circle cx="10" cy="10" r="9.5" fill="white" stroke="#E9E9EA" />
+                </svg>
+                <p className="bg-gradient-to-r from-primary to-secondary text-white w-full text-center border border-[#E9E9EA] rounded-[100px] py-4 px-5 font-medium">Add New Goal</p>
+              </div>
+
+              <div className={`absolute h-full w-[${calculateWidth()}] bg-red-600 top-0 left-1 opacity-40`}>
+
+              </div>
+
+
+
             </div>
-          </div>
+          </div> */}
+
+          <Stepper></Stepper>
 
         </div>
 
 
         {/* progress circle  */}
-        <div className="col-span-1 mt-10">
-          <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">Task Status</h3>
-          <div className="w-full flex items-center justify-center font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
+        <div className="col-span-1 mb-4">
+          {/* <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">Task Status</h3> */}
+          <div className="w-full h-full flex items-center justify-center font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
             <div>
               <CircularProgress
                 value={progress[0]}
-                size={150}
+                size={144}
                 strokeWidth={14}
                 showLabel
                 labelClassName="text-xl font-bold"
@@ -472,7 +501,7 @@ export default function Dashboard() {
             <div>
               <CircularProgress
                 value={progress3[0]}
-                size={150}
+                size={144}
                 strokeWidth={14}
                 showLabel
                 labelClassName="text-xl font-bold"

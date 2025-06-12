@@ -15,6 +15,7 @@ import OtpVarification from '@/pages/auth/OtpVarification';
 import SignIn from '@/pages/auth/sign-in';
 import SignUp from '@/pages/auth/SignUp';
 import Home from '@/pages/common/home';
+import CoachingCallBooking from '@/pages/dashboard/coaching-call-booking';
 import Dashboard from '@/pages/dashboard/dashboard';
 import { createBrowserRouter } from 'react-router';
 
@@ -114,6 +115,10 @@ export const router = createBrowserRouter([
             index: true,
             element: <Dashboard />,
           },
+          {
+            path: 'coaching',
+            element: <CoachingCallBooking></CoachingCallBooking>
+          }
         ],
       },
     ],

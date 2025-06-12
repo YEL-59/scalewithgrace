@@ -10,7 +10,7 @@ function DashAside({collapsed, setCollapsed}) {
 
     const links = (
         <div className='flex flex-col justify-center'>
-            <NavLink to='/dashboard' className={`dash-nav-links font-nunito flex items-center gap-1 md:gap-2 xl:gap-5 ${collapsed ? 'py-3 px-4' : 'py-4 px-6'}`}>
+            <NavLink to='coaching' className={`dash-nav-links font-nunito flex items-center gap-1 md:gap-2 xl:gap-5 ${collapsed ? 'py-3 px-4' : 'py-4 px-6'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                     <path d="M13.6903 19.9567C13.5 19.4973 13.5 18.9149 13.5 17.75C13.5 16.5851 13.5 16.0027 13.6903 15.5433C13.944 14.9307 14.4307 14.444 15.0433 14.1903C15.5027 14 16.0851 14 17.25 14C18.4149 14 18.9973 14 19.4567 14.1903C20.0693 14.444 20.556 14.9307 20.8097 15.5433C21 16.0027 21 16.5851 21 17.75C21 18.9149 21 19.4973 20.8097 19.9567C20.556 20.5693 20.0693 21.056 19.4567 21.3097C18.9973 21.5 18.4149 21.5 17.25 21.5C16.0851 21.5 15.5027 21.5 15.0433 21.3097C14.4307 21.056 13.944 20.5693 13.6903 19.9567Z" stroke="#717171" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round" />
                     <path d="M13.6903 9.45671C13.5 8.99728 13.5 8.41485 13.5 7.25C13.5 6.08515 13.5 5.50272 13.6903 5.04329C13.944 4.43072 14.4307 3.94404 15.0433 3.6903C15.5027 3.5 16.0851 3.5 17.25 3.5C18.4149 3.5 18.9973 3.5 19.4567 3.6903C20.0693 3.94404 20.556 4.43072 20.8097 5.04329C21 5.50272 21 6.08515 21 7.25C21 8.41485 21 8.99728 20.8097 9.45671C20.556 10.0693 20.0693 10.556 19.4567 10.8097C18.9973 11 18.4149 11 17.25 11C16.0851 11 15.5027 11 15.0433 10.8097C14.4307 10.556 13.944 10.0693 13.6903 9.45671Z" stroke="#717171" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round" />
@@ -20,7 +20,7 @@ function DashAside({collapsed, setCollapsed}) {
                 {!collapsed && <span className=''>Dashboard</span>}
             </NavLink>
 
-            <NavLink className={`dash-nav-links font-nunito flex items-center gap-1 md:gap-2 xl:gap-5 ${collapsed ? 'py-3 px-4' : 'py-4 px-6'}`}>
+            <NavLink to='#' className={`dash-nav-links font-nunito flex items-center gap-1 md:gap-2 xl:gap-5 ${collapsed ? 'py-3 px-4' : 'py-4 px-6'}`}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="25" viewBox="0 0 24 25" fill="none">
                     <g clip-path="url(#clip0_8836_6804)">
                         <path fill-rule="evenodd" clip-rule="evenodd" d="M19.9507 24.2097H4.04913C3.10713 24.2097 2.3479 23.4504 2.3479 22.5084V1.93902C2.3479 0.99702 3.10713 0.237793 4.04913 0.237793H19.9507C20.8787 0.237793 21.6379 0.99702 21.6379 1.93902V22.5084C21.6379 23.4504 20.8787 24.2097 19.9507 24.2097ZM4.04913 0.800183C3.41644 0.800183 2.91029 1.30633 2.91029 1.93902V22.5084C2.91029 23.1411 3.41644 23.6473 4.04913 23.6473H19.9507C20.5693 23.6473 21.0755 23.1411 21.0755 22.5084V1.93902C21.0755 1.30633 20.5693 0.800183 19.9507 0.800183H4.04913Z" fill="#717171" />

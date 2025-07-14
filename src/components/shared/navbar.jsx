@@ -33,13 +33,13 @@ export default function Navbar() {
         Home
       </NavLink>
       <NavLink
-        to="/aboutUs"
+        to="/about-Us"
         className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         About Us
       </NavLink>
       <NavLink
-        to="/features"
+        to="/all-features"
         className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         Features
@@ -109,7 +109,9 @@ export default function Navbar() {
               onClick={handleClick}
             >
               <SheetHeader className="md:hidden">
-                <div ref={linksRef} className="w-fit flex items-start">{Links}</div>
+                <div ref={linksRef} className="w-fit flex items-start">
+                  {Links}
+                </div>
               </SheetHeader>
             </SheetContent>
           </Sheet>

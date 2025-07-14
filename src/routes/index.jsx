@@ -18,6 +18,8 @@ import SignUp from "@/pages/auth/sign-up";
 import Home from "@/pages/common/home";
 import CoachingCallBooking from "@/pages/dashboard/coaching-call-booking";
 import Dashboard from "@/pages/dashboard/dashboard";
+import AboutUs from "@/pages/main/aboutus";
+import Features from "@/pages/main/features";
 import { createBrowserRouter } from "react-router";
 
 // List of routes that are considered ready for production deployment.
@@ -51,6 +53,14 @@ export const router = createBrowserRouter([
           {
             index: true,
             element: <Home />,
+          },
+          {
+            path: "/about-Us",
+            element: <AboutUs />,
+          },
+          {
+            path: "/all-features",
+            element: <Features />,
           },
           {
             path: "/aboutUs",

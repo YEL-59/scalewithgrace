@@ -1,90 +1,104 @@
-// import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { Link } from "react-router";
-// import { z } from "zod";
 
+import { Button } from "@/components/ui/button";
+import { useMatchOtp, useSendOtp } from "@/hooks/auth.hook";
+import toast from "react-hot-toast";
 
-function OtpVarification() {
+function OtpVerification() {
+  const { form, matchOtp, isMatching } = useMatchOtp();
 
-    const [otp, setOtp] = useState(new Array(4).fill(""))
+  const handleChange = (e, index) => {
+    const value = e.target.value;
+    if (!/^[0-9]{0,1}$/.test(value)) return;
 
+    form.setValue(`otp${index}`, value);
 
-    const {
-        register,
-        setValue,
-        handleSubmit,
-    } = useForm();
-
-
-    const handleChange = (e, index) => {
-        const value = e.target.value;
-        if (isNaN(value)) {
-            return false;
-        }
-
-        const updatedOtp = [...otp];
-        updatedOtp[index] = value;
-        setOtp(updatedOtp);
-
-        setValue(`digit${index}`, value);
-        if (value && index < 3) {
-            const nextInput = document.getElementById(`otp-${index + 1}`);
-            if (nextInput) nextInput.focus();
-        }
+    if (value && index < 3) {
+      const next = document.getElementById(`otp-${index + 1}`);
+      if (next) next.focus();
     }
+  };
 
-    const onSubmit = (data) => {
-        const otpCode = `${data.digit0}${data.digit1}${data.digit2}${data.digit3}`;
-        console.log(otpCode);
-    };
-    return (
-        <div className="font-poppins w-11/12 lg:w-3/4 xl:w-1/2 mx-auto p-4 md:p-6 lg:p-8 xl:p-10">
+  const onSubmit = (data) => {
+    matchOtp(data);
+  };
+  const { sendOtp, isSending } = useSendOtp();
 
-            {/* Sign-in form */}
-            <div className="mx-auto my-4 md:my-5 lg:my-6 xl:my-[30px]">
-                <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center font-bold">
-                    OTP varification
-                </h2>
-                <p className="text-[#959595] text-xs md:text-sm lg:text-base text-center">
-                    We have sent a verification code to email address
-                </p>
+  const handleResend = () => {
+    const email = form.watch("email");
+    if (!email) return toast.error("No email found to resend OTP");
+    sendOtp({ email });
+  };
+  return (
+    <div className="font-poppins w-11/12 lg:w-3/4 xl:w-1/2 mx-auto p-4 md:p-6 lg:p-8 xl:p-10">
+      <div className="mx-auto my-6 md:my-10">
+        <h2 className="text-2xl md:text-3xl xl:text-5xl text-[#1E1E1E] text-center font-bold">
+          OTP Verification
+        </h2>
+        <p className="text-[#959595] text-sm lg:text-base text-center">
+          We have sent a verification code to your email
+        </p>
 
-                <p className="text-[#959595] text-xs md:text-sm lg:text-base text-center">
-                    tahsankhan380@gmail.com <Link className="text-secondary">Wrong Email?</Link>
-                </p>
+        <p className="text-[#959595] text-sm lg:text-base text-center">
+          {form.watch("email")}{" "}
+          <Link className="text-secondary" to="/sign-up">
+            Wrong Email?
+          </Link>
+        </p>
 
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="mt-10 grid gap-6"
+        >
+          <div className="grid grid-cols-4 gap-5 justify-center max-w-xs mx-auto">
+            {[0, 1, 2, 3].map((i) => (
+              <input
+                key={i}
+                id={`otp-${i}`}
+                type="text"
+                maxLength={1}
+                className="border rounded-[100px] py-4 px-2 w-full text-center focus:bg-[#F6F8FE] focus:border-[#B4CAF3] text-lg"
+                {...form.register(`otp${i}`)}
+                onChange={(e) => handleChange(e, i)}
+              />
+            ))}
+          </div>
 
-                <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="mt-8 md:mt-10 lg:mt-12  xl:mt-[54px]"
-                >
-                    <div className="grid grid-cols-4 gap-5">
-                        {otp.map((data, i) => (
-                            <input
-                                key={i}
-                                id={`otp-${i}`}
-                                type="text"
-                                value={data}
-                                maxLength={1}
-                                {...register(`digit${i}`)}
-                                onChange={(e) => handleChange(e, i)}
-                                className="border rounded-[100px] py-2 px-4 max-w-[90px] text-center focus:bg-[#F6F8FE] focus:border-[#B4CAF3]"
-                            />
-                        ))}
-                    </div>
+          <Button
+            type="submit"
+            disabled={isMatching}
+            className="bg-gradient-to-r from-primary to-secondary w-full rounded-[60px] py-5 text-white text-lg"
+          >
+            {isMatching ? "Verifying..." : "Verify OTP"}
+          </Button>
+        </form>
 
-                    <button className="bg-gradient-to-r from-primary to-secondary w-full rounded-[60px] py-4 text-white text-base lg:text-lg mt-[54px]">
-                        <Link to='/confirm-password'>  <input type="submit" /></Link>
-                    </button>
-                </form>
-
-                <p className="text-[#959595] text-base lg:text-lg text-center mt-6">
-                    Didn’t received the email? <Link className="text-primary">Resend</Link>
-                </p>
-            </div>
-        </div>
-    )
+        {/* <p className="text-[#959595] text-base text-center mt-6">
+          Didn’t receive the email?{" "}
+          <button
+            type="button"
+            onClick={() => {
+              // You can add resend logic here
+            }}
+            className="text-primary"
+          >
+            Resend
+          </button>
+        </p> */}
+        <p className="text-[#959595] text-base lg:text-lg text-center mt-6">
+          Didn’t receive the email?{" "}
+          <button
+            type="button"
+            className="text-primary underline font-medium"
+            onClick={handleResend}
+            disabled={isSending}
+          >
+            {isSending ? "Resending..." : "Resend"}
+          </button>
+        </p>
+      </div>
+    </div>
+  );
 }
 
-export default OtpVarification;
+export default OtpVerification;

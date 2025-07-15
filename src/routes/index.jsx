@@ -20,6 +20,7 @@ import CoachingCallBooking from "@/pages/dashboard/coaching-call-booking";
 import Dashboard from "@/pages/dashboard/dashboard";
 import AboutUs from "@/pages/main/aboutus";
 import Features from "@/pages/main/features";
+import Pricing from "@/pages/main/pricing";
 import { createBrowserRouter } from "react-router";
 
 // List of routes that are considered ready for production deployment.
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
             element: <Features />,
           },
           {
+            path: "/pricing",
+            element: <Pricing />,
+          },
+          {
             path: "/aboutUs",
             element: <ShowcaseSection></ShowcaseSection>,
           },
@@ -71,7 +76,7 @@ export const router = createBrowserRouter([
             element: <OurFeaturesSection></OurFeaturesSection>,
           },
           {
-            path: "/pricing",
+            path: "/pricings",
             element: <PricingPlanSection></PricingPlanSection>,
           },
           {

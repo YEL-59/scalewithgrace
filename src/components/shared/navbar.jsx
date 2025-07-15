@@ -50,12 +50,12 @@ export default function Navbar() {
       >
         Pricing
       </NavLink>
-      <NavLink
+      {/* <NavLink
         to="/contact"
         className="bg-white py-3 px-9 md:py-3 md:px-3 lg:px-7 xl:px-[45px] rounded-2xl md:rounded-[50px] lg:rounded-[100px]"
       >
         Contact
-      </NavLink>
+      </NavLink> */}
     </div>
   );
 

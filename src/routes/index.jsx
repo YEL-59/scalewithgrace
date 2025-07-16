@@ -18,6 +18,7 @@ import SignUp from "@/pages/auth/sign-up";
 import Home from "@/pages/common/home";
 import Billing from "@/pages/dashboard/billing";
 import CoachingCallBooking from "@/pages/dashboard/coaching-call-booking";
+import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
 import AboutUs from "@/pages/main/aboutus";
 import Features from "@/pages/main/features";
@@ -130,7 +131,7 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <Dashboard />,
+            element: <MyDashboard />,
           },
           {
             path: "coaching",

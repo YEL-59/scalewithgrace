@@ -17,16 +17,32 @@ import { useNavigate } from "react-router";
 import logo from "../../assets/images/logopng.png";
 
 const menuItems = [
-  { path: "/dashboard", label: "Dashboard", icon: "DashboardIcon" },
   {
-    path: "/resume-builder",
+    path: "/dashboard",
+    label: "Dashboard",
+    icon: "DashboardIcon",
+  },
+  {
+    path: "/dashboard/resume-builder",
     label: "Resume Builder",
     icon: "ResumeBuilderIcon",
   },
-  { path: "/cover-letter", label: "Cover Letter", icon: "CoverLetterIcon" },
-  { path: "/career-goal", label: "Career Goal", icon: "CareerGoalIcon" },
-  { path: "/weekly-task", label: "Weekly Task", icon: "WeeklyTaskIcon" },
-  { path: "/billing", label: "Billing", icon: "BillingIcon" },
+  {
+    path: "/dashboard/cover-letter",
+    label: "Cover Letter",
+    icon: "CoverLetterIcon",
+  },
+  {
+    path: "/dashboard/career-goal",
+    label: "Career Goal",
+    icon: "CareerGoalIcon",
+  },
+  {
+    path: "/dashboard/weekly-task",
+    label: "Weekly Task",
+    icon: "WeeklyTaskIcon",
+  },
+  { path: "/dashboard/billing", label: "Billing", icon: "BillingIcon" },
 ];
 
 const AppLayout = ({ collapsed, setCollapsed, sheetOpen, setSheetOpen }) => {
@@ -103,7 +119,11 @@ const AppLayout = ({ collapsed, setCollapsed, sheetOpen, setSheetOpen }) => {
               BillingIcon,
             }[item.icon];
 
-            const isActive = location.pathname === item.path;
+            const isActive =
+              item.path === "/dashboard"
+                ? location.pathname === "/dashboard"
+                : location.pathname === item.path ||
+                  location.pathname.startsWith(item.path + "/");
 
             return (
               <button
@@ -112,10 +132,15 @@ const AppLayout = ({ collapsed, setCollapsed, sheetOpen, setSheetOpen }) => {
                 className={cn(
                   "flex items-center text-sm font-medium text-[#717171] px-3 py-2 rounded-full gap-3 hover:bg-gray-100 text-left",
                   isActive &&
-                    "bg-gradient-to-r from-teal-400 to-blue-500 text-white"
+                    "bg-gradient-to-r from-primary to-secondary text-white"
                 )}
               >
-                <IconComponent className="w-4 h-4 mr-3" />
+                <IconComponent
+                  className={cn(
+                    "w-8 h-8",
+                    isActive ? "text-white" : "text-[#717171]"
+                  )}
+                />
                 {!collapsed && item.label}
               </button>
             );

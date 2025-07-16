@@ -16,6 +16,7 @@ import OtpVarification from "@/pages/auth/OtpVarification";
 import SignIn from "@/pages/auth/sign-in";
 import SignUp from "@/pages/auth/sign-up";
 import Home from "@/pages/common/home";
+import Billing from "@/pages/dashboard/billing";
 import CoachingCallBooking from "@/pages/dashboard/coaching-call-booking";
 import Dashboard from "@/pages/dashboard/dashboard";
 import AboutUs from "@/pages/main/aboutus";
@@ -134,6 +135,10 @@ export const router = createBrowserRouter([
           {
             path: "coaching",
             element: <CoachingCallBooking></CoachingCallBooking>,
+          },
+          {
+            path: "billing",
+            element: <Billing />,
           },
         ],
       },

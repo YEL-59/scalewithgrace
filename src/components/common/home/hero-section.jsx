@@ -1,13 +1,16 @@
-import image1 from '@/assets/images/1.png';
-import image2 from '@/assets/images/2.png';
-import image3 from '@/assets/images/3.png';
-import image4 from '@/assets/images/4.png';
+import image1 from "@/assets/images/1.png";
+import image2 from "@/assets/images/2.png";
+import image3 from "@/assets/images/3.png";
+import image4 from "@/assets/images/4.png";
 // import image3 from "@/assets/images/3.png";
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Link } from 'react-router';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useGetHomepage } from "@/hooks/home.hook";
+import { Link } from "react-router";
 // import image4 from "@/assets/images/4.png";
 
 export default function HeroSection() {
+  const { data } = useGetHomepage();
+  console.log({ data });
   return (
     <section
       id="hero"
@@ -49,8 +52,6 @@ export default function HeroSection() {
           </p>
         </div>
 
-        
-
         {/* hero content */}
 
         <div className="text-center pb-6">
@@ -65,10 +66,10 @@ export default function HeroSection() {
             data-aos="fade-right"
           >
             Karially gives you the plan
-          </h2>{' '}
+          </h2>{" "}
           <p className=" text-[#6C6C6C] text-lg md:text-xl lg:text-2xl leading-[34px]">
             Karially helps you get clarity on where you’re going, how to get
-            there, and what to do next, <br className="hidden lg:block"></br>{' '}
+            there, and what to do next, <br className="hidden lg:block"></br>{" "}
             without overwhelm. We’re not a job board. Not a resume builder.
             We’re your career ally.
           </p>
@@ -76,7 +77,7 @@ export default function HeroSection() {
             <button
               className="font-read flex mx-auto items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10  lg:mt-[45px] text-white bg-gradient-to-r  from-primary to-secondary"
               data-aos="zoom-in"
-            >  
+            >
               <button> Start a free trial</button>
               <svg
                 xmlns="http://www.w3.org/2000/svg"

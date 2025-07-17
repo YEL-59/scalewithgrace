@@ -27,7 +27,10 @@ export default function ShowcaseSection() {
             ></img>
             <img className="mt-6" src={homepageImg} data-aos="zoom-in"></img>
             <div className="absolute top-10 -right-6 md:top-20 md:-right-12 lg:top-20 lg:-right-16 xl:top-28 xl:-right-20">
-              <img className="w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12" src={trikon}></img>
+              <img
+                className="w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                src={trikon}
+              ></img>
             </div>
           </div>
 
@@ -37,8 +40,11 @@ export default function ShowcaseSection() {
         {/* trusted brands */}
         <div className="pt-12 md:pt-20 lg:pt-[115px] text-center">
           <img src={vectorBottom}></img>
-          <h3 className="text-2xl leading-8 font-medium font-read " data-aos="zoom-out-down">
-            We are trusted by
+          <h3
+            className="text-2xl leading-8 font-medium font-read "
+            data-aos="zoom-out-down"
+          >
+            We are trusted byrtr
           </h3>
 
           {/* company logos */}

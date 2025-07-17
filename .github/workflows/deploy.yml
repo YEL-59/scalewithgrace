@@ -2,7 +2,8 @@ name: 🚀 Deploy to FTP on push
 
 on:
   push:
-    branches: -tofayel-v1
+    branches:
+      - main
 
 jobs:
   ftp-deploy:
@@ -10,23 +11,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. get your code
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 2. set up Node (Vite needs it)
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "20"
 
-      # 3. install & build
       - name: Install and Build
         run: |
           npm install
           npm run build
 
-      # 4. upload dist/ via FTP
       - name: FTP Deploy
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -34,6 +31,5 @@ jobs:
           username: ftp-karially
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftp
-          passive: true
           local-dir: dist/
-          clean: true
+          dangerous-clean-slate: true

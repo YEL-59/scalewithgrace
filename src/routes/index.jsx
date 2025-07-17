@@ -74,14 +74,14 @@ export const router = createBrowserRouter([
             path: "/pricing",
             element: <Pricing />,
           },
-          {
-            path: "/aboutUs",
-            element: <ShowcaseSection></ShowcaseSection>,
-          },
-          {
-            path: "/features",
-            element: <OurFeaturesSection></OurFeaturesSection>,
-          },
+          // {
+          //   path: "/aboutUs",
+          //   element: <ShowcaseSection></ShowcaseSection>,
+          // },
+          // {
+          //   path: "/features",
+          //   element: <OurFeaturesSection></OurFeaturesSection>,
+          // },
           {
             path: "/pricings",
             element: <PricingPlanSection></PricingPlanSection>,

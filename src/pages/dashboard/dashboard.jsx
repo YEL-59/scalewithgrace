@@ -74,7 +74,7 @@ const CircularProgress = ({
   );
 };
 
-export default function Dashboard() {
+export default function MyDashboard() {
 
   // const [progress2, setProgress2] = React.useState(13);
   const [progress,] = React.useState([84]);

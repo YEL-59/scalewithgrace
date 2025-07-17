@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
+import { CheckCircle2, Circle } from "lucide-react";
 
 const roadmapData = [
   {
@@ -47,7 +47,7 @@ export default function CareerRoadmap() {
   const [selectedPlan, setSelectedPlan] = useState(0);
   const [completedGoals, setCompletedGoals] = useState([]);
 
-  const handleCheckboxChange = (index) => {
+  const handleStepClick = (index) => {
     setCompletedGoals((prev) =>
       prev.includes(index) ? prev.filter((i) => i !== index) : [...prev, index]
     );
@@ -90,37 +90,55 @@ export default function CareerRoadmap() {
         </div>
       </div>
 
-      <div className="md:w-2/3 space-y-4 mt-6 md:mt-0">
+      <div className="md:w-2/3 space-y-6 mt-6 md:mt-0">
         <h2 className="text-xl font-bold">Your Progress</h2>
         <p className="text-sm text-muted-foreground mb-4">
           Become a product manager design training course.
         </p>
-        {selectedGoals.map((goal, i) => (
-          <Card
-            key={i}
-            className={cn(
-              "w-full",
-              i === 1 &&
-                "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white"
-            )}
-          >
-            <CardContent className="p-4 flex items-start gap-3">
-              <Checkbox
-                checked={completedGoals.includes(i)}
-                onCheckedChange={() => handleCheckboxChange(i)}
-              />
-              <div>
-                <p className="font-semibold text-sm mb-1">{goal.week}</p>
-                <h4 className="text-lg font-semibold leading-tight mb-1">
-                  {goal.title}
-                </h4>
-                <p className="text-sm text-muted-foreground dark:text-gray-200">
-                  {goal.description}
-                </p>
+
+        <div className="relative border-l-2 border-gray-200 dark:border-gray-700 ml-4">
+          {selectedGoals.map((goal, i) => {
+            const isCompleted = completedGoals.includes(i);
+            return (
+              <div
+                key={i}
+                className={cn(
+                  "relative pl-8 pb-10 group cursor-pointer",
+                  isCompleted && "border-l-2 border-green-500"
+                )}
+                onClick={() => handleStepClick(i)}
+              >
+                <span
+                  className={cn(
+                    "absolute left-[-16px] top-1 w-6 h-6 rounded-full flex items-center justify-center",
+                    isCompleted ? "text-green-500" : "text-gray-400"
+                  )}
+                >
+                  {isCompleted ? (
+                    <CheckCircle2 className="w-5 h-5" />
+                  ) : (
+                    <Circle className="w-5 h-5" />
+                  )}
+                </span>
+                <Card
+                  className={cn(
+                    "p-4",
+                    i === 1 &&
+                      "bg-gradient-to-r from-cyan-500 to-indigo-500 text-white"
+                  )}
+                >
+                  <p className="text-sm font-medium mb-1">{goal.week}</p>
+                  <h4 className="text-lg font-semibold leading-tight mb-1">
+                    {goal.title}
+                  </h4>
+                  <p className="text-sm text-muted-foreground dark:text-gray-200">
+                    {goal.description}
+                  </p>
+                </Card>
               </div>
-            </CardContent>
-          </Card>
-        ))}
+            );
+          })}
+        </div>
       </div>
     </div>
   );

@@ -32,10 +32,10 @@ const CareerGoal = () => {
     console.log("regenerate clicked");
     // your regenerate logic here
   };
-  const onRoadmap = () => {
-    const navigate = Navigate();
-    navigate("/career-road-map");
-  };
+  //   const onRoadmap = () => {
+  //     const navigate = Navigate();
+  //     navigate("/career-road-map");
+  //   };
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">

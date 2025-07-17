@@ -23,6 +23,8 @@ import CareerGoal from "@/pages/dashboard/creergoal";
 import CareerRoadmap from "@/pages/dashboard/creergoal/careerroadmap";
 import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
+import ResumeBuilder from "@/pages/dashboard/rusumebuilder";
+import WeeklyTask from "@/pages/dashboard/weeklytask";
 import AboutUs from "@/pages/main/aboutus";
 import Features from "@/pages/main/features";
 import Pricing from "@/pages/main/pricing";
@@ -155,6 +157,14 @@ export const router = createBrowserRouter([
           {
             path: "career-road-map",
             element: <CareerRoadmap />,
+          },
+          {
+            path: "resume-builder",
+            element: <ResumeBuilder />,
+          },
+          {
+            path: "weekly-task",
+            element: <WeeklyTask />,
           },
         ],
       },

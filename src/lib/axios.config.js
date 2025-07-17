@@ -30,19 +30,19 @@ axiosPrivate.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-axiosPrivate.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const status = error?.response?.status;
+// axiosPrivate.interceptors.response.use(
+//   (response) => response,
+//   (error) => {
+//     const status = error?.response?.status;
 
-    if (status === 401 || status === 403) {
-      localStorage.removeItem("token");
-      window.location.href = "/sign-in";
-    }
+//     if (status === 401 || status === 403) {
+//       localStorage.removeItem("token");
+//       window.location.href = "/sign-in";
+//     }
 
-    return Promise.reject(error);
-  }
-);
+//     return Promise.reject(error);
+//   }
+// );
 
 // axiosPrivate.interceptors.response.use(
 //   (res) => res,

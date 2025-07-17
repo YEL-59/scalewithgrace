@@ -19,6 +19,8 @@ import Home from "@/pages/common/home";
 import Billing from "@/pages/dashboard/billing";
 import CoachingCallBooking from "@/pages/dashboard/coaching-call-booking";
 import CoverLetterGenerator from "@/pages/dashboard/coverletter";
+import CareerGoal from "@/pages/dashboard/creergoal";
+import CareerRoadmap from "@/pages/dashboard/creergoal/careerroadmap";
 import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
 import AboutUs from "@/pages/main/aboutus";
@@ -145,6 +147,14 @@ export const router = createBrowserRouter([
           {
             path: "cover-letter",
             element: <CoverLetterGenerator />,
+          },
+          {
+            path: "career-goal",
+            element: <CareerGoal />,
+          },
+          {
+            path: "career-road-map",
+            element: <CareerRoadmap />,
           },
         ],
       },

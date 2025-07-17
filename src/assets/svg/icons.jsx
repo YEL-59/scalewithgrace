@@ -92,6 +92,7 @@ export const CoverLetterIcon = ({ className = "" }) => (
     viewBox="0 0 24 25"
     fill="none"
     className={className}
+    stroke="currentColor"
   >
     <g clip-path="url(#clip0_8865_6376)">
       <path
@@ -119,10 +120,11 @@ export const CareerGoalIcon = ({ className = "" }) => (
     viewBox="0 0 24 25"
     fill="none"
     className={className}
+    stroke="currentColor"
   >
     <path
       d="M11.9458 6.22412L9.58384 17.3096C9.39588 18.1918 9.49933 18.5221 10.1472 19.1556L12.7673 21.7175C13.1127 22.0552 13.2854 22.2241 13.5 22.2241C13.7146 22.2241 13.8873 22.0552 14.2327 21.7175L16.8528 19.1556C17.5007 18.5221 17.6041 18.1918 17.4162 17.3096L15.0542 6.22412"
-      stroke="#717171"
+      stroke="currentColor"
       stroke-width="1.5"
       stroke-linecap="round"
       stroke-linejoin="round"

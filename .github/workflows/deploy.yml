@@ -2,8 +2,7 @@ name: 🚀 Deploy to FTP on push
 
 on:
   push:
-    branches:
-      - tofayel-v1
+    branches: -tofayel-v1
 
 jobs:
   ftp-deploy:

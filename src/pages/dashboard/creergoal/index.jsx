@@ -70,7 +70,7 @@ const CareerGoal = () => {
                   <Input
                     type="text"
                     placeholder="Enter roadmap name"
-                    className="bg-[#EDFCFF] p-4 rounded-full w-full focus-visible:ring-0 shadow-none mt-2 py-5"
+                    className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 py-5"
                     {...field}
                   />
                 </FormControl>
@@ -94,7 +94,7 @@ const CareerGoal = () => {
                     min={1}
                     max={52}
                     placeholder="Number of weeks"
-                    className="bg-[#EDFCFF] p-4 rounded-full w-full focus-visible:ring-0 shadow-none mt-2 py-5"
+                    className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 py-5"
                     {...field}
                   />
                 </FormControl>
@@ -115,7 +115,7 @@ const CareerGoal = () => {
                 <FormControl>
                   <Textarea
                     placeholder="Enter prompt or notes…"
-                    className="bg-[#EDFCFF] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 min-h-[120px]"
+                    className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 min-h-[120px]"
                     {...field}
                   />
                 </FormControl>
@@ -123,18 +123,6 @@ const CareerGoal = () => {
               </FormItem>
             )}
           />
-
-          {/* Options */}
-          <div className="flex items-center justify-between mt-3 text-[#1E1E1E] text-base font-medium leading-none">
-            <label className="flex items-center gap-3">
-              <input type="checkbox" />
-              remember me
-            </label>
-
-            <button className="text-blue-600 underline">
-              <Link to="/forgot-password">Forget Password?</Link>
-            </button>
-          </div>
 
           {/* Buttons */}
           <div className="flex gap-4 mt-6">

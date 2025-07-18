@@ -36,8 +36,8 @@ import { createBrowserRouter } from "react-router";
 export const PRODUCTION_READY_PATHS = [
   "/",
   "/coming",
-  "/aboutUs",
-  "/features",
+  "/about-Us",
+  "/all-features",
   "/pricing",
   "/contact",
   "/sign-in",
@@ -47,6 +47,13 @@ export const PRODUCTION_READY_PATHS = [
   "/otp",
   "/confirm-password",
   "/confirmation",
+  "/dashboard/coaching",
+  "/dashboard/billing",
+  "/dashboard/cover-letter",
+  "/dashboard/career-goal",
+  "/dashboard/career-road-map",
+  "/dashboard/resume-builder",
+  "/dashboard/weekly-task",
 ];
 
 export const router = createBrowserRouter([
@@ -74,14 +81,14 @@ export const router = createBrowserRouter([
             path: "/pricing",
             element: <Pricing />,
           },
-          {
-            path: "/aboutUs",
-            element: <ShowcaseSection></ShowcaseSection>,
-          },
-          {
-            path: "/features",
-            element: <OurFeaturesSection></OurFeaturesSection>,
-          },
+          // {
+          //   path: "/aboutUs",
+          //   element: <ShowcaseSection></ShowcaseSection>,
+          // },
+          // {
+          //   path: "/features",
+          //   element: <OurFeaturesSection></OurFeaturesSection>,
+          // },
           {
             path: "/pricings",
             element: <PricingPlanSection></PricingPlanSection>,

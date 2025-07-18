@@ -25,6 +25,9 @@ import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
 import ResumeBuilder from "@/pages/dashboard/rusumebuilder";
 import WeeklyTask from "@/pages/dashboard/weeklytask";
+import TaskDetail from "@/pages/dashboard/weeklytask/taskdetails";
+import WeeklyTaskList from "@/pages/dashboard/weeklytask/taskdetails";
+import TaskManager from "@/pages/dashboard/weeklytask/taskmanager";
 import AboutUs from "@/pages/main/aboutus";
 import Features from "@/pages/main/features";
 import Pricing from "@/pages/main/pricing";
@@ -47,6 +50,7 @@ export const PRODUCTION_READY_PATHS = [
   "/otp",
   "/confirm-password",
   "/confirmation",
+  "dashboard",
   "/dashboard/coaching",
   "/dashboard/billing",
   "/dashboard/cover-letter",
@@ -54,6 +58,8 @@ export const PRODUCTION_READY_PATHS = [
   "/dashboard/career-road-map",
   "/dashboard/resume-builder",
   "/dashboard/weekly-task",
+  "/dashboard/task-manager",
+  "/dashboard/task/:id",
 ];
 
 export const router = createBrowserRouter([
@@ -172,6 +178,14 @@ export const router = createBrowserRouter([
           {
             path: "weekly-task",
             element: <WeeklyTask />,
+          },
+          {
+            path: "task-manager",
+            element: <TaskManager />,
+          },
+          {
+            path: "task/:id",
+            element: <TaskDetail />,
           },
         ],
       },

@@ -25,13 +25,14 @@ const workspaces = [
   },
   {
     id: 3,
-    name: "Workspace 3",
-    createdBy: "ghi@example.com",
+    name: "Logout",
+    //createdBy: "ghi@example.com",
   },
 ];
 
 function DashNavbar({ collapsed, onMobileMenuClick }) {
   const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
+
   return (
     <div className="bg-[#FFF] w-full text-sm md:text-base sticky top-0 z-50 py-7">
       <div className="w-11/12 mx-auto flex items-center justify-between">
@@ -132,7 +133,14 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
                 {workspaces.map((workspace) => (
                   <DropdownMenuItem
                     key={workspace.id}
-                    onClick={() => setSelectedWorkspace(workspace)}
+                    onClick={() => {
+                      if (workspace.name === "Logout") {
+                        localStorage.removeItem("token");
+                        window.location.href = "/sign-in";
+                      } else {
+                        setSelectedWorkspace(workspace);
+                      }
+                    }}
                   >
                     <div className="flex items-center gap-2">
                       <Avatar className="rounded-md h-8 w-8">
@@ -147,9 +155,10 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
                         </span>
                       </div>
                     </div>
-                    {selectedWorkspace.id === workspace.id && (
-                      <Check className="ml-auto" />
-                    )}
+                    {selectedWorkspace.id === workspace.id &&
+                      workspace.name !== "Logout" && (
+                        <Check className="ml-auto" />
+                      )}
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuContent>

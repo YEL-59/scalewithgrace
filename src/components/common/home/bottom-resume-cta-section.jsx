@@ -1,8 +1,11 @@
-import resumeBottom from '@/assets/images/resume-bottom.svg';
-import resumeTop from '@/assets/images/resume-top.svg';
-import { Link } from 'react-router';
+import resumeTop from "@/assets/images/resume-top.svg";
+import { useGetHomepageSection } from "@/hooks/home.hook";
+import { Link } from "react-router";
 
 export default function BottomResumeCTASection() {
+  const { data, isLoading } = useGetHomepageSection("spotlight-section");
+
+  if (isLoading) return <p>Loading...</p>;
   return (
     <section className="w-full bg-gradient-to-r from-primary to-secondary md:pt-20 lg:pt-32 font-poppins">
       <div className="container w-11/12 mx-auto flex flex-col md:flex-row gap-7">
@@ -13,11 +16,10 @@ export default function BottomResumeCTASection() {
               className="text-[#F7F7F8] text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16"
               data-aos="fade-right"
             >
-              Your perfect resume is a click away
+              {data?.title}
             </h3>
             <p className="text-[#E0E2E6] my-2 max-w-[560px] leading-4 md:leading-5 lg:leading-6">
-              Ditch blank pages and formatting woes. Resumate_ai helps you craft
-              standout resumes.
+              {data?.description}
             </p>
 
             <Link to="/coming">
@@ -25,7 +27,7 @@ export default function BottomResumeCTASection() {
                 className="rounded-[100px] text-sm md:text-base bg-white py-3 px-5 mt-8"
                 data-aos="zoom-in"
               >
-                Start for Free
+                {data?.button_text}
               </button>
             </Link>
 
@@ -37,13 +39,13 @@ export default function BottomResumeCTASection() {
         <div className="flex-1 mt-5 md:mt-0 flex relative">
           <div>
             <img
-              src={resumeBottom}
+              src={data?.image}
               className="absolute bottom-0 md:max-w-[770px] md:max-h-[1020px] md:w-full md:h-full"
             ></img>
           </div>
           <div className="">
             <img
-              className="absolute bottom-0 -ml-4 md:max-w-[770px] md:max-h-[1020px] md:w-full md:h-full"
+              className="absolute bottom-0 -ml-4 md:max-w-[770px] md:max-h-[1020px]  md:w-full md:h-full"
               src={resumeTop}
             ></img>
           </div>

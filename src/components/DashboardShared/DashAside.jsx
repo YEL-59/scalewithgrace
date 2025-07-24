@@ -38,7 +38,7 @@ const menuItems = [
     icon: "CareerGoalIcon",
   },
   {
-    path: "/dashboard/weekly-task",
+    path: "/dashboard/task-manager",
     label: "Weekly Task",
     icon: "WeeklyTaskIcon",
   },

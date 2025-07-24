@@ -7,7 +7,9 @@ import "./index.css";
 import { router } from "./routes";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { Toaster } from "react-hot-toast";
-
+import { ResumeProvider } from "./pages/dashboard/rusumebuilder/resumeContext";
+import { Provider } from "react-redux";
+import store from "../src/redux/store";
 const queryClient = new QueryClient();
 
 Aos.init({
@@ -16,9 +18,13 @@ Aos.init({
 });
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-      <Toaster />
-    </QueryClientProvider>
+    <Provider store={store}>
+      <ResumeProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <Toaster />
+        </QueryClientProvider>
+      </ResumeProvider>
+    </Provider>
   </StrictMode>
 );

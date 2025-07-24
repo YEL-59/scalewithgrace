@@ -24,10 +24,14 @@ import CareerRoadmap from "@/pages/dashboard/creergoal/careerroadmap";
 import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
 import ResumeBuilder from "@/pages/dashboard/rusumebuilder";
+import CVPreview from "@/pages/dashboard/rusumebuilder/cvpreview";
+import CVTemplateGallery from "@/pages/dashboard/rusumebuilder/step/cvtemplategallery";
+import ResumeBuilderStepper from "@/pages/dashboard/rusumebuilder/stepper";
 import WeeklyTask from "@/pages/dashboard/weeklytask";
 import TaskDetail from "@/pages/dashboard/weeklytask/taskdetails";
 import WeeklyTaskList from "@/pages/dashboard/weeklytask/taskdetails";
 import TaskManager from "@/pages/dashboard/weeklytask/taskmanager";
+import TaskManagerRedirect from "@/pages/dashboard/weeklytask/TaskManagerRedirect";
 import AboutUs from "@/pages/main/aboutus";
 import Features from "@/pages/main/features";
 import Pricing from "@/pages/main/pricing";
@@ -60,6 +64,8 @@ export const PRODUCTION_READY_PATHS = [
   "/dashboard/weekly-task",
   "/dashboard/task-manager",
   "/dashboard/task/:id",
+  "/dashboard/resumeBuild-step",
+  "/dashboard/cv-preview/:templateSlug",
 ];
 
 export const router = createBrowserRouter([
@@ -176,16 +182,28 @@ export const router = createBrowserRouter([
             element: <ResumeBuilder />,
           },
           {
+            path: "task-manager",
+            element: <TaskManagerRedirect />,
+          },
+          {
             path: "weekly-task",
             element: <WeeklyTask />,
           },
           {
-            path: "task-manager",
+            path: "task-manager/:weekId",
             element: <TaskManager />,
           },
           {
             path: "task/:id",
             element: <TaskDetail />,
+          },
+          {
+            path: "resumeBuild-step",
+            element: <ResumeBuilderStepper />,
+          },
+          {
+            path: "cv-preview/:templateSlug",
+            element: <CVPreview />,
           },
         ],
       },

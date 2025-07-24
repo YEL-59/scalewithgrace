@@ -2,11 +2,11 @@ import { axiosPublic } from "@/lib/axios.config";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-export const useGetHomepageSection = (section) => {
+export const useGetFeaturePageSection = (section) => {
   return useQuery({
-    queryKey: ["home-page-section", section],
+    queryKey: ["feature-page-section", section],
     queryFn: async () => {
-      const { data } = await axiosPublic.get(`/cms/home-page/${section}`);
+      const { data } = await axiosPublic.get(`/cms/feature-page/${section}`);
 
       console.log(`${section} data:`, data);
 

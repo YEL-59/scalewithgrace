@@ -12,13 +12,13 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
-import { useSearchParams } from "react-router";
+//import { useSearchParams } from "react-router";
 
 //sign in
 export const useSignIn = () => {
-  const [params] = useSearchParams();
+  //const [params] = useSearchParams();
   const navigate = useNavigate();
-  const redirectUrl = params.get("redirect");
+  //const redirectUrl = params.get("redirect");
 
   const form = useForm({
     resolver: zodResolver(signInSchema),
@@ -41,8 +41,8 @@ export const useSignIn = () => {
         const user = data?.data;
         localStorage.setItem("user", JSON.stringify(user));
 
-        if (redirectUrl) {
-          navigate(redirectUrl);
+        if (data?.status) {
+          navigate("/dashboard");
         } else {
           navigate("/");
         }

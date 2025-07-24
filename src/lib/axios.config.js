@@ -15,7 +15,7 @@ const axiosPrivate = axios.create({
     "Content-Type": "application/json",
     Accept: "application/json",
   },
-  timeout: 5000,
+  timeout: 15000, //fuck it causes me 1 hours+ debug
 });
 
 // Combined request and response interceptor setup

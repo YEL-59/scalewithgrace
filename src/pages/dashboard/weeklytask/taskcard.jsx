@@ -3,13 +3,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import { Trash2 } from "lucide-react";
 
-const TaskCard = ({ task, onToggle, onOpen }) => {
+const TaskCard = ({ task, onOpen, onToggle }) => {
   const [showAll, setShowAll] = useState(false);
   const visibleTasks = showAll ? task.tasks : task.tasks.slice(0, 3);
-  // Prevent checkbox clicks from bubbling to card click handler
-  const handleCheckboxClick = (e) => {
-    e.stopPropagation();
-  };
+
   return (
     <div
       onClick={onOpen}
@@ -22,8 +19,8 @@ const TaskCard = ({ task, onToggle, onOpen }) => {
         <div className="flex items-center gap-2">
           <Checkbox
             checked={task.completed}
-            onCheckedChange={onToggle}
-            onClick={handleCheckboxClick}
+            onClick={(e) => e.stopPropagation()}
+            disabled
           />
           <span className="text-sm font-semibold">{task.week}</span>
           {task.completed && <Badge className="text-xs">Completed</Badge>}
@@ -31,10 +28,29 @@ const TaskCard = ({ task, onToggle, onOpen }) => {
         <Trash2 className="h-4 w-4 text-gray-500 hover:text-red-500 cursor-pointer" />
       </div>
 
-      {/* Tasks */}
-      <ul className="mt-3 pl-6 list-disc text-sm text-gray-700 space-y-1">
-        {visibleTasks.map((item, idx) => (
-          <li key={idx}>{item}</li>
+      {/* Subtasks */}
+      <ul className="mt-3 space-y-2">
+        {visibleTasks.map((item) => (
+          <li
+            key={item.id}
+            className="flex items-center gap-2 text-sm text-gray-800 ml-4"
+          >
+            <Checkbox
+              checked={item.is_completed}
+              onCheckedChange={() => {
+                // Call parent toggle handler checked
+                onToggle(item.id);
+              }}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <span
+              className={
+                item.is_completed ? "line-through text-muted-foreground" : ""
+              }
+            >
+              {item.title}
+            </span>
+          </li>
         ))}
       </ul>
 

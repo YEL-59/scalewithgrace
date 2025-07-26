@@ -204,80 +204,6 @@ export const useMatchOtp = () => {
   };
 };
 
-//  OTP Match function for forget password
-export const useMatchOtpForgetPassword = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const email = location.state?.email || "";
-
-  const form = useForm({
-    resolver: zodResolver(OtpMatchSchema),
-    defaultValues: {
-      email,
-
-      otp0: "",
-      otp1: "",
-      otp2: "",
-      otp3: "",
-    },
-  });
-
-  useEffect(() => {
-    if (email) {
-      form.reset({
-        email,
-
-        otp0: "",
-        otp1: "",
-        otp2: "",
-        otp3: "",
-      });
-    }
-  }, [email]);
-
-  const { mutate, isPending } = useMutation({
-    mutationFn: async (formData) => {
-      const otp =
-        `${formData.otp0}${formData.otp1}${formData.otp2}${formData.otp3}`
-          .replace(/\s/g, "")
-          .toUpperCase();
-
-      const payload = {
-        email: formData.email,
-        otp,
-      };
-
-      const { data } = await axiosPublic.post("/verify-otp", payload);
-
-      return { data, otp };
-    },
-    onSuccess: ({ data, otp }) => {
-      navigate("/confirm-password ", {
-        state: {
-          email: form.watch("email"),
-          otp: otp,
-        },
-      });
-
-      // Store email and otp in sessionStorage
-      sessionStorage.setItem("reset_email", email);
-      sessionStorage.setItem("reset_otp", otp);
-
-      toast.success(data.message || "OTP Verified");
-    },
-    onError: (error) => {
-      const message = error?.response?.data?.message || error.message;
-      toast.error(message || "OTP verification failed");
-    },
-  });
-
-  return {
-    form,
-    matchOtp: mutate,
-    isMatching: isPending,
-  };
-};
-
 //Re-send otp
 
 export const useSendOtp = () => {
@@ -358,7 +284,81 @@ export const useForgetPassword = () => {
 
   return { form, mutate, isPending };
 };
+//  OTP Match function for forget password
+export const useMatchOtpForgetPassword = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const email = location.state?.email || "";
 
+  const form = useForm({
+    resolver: zodResolver(OtpMatchSchema),
+    defaultValues: {
+      email,
+
+      otp0: "",
+      otp1: "",
+      otp2: "",
+      otp3: "",
+    },
+  });
+
+  useEffect(() => {
+    if (email) {
+      form.reset({
+        email,
+
+        otp0: "",
+        otp1: "",
+        otp2: "",
+        otp3: "",
+      });
+    }
+  }, [email]);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (formData) => {
+      const otp =
+        `${formData.otp0}${formData.otp1}${formData.otp2}${formData.otp3}`
+          .replace(/\s/g, "")
+          .toUpperCase();
+
+      const payload = {
+        email: formData.email,
+        otp,
+      };
+
+      const { data } = await axiosPublic.post("/verify-otp", payload);
+      const { token, message } = data;
+      return { data, otp, token, message };
+    },
+    onSuccess: ({ data, otp, token }) => {
+      navigate("/confirm-password", {
+        state: {
+          email: form.watch("email"),
+          otp: otp,
+          token: token,
+        },
+      });
+
+      // Store email and otp in sessionStorage
+      sessionStorage.setItem("reset_email", email);
+      sessionStorage.setItem("reset_otp", otp);
+      sessionStorage.setItem("reset_token", data?.token);
+
+      toast.success(data.message || "OTP Verified");
+    },
+    onError: (error) => {
+      const message = error?.response?.data?.message || error.message;
+      toast.error(message || "OTP verification failed");
+    },
+  });
+
+  return {
+    form,
+    matchOtp: mutate,
+    isMatching: isPending,
+  };
+};
 //  Reset-password function
 export const useResetPassword = () => {
   const location = useLocation();
@@ -368,12 +368,14 @@ export const useResetPassword = () => {
   const email =
     location.state?.email || sessionStorage.getItem("reset_email") || "";
   const otp = location.state?.otp || sessionStorage.getItem("reset_otp") || "";
-
+  const token =
+    location.state?.token || sessionStorage.getItem("reset_token") || "";
   // Store in sessionStorage so it survives refresh
   useEffect(() => {
     if (email) sessionStorage.setItem("reset_email", email);
     if (otp) sessionStorage.setItem("reset_otp", otp);
-  }, [email, otp]);
+    if (token) sessionStorage.setItem("reset_token", token);
+  }, [email, otp, token]);
 
   const form = useForm({
     defaultValues: {
@@ -381,6 +383,7 @@ export const useResetPassword = () => {
       otp,
       password: "",
       password_confirmation: "",
+      token,
     },
   });
 
@@ -391,9 +394,10 @@ export const useResetPassword = () => {
         otp,
         password: "",
         password_confirmation: "",
+        token,
       });
     }
-  }, [email, otp]);
+  }, [email, otp, token]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: async () => {
@@ -404,6 +408,7 @@ export const useResetPassword = () => {
         otp: values.otp,
         password: values.password,
         password_confirmation: values.password_confirmation,
+        token: values.token,
       };
 
       console.log("Submitting payload:", payload);

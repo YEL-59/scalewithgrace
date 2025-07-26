@@ -1,4 +1,4 @@
-import { axiosPublic } from "@/lib/axios.config";
+import { axiosPrivate, axiosPublic } from "@/lib/axios.config";
 import {
   forgetPassword,
   OtpMatchSchema,
@@ -6,7 +6,7 @@ import {
   signUpSchema,
 } from "@/schemas/auth.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -247,7 +247,7 @@ export const useMatchOtpForgetPassword = () => {
         otp,
       };
 
-      const { data } = await axiosPublic.post("/verify-email", payload);
+      const { data } = await axiosPublic.post("/verify-otp", payload);
 
       return { data, otp };
     },
@@ -433,4 +433,17 @@ export const useResetPassword = () => {
     mutate,
     isResetting: isPending,
   };
+};
+
+export const useGetUser = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["user"],
+    queryFn: async () => {
+      const res = await axiosPrivate.get("/me");
+      return res.data;
+    },
+    refetchOnWindowFocus: false, // Optional config
+  });
+
+  return { user: data?.data, isLoading };
 };

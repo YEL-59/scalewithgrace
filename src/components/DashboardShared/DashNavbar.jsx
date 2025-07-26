@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router";
+
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -10,8 +10,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Check, ChevronDown } from "lucide-react";
 import logo from "../../assets/images/logosvg.svg";
-import user from "../../assets/images/1.png";
+
 import { Input } from "../ui/input";
+import { useGetUser } from "@/hooks/auth.hook";
 const workspaces = [
   {
     id: 1,
@@ -24,14 +25,29 @@ const workspaces = [
     createdBy: "def@example.com",
   },
   {
+    id: 4,
+    name: "Home",
+    createdBy: "",
+  },
+  {
     id: 3,
     name: "Logout",
-    //createdBy: "ghi@example.com",
   },
 ];
 
 function DashNavbar({ collapsed, onMobileMenuClick }) {
   const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
+  const { user, isLoading } = useGetUser();
+  const handleWorkspaceAction = (workspace) => {
+    if (workspace.name === "Logout") {
+      localStorage.removeItem("token");
+      window.location.href = "/sign-in";
+    } else if (workspace.name === "Home") {
+      window.location.href = "/";
+    } else {
+      setSelectedWorkspace(workspace);
+    }
+  };
 
   return (
     <div className="bg-[#FFF] w-full text-sm md:text-base sticky top-0 z-50 py-7">
@@ -122,9 +138,16 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 border border-[#ECEEF0] py-2.5 px-3 rounded-[69px]">
-                <img src={user} className="w-8 h-8 rounded-full" alt="" />
+                <img
+                  src={user?.avatar || user}
+                  className="w-8 h-8 rounded-full"
+                  alt="User Avatar"
+                />
+
                 <div className="text-start flex flex-col gap-3 leading-none ml-2">
-                  <span className="text-lg font-nunito leading-7">Scarlet</span>
+                  <span className="text-lg font-nunito leading-7">
+                    {isLoading ? "Loading..." : user?.name ?? "User"}
+                  </span>
                 </div>
                 <ChevronDown className="ml-6 h-6 w-6" />
               </DropdownMenuTrigger>
@@ -133,14 +156,7 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
                 {workspaces.map((workspace) => (
                   <DropdownMenuItem
                     key={workspace.id}
-                    onClick={() => {
-                      if (workspace.name === "Logout") {
-                        localStorage.removeItem("token");
-                        window.location.href = "/sign-in";
-                      } else {
-                        setSelectedWorkspace(workspace);
-                      }
-                    }}
+                    onClick={() => handleWorkspaceAction(workspace)}
                   >
                     <div className="flex items-center gap-2">
                       <Avatar className="rounded-md h-8 w-8">

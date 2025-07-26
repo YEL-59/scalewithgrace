@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { X } from "lucide-react";
 
 const SkillsSection = () => {
-  const { control, setValue } = useFormContext();
+  const { control, setValue, getValues } = useFormContext();
   const skills = useWatch({ control, name: "skills" }) || [];
 
   const addCategory = () => {

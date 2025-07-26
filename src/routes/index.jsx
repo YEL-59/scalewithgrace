@@ -10,6 +10,7 @@ import RootLayout from "@/layouts/root-layout";
 import CheckMail from "@/pages/auth/CheckMail";
 import Confirmation from "@/pages/auth/Confirmation";
 import ConfirmPassword from "@/pages/auth/ConfirmPassword";
+import ForgetPasswordOtpVerification from "@/pages/auth/ForgetPaswordOtpVarification";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
 import OtpVerification from "@/pages/auth/OtpVarification";
 import OtpVarification from "@/pages/auth/OtpVarification";
@@ -130,6 +131,10 @@ export const router = createBrowserRouter([
           {
             path: "/forgot-password",
             element: <ForgotPassword></ForgotPassword>,
+          },
+          {
+            path: "/otp-verify-forget-password",
+            element: <ForgetPasswordOtpVerification />,
           },
           {
             path: "/check-mail",

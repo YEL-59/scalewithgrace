@@ -1,4 +1,3 @@
-import { useForm, FormProvider } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -7,35 +6,19 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
-import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Input } from "@/components/ui/input";
-import { Navigate } from "react-router";
-import { Links } from "react-router";
+
+import { Loader2 } from "lucide-react";
+import { useResumeBuilderSummeryText } from "@/hooks/resumebuild.hook";
+import { FormProvider } from "react-hook-form";
 
 const ResumeBuilder = () => {
-  const form = useForm({
-    defaultValues: {
-      roadmapName: "",
-      weeks: 4,
-      testArea: "",
-    },
-  });
+  const { form, mutate, isPending } = useResumeBuilderSummeryText();
 
   const onSubmit = (values) => {
-    console.log("submit", values);
-    // your generate logic here
+    mutate(values); // ✅ trigger API call
   };
-
-  const onRegenerate = () => {
-    console.log("regenerate clicked");
-    // your regenerate logic here
-  };
-  //   const onRoadmap = () => {
-  //     const navigate = Navigate();
-  //     navigate("/career-road-map");
-  //   };
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
@@ -52,60 +35,68 @@ const ResumeBuilder = () => {
         </p>
       </div>
 
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6 max-w-7xl mx-auto"
-        >
-          {/* Test Area */}
-          <FormField
-            control={form.control}
-            name="testArea"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel className="text-[#1E1E1E] text-[18px] font-medium">
-                  Roadmap Generation Prompt
-                </FormLabel>
-                <FormLabel className="text-[#1E1E1E] text-[12px] font-normal">
-                  Describe your role in a few words, and we'll generate tailored
-                  content for your work experience section.
-                </FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Enter prompt or notes…"
-                    className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 min-h-[120px]"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+      {/* Form */}
+      <FormProvider {...form}>
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="space-y-6 max-w-7xl mx-auto"
+          >
+            {/* Textarea for Prompt */}
+            <FormField
+              control={form.control}
+              name="prompt_text"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-[#1E1E1E] text-[18px] font-medium">
+                    Let AI do the work!
+                  </FormLabel>
+                  <FormLabel className="text-[#1E1E1E] text-[12px] font-normal">
+                    Describe your role in a few words, and we'll generate
+                    tailored content for your work experience section.
+                  </FormLabel>
+                  <FormControl>
+                    <Textarea
+                      placeholder="Enter prompt or notes…"
+                      className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 min-h-[120px]"
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          {/* Buttons */}
-          <div className="flex gap-4 mt-6">
-            <Button
-              type="button"
-              variant="secondary"
-              onClick={onRegenerate}
-              className="px-6 py-3 rounded-full"
-            >
-              Regenerate
-            </Button>
-            <Link to="/dashboard/resumeBuild-step">
-              {" "}
+            {/* Buttons */}
+            <div className="flex gap-4 mt-6">
+              <Button
+                type="button"
+                variant="secondary"
+                className="px-6 py-3 rounded-full"
+                onClick={() => form.reset()}
+              >
+                Regenerate
+              </Button>
+
               <Button
                 type="submit"
                 variant="primary"
                 className="px-6 py-3 rounded-full"
-                // onClick={onRoadmap()}
+                disabled={isPending}
               >
-                Generate Resume
+                {isPending ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Generating...
+                  </>
+                ) : (
+                  "Generate Resume"
+                )}
               </Button>
-            </Link>
-          </div>
-        </form>
-      </Form>
+            </div>
+          </form>
+        </Form>
+      </FormProvider>
     </div>
   );
 };

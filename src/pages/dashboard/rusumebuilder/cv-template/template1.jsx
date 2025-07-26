@@ -1,8 +1,24 @@
+import { fetchResume } from "@/hooks/resumebuild.hook";
 import { html2pdf } from "html2pdf.js";
+import { useState } from "react";
+import { useEffect } from "react";
 import { useRef } from "react";
+import { useLocation } from "react-router";
 
 const Template1 = ({ data }) => {
   const resumeRef = useRef();
+  const { state } = useLocation();
+  const resumeId = state?.resumeId;
+
+  const [resumeData, setResumeData] = useState(null);
+
+  useEffect(() => {
+    if (resumeId) {
+      fetchResume(resumeId).then(setResumeData).catch(console.error);
+    }
+  }, [resumeId]);
+
+  if (!resumeData) return <p>Loading resume...</p>;
 
   if (!data) return <p className="p-6 text-red-500">No data provided.</p>;
 

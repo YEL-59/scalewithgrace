@@ -42,6 +42,7 @@ const YourDetails = () => {
           />
           <TextInput name="phone" label="Phone*" placeholder="88017724999675" />
         </div>
+        <TextInput name="title" label="Title" placeholder="Web Developer" />
 
         <TextInput
           name="linkedin"
@@ -53,6 +54,9 @@ const YourDetails = () => {
           label="Summary"
           placeholder="About you..."
         />
+        {values.summary && (
+          <p className="text-xs text-gray-500 italic">AI generated summary</p>
+        )}
 
         <div className="grid grid-cols-2 gap-4">
           <TextInput name="address" label="Address" placeholder="123 Street" />

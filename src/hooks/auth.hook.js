@@ -130,7 +130,7 @@ export const useSignUp = () => {
   return { form, mutate, isPending };
 };
 
-//  OTP Match function
+//  OTP Match function for login
 export const useMatchOtp = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -178,7 +178,81 @@ export const useMatchOtp = () => {
       return { data, otp };
     },
     onSuccess: ({ data, otp }) => {
-      navigate("/confirm-password", {
+      navigate("/sign-in", {
+        state: {
+          email: form.watch("email"),
+          otp: otp,
+        },
+      });
+
+      // Store email and otp in sessionStorage
+      sessionStorage.setItem("reset_email", email);
+      sessionStorage.setItem("reset_otp", otp);
+
+      toast.success(data.message || "OTP Verified");
+    },
+    onError: (error) => {
+      const message = error?.response?.data?.message || error.message;
+      toast.error(message || "OTP verification failed");
+    },
+  });
+
+  return {
+    form,
+    matchOtp: mutate,
+    isMatching: isPending,
+  };
+};
+
+//  OTP Match function for forget password
+export const useMatchOtpForgetPassword = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const email = location.state?.email || "";
+
+  const form = useForm({
+    resolver: zodResolver(OtpMatchSchema),
+    defaultValues: {
+      email,
+
+      otp0: "",
+      otp1: "",
+      otp2: "",
+      otp3: "",
+    },
+  });
+
+  useEffect(() => {
+    if (email) {
+      form.reset({
+        email,
+
+        otp0: "",
+        otp1: "",
+        otp2: "",
+        otp3: "",
+      });
+    }
+  }, [email]);
+
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (formData) => {
+      const otp =
+        `${formData.otp0}${formData.otp1}${formData.otp2}${formData.otp3}`
+          .replace(/\s/g, "")
+          .toUpperCase();
+
+      const payload = {
+        email: formData.email,
+        otp,
+      };
+
+      const { data } = await axiosPublic.post("/verify-email", payload);
+
+      return { data, otp };
+    },
+    onSuccess: ({ data, otp }) => {
+      navigate("/confirm-password ", {
         state: {
           email: form.watch("email"),
           otp: otp,
@@ -268,7 +342,7 @@ export const useForgetPassword = () => {
     },
     onSuccess: (data) => {
       if (data?.status) {
-        navigate("/otp-verify", {
+        navigate("/otp-verify-forget-password", {
           state: { email: form.watch("email") },
         });
         toast.success(data?.message || "OTP sent successfully");

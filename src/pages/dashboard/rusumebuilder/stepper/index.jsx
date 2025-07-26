@@ -7,6 +7,7 @@ import EducationSection from "../step/educationsection";
 import SkillsSection from "../step/skillssection";
 import CVTemplateGallery from "../step/cvtemplategallery";
 import { useResume } from "../resumeContext";
+import { useLocation } from "react-router";
 
 // import FinalStep from "./steps/FinalStep";
 
@@ -14,6 +15,11 @@ const steps = ["Your Details", "Experience", "Education", "Skills", "Template"];
 
 const ResumeBuilderStepper = () => {
   const { setFormData } = useResume();
+
+  const location = useLocation();
+
+  const generatedSummary =
+    location?.state?.summary || localStorage.getItem("resumeSummary") || "";
 
   const methods = useForm({
     mode: "onChange",
@@ -23,7 +29,7 @@ const ResumeBuilderStepper = () => {
       email: "",
       phone: "",
       linkedin: "",
-      summary: "",
+      summary: generatedSummary,
       address: "",
       city: "",
       state: "",

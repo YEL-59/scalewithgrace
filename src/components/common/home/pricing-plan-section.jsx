@@ -4,7 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import bgImage from "../../../assets/images/pricingbg.png";
-import { useSubscriptionPlans } from "@/hooks/subscription.hook";
+import {
+  useCheckoutSubscription,
+  useSubscriptionPlans,
+} from "@/hooks/subscription.hook";
+import toast from "react-hot-toast";
 
 const PricingPlan = () => {
   const [activeTab, setActiveTab] = useState("monthly");
@@ -69,7 +73,18 @@ const PricingPlan = () => {
 };
 
 const PricingCards = ({ plans }) => {
+  const { mutate: checkoutSubscription, isLoading: isCheckoutLoading } =
+    useCheckoutSubscription();
+
   if (!plans?.length) return <p className="text-white">No plans available.</p>;
+
+  const handleCheckout = (planId) => {
+    if (!planId) {
+      toast.error("Invalid plan.");
+      return;
+    }
+    checkoutSubscription(planId);
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 container mx-auto">
@@ -110,8 +125,18 @@ const PricingCards = ({ plans }) => {
               ))}
             </ul>
 
-            <Button className="w-full rounded-full py-5 bg-gradient-to-r from-primary to-secondary text-white text-md font-medium">
-              {plan.price === "0.00" ? "Start for Free" : "Choose Plan"}
+            <Button
+              onClick={() => handleCheckout(plan.id)}
+              disabled={isCheckoutLoading}
+              className="w-full rounded-full py-5 bg-gradient-to-r from-primary to-secondary text-white text-md font-medium"
+            >
+              {plan.price === "0.00"
+                ? isCheckoutLoading
+                  ? "Starting..."
+                  : "Start for Free"
+                : isCheckoutLoading
+                ? "Processing..."
+                : "Choose Plan"}
             </Button>
           </div>
         </div>

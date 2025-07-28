@@ -36,6 +36,8 @@ import TaskManagerRedirect from "@/pages/dashboard/weeklytask/TaskManagerRedirec
 import AboutUs from "@/pages/main/aboutus";
 import Features from "@/pages/main/features";
 import Pricing from "@/pages/main/pricing";
+import CancelPage from "@/pages/main/pricing/cancle";
+import SuccessPage from "@/pages/main/pricing/paymentsuccess";
 import { createBrowserRouter } from "react-router";
 
 // List of routes that are considered ready for production deployment.
@@ -211,6 +213,14 @@ export const router = createBrowserRouter([
             element: <CVPreview />,
           },
         ],
+      },
+      {
+        path: "payment-success",
+        element: <SuccessPage />,
+      },
+      {
+        path: "payment-canceled",
+        element: <CancelPage />,
       },
     ],
   },

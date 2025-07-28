@@ -21,6 +21,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { ChevronDown } from "lucide-react";
+import { User2 } from "lucide-react";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -91,11 +92,12 @@ export default function Navbar() {
           {!isLoading && user ? (
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 border border-[#ECEEF0] bg-white py-2.5 px-3 rounded-[69px]">
-                <img
+                {/* <img
                   src={user?.avatar || user}
                   className="w-8 h-8 rounded-full"
                   alt="User Avatar"
-                />
+                /> */}
+                <User2 className="h-6 w-6 text-gray-700" />
 
                 <div className="text-start flex flex-col gap-3 leading-none ml-2">
                   <span className="text-lg font-nunito leading-7">

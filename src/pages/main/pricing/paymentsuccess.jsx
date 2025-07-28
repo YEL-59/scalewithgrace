@@ -29,7 +29,7 @@ const SuccessPage = () => {
           </svg>
         </div>
 
-        <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-green-700">
+        <h1 className="mb-4 text-4xl font-extrabold tracking-tight text-green-600">
           Subscription Successful!
         </h1>
 
@@ -40,14 +40,14 @@ const SuccessPage = () => {
 
         <div className="flex flex-col sm:flex-row justify-center gap-6">
           <Button
-            className="w-full sm:w-auto bg-[#B5F169] text-black font-semibold transition hover:bg-[#A1E65C] focus:ring-4 focus:ring-green-300"
+            className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary text-black font-semibold transition focus:ring-4 focus:ring-green-300"
             onClick={() => navigate("/")}
           >
             Go to Home
           </Button>
 
           <Button
-            className="w-full sm:w-auto bg-green-700 text-white font-semibold transition hover:bg-green-800 focus:ring-4 focus:ring-green-500"
+            className="w-full sm:w-auto bg-gradient-to-r from-primary to-secondary text-white font-semibold transition hover:bg-green-800 focus:ring-4 focus:ring-green-500"
             onClick={() => navigate("/dashboard")}
           >
             Go to Dashboard

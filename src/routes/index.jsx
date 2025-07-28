@@ -39,6 +39,7 @@ import Pricing from "@/pages/main/pricing";
 import CancelPage from "@/pages/main/pricing/cancle";
 import SuccessPage from "@/pages/main/pricing/paymentsuccess";
 import { createBrowserRouter } from "react-router";
+import ProtectedRoute from "./ProtectedRoute";
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -57,7 +58,9 @@ export const PRODUCTION_READY_PATHS = [
   "/otp",
   "/confirm-password",
   "/confirmation",
-  "dashboard",
+  "/payment-success",
+  "/payment-canceled",
+  "/dashboard",
   "/dashboard/coaching",
   "/dashboard/billing",
   "/dashboard/cover-letter",
@@ -157,60 +160,65 @@ export const router = createBrowserRouter([
         ],
       },
       {
-        path: "/dashboard",
-        element: <DashboardLayout />,
+        element: <ProtectedRoute />,
         children: [
           {
-            index: true,
-            element: <MyDashboard />,
-          },
-          {
-            path: "coaching",
-            element: <CoachingCallBooking></CoachingCallBooking>,
-          },
-          {
-            path: "billing",
-            element: <Billing />,
-          },
-          {
-            path: "cover-letter",
-            element: <CoverLetterGenerator />,
-          },
-          {
-            path: "career-goal",
-            element: <CareerGoal />,
-          },
-          {
-            path: "career-road-map",
-            element: <CareerRoadmap />,
-          },
-          {
-            path: "resume-builder",
-            element: <ResumeBuilder />,
-          },
-          {
-            path: "task-manager",
-            element: <TaskManagerRedirect />,
-          },
-          {
-            path: "weekly-task",
-            element: <WeeklyTask />,
-          },
-          {
-            path: "task-manager/:weekId",
-            element: <TaskManager />,
-          },
-          {
-            path: "task/:id",
-            element: <TaskDetail />,
-          },
-          {
-            path: "resumeBuild-step",
-            element: <ResumeBuilderStepper />,
-          },
-          {
-            path: "cv-preview/:templateSlug",
-            element: <CVPreview />,
+            path: "/dashboard",
+            element: <DashboardLayout />,
+            children: [
+              {
+                index: true,
+                element: <MyDashboard />,
+              },
+              {
+                path: "coach-call",
+                element: <CoachingCallBooking />,
+              },
+              {
+                path: "billing",
+                element: <Billing />,
+              },
+              {
+                path: "cover-letter",
+                element: <CoverLetterGenerator />,
+              },
+              {
+                path: "career-goal",
+                element: <CareerGoal />,
+              },
+              {
+                path: "career-road-map",
+                element: <CareerRoadmap />,
+              },
+              {
+                path: "resume-builder",
+                element: <ResumeBuilder />,
+              },
+              {
+                path: "task-manager",
+                element: <TaskManagerRedirect />,
+              },
+              {
+                path: "weekly-task",
+                element: <WeeklyTask />,
+              },
+              {
+                path: "task-manager/:weekId",
+                element: <TaskManager />,
+              },
+              {
+                path: "task/:id",
+                element: <TaskDetail />,
+              },
+              {
+                path: "resumeBuild-step",
+                element: <ResumeBuilderStepper />,
+              },
+              {
+                path: "cv-preview/:templateSlug",
+                element: <CVPreview />,
+              },
+            ],
           },
         ],
       },

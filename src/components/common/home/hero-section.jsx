@@ -4,13 +4,14 @@ import image3 from "@/assets/images/3.png";
 import image4 from "@/assets/images/4.png";
 // import image3 from "@/assets/images/3.png";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useGetHomepage } from "@/hooks/home.hook";
+import { useGetHomepageSection } from "@/hooks/home.hook";
 import { Link } from "react-router";
 // import image4 from "@/assets/images/4.png";
 
 export default function HeroSection() {
-  const { data } = useGetHomepage();
+  const { data, isLoading } = useGetHomepageSection("hero-section");
   console.log({ data });
+  if (isLoading) return <p>Loading...</p>;
   return (
     <section
       id="hero"
@@ -48,7 +49,7 @@ export default function HeroSection() {
           </Avatar>
 
           <p className="ml-2 text-sm md:text-base font-read text-[#0D1117]">
-            10k+ people using Karially ai
+            {data?.counter_text}
           </p>
         </div>
 
@@ -68,17 +69,14 @@ export default function HeroSection() {
             Karially gives you the plan
           </h2>{" "}
           <p className=" text-[#6C6C6C] text-lg md:text-xl lg:text-2xl leading-[34px]">
-            Karially helps you get clarity on where you’re going, how to get
-            there, and what to do next, <br className="hidden lg:block"></br>{" "}
-            without overwhelm. We’re not a job board. Not a resume builder.
-            We’re your career ally.
+            {data?.description}
           </p>
           <Link to="/dashboard">
             <button
               className="font-read flex mx-auto items-center gap-1 md:gap-2 py-2 px-3 md:py-3 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10  lg:mt-[45px] text-white bg-gradient-to-r  from-primary to-secondary"
               data-aos="zoom-in"
             >
-              <button> Start a free trial</button>
+              <button> {data?.button_text}</button>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"

@@ -1,6 +1,11 @@
+import { useGetAboutPageSection } from "@/hooks/about.hook";
 import image from "../../../assets/images/abouthero.png";
 
 const AboutUsHero = () => {
+  const { data, isLoading } = useGetAboutPageSection("hero-section");
+  console.log({ data });
+
+  if (isLoading) return <p>Loading...</p>;
   return (
     <section className="bg-[#F1F4FF]">
       {/* Text Section */}
@@ -9,15 +14,14 @@ const AboutUsHero = () => {
           className="text-3xl sm:text-4xl md:text-6xl font-semibold mb-4"
           data-aos="fade-up"
         >
-          You shouldn't have to figure out your career on your own.
+          {data?.title}
         </h1>
         <p
           className="text-[#6C6C6C] text-base sm:text-lg max-w-4xl mx-auto"
           data-aos="fade-up"
           data-aos-delay="200"
         >
-          Karially gives you structure, strategy, and support so you always know
-          what to do next and why it matters.
+          {data?.description}
         </p>
       </div>
 
@@ -29,7 +33,7 @@ const AboutUsHero = () => {
           data-aos-delay="400"
         >
           <img
-            src={image}
+            src={data?.image || image}
             alt="Career support meeting"
             className="rounded-xl shadow-lg w-full object-cover"
           />

@@ -12,6 +12,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import PricingPlan from "@/components/common/home/pricing-plan-section";
+import Paymenthistory from "@/assets/svg/paymenthistory";
+import Pricing from "@/assets/svg/pricing";
 
 const Billing = () => {
   return (
@@ -27,35 +29,7 @@ const Billing = () => {
                   className="px-5 py-2 rounded-full  data-[state=active]:bg-white data-[state=active]:text-black text-white"
                 >
                   <span className="flex gap-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="24"
-                      viewBox="0 0 25 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M19.7499 10.5V9.99995C19.7499 6.22876 19.7498 4.34311 18.5783 3.17154C17.4067 2 15.5211 2 11.7499 2C7.97883 2 6.0932 2.00006 4.92163 3.17159C3.75009 4.34315 3.75007 6.22872 3.75004 9.99988L3.75 14.5C3.74997 17.7874 3.74996 19.4312 4.65788 20.5375C4.82412 20.7401 5.00986 20.9258 5.21243 21.0921C6.31877 22 7.96249 22 11.2499 22"
-                        stroke="#191919"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M7.75 7H15.75M7.75 11H11.75"
-                        stroke="#191919"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M18.75 18.5L17.25 17.95V15.5M12.75 17.5C12.75 19.9853 14.7647 22 17.25 22C19.7353 22 21.75 19.9853 21.75 17.5C21.75 15.0147 19.7353 13 17.25 13C14.7647 13 12.75 15.0147 12.75 17.5Z"
-                        stroke="#191919"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
+                    <Paymenthistory />
                   </span>
                   Payment History
                 </TabsTrigger>
@@ -64,43 +38,7 @@ const Billing = () => {
                   className="px-5 py-2 rounded-full data-[state=active]:bg-white data-[state=active]:text-black text-white"
                 >
                   <span className="flex gap-2">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="25"
-                      height="24"
-                      viewBox="0 0 25 24"
-                      fill="none"
-                    >
-                      <path
-                        d="M2.25 12C2.25 8.46252 2.25 6.69377 3.3028 5.5129C3.47119 5.32403 3.65678 5.14935 3.85746 4.99087C5.11213 4 6.99142 4 10.75 4H13.75C17.5086 4 19.3879 4 20.6425 4.99087C20.8432 5.14935 21.0288 5.32403 21.1972 5.5129C22.25 6.69377 22.25 8.46252 22.25 12C22.25 15.5375 22.25 17.3062 21.1972 18.4871C21.0288 18.676 20.8432 18.8506 20.6425 19.0091C19.3879 20 17.5086 20 13.75 20H10.75C6.99142 20 5.11213 20 3.85746 19.0091C3.65678 18.8506 3.47119 18.676 3.3028 18.4871C2.25 17.3062 2.25 15.5375 2.25 12Z"
-                        stroke="black"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M10.25 16H11.75"
-                        stroke="black"
-                        stroke-width="1.5"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M14.75 16H18.25"
-                        stroke="black"
-                        stroke-width="1.5"
-                        stroke-miterlimit="10"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      />
-                      <path
-                        d="M2.25 9H22.25"
-                        stroke="black"
-                        stroke-width="1.5"
-                        stroke-linejoin="round"
-                      />
-                    </svg>
+                    <Pricing />
                   </span>
                   Pricing
                 </TabsTrigger>

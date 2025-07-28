@@ -1,5 +1,9 @@
+import { useGetAboutPageSection } from "@/hooks/about.hook";
 import image from "../../../assets/images/about-mission.png";
 const OurMission = () => {
+  const { data, isLoading } = useGetAboutPageSection("our-mission-section");
+  console.log({ data });
+  if (isLoading) return <p>Loading...</p>;
   return (
     <>
       <div className="bg-white">
@@ -10,7 +14,7 @@ const OurMission = () => {
               className="text-[63.967px] leading-[85.289px] font-semibold tracking-[-1.599px] text-[#0D1117] font-poppins"
               data-aos="fade-up"
             >
-              Our mission
+              {data?.section_title || " Our mission"}
             </h1>
 
             <h3
@@ -18,8 +22,8 @@ const OurMission = () => {
               data-aos="fade-up"
               data-aos-delay="100"
             >
-              Our mission is simple: Help people move forward with less stress
-              and more strategy.
+              {data?.title ||
+                " Our mission is simple: Help people move forward with less stress and more strategy."}
             </h3>
 
             <div
@@ -27,18 +31,8 @@ const OurMission = () => {
               data-aos="fade-up"
               data-aos-delay="200"
             >
-              <p>
-                Karially was created to end the cycle of career confusion. No
-                more downloading generic templates, doom-scrolling job boards,
-                or feeling stuck.
-              </p>
-              <p>
-                We guide you through the big picture and the small steps. From
-                planning your next role to preparing your resume and setting
-                weekly goals, Karially makes sure you're not just working hard.
-                You're moving in the right direction.
-              </p>
-              <p>Because when you have clarity, you show up differently.</p>
+              {data?.description ||
+                " Our mission is simple: Help people move forward with less stress and more strategy."}
 
               {/* Stats Cards */}
               <div
@@ -46,22 +40,19 @@ const OurMission = () => {
                 data-aos="fade-up"
                 data-aos-delay="300"
               >
-                <div className="bg-[#EEF5FE] p-5 w-full rounded-lg text-center">
-                  <h2 className="text-[47.975px] leading-[63.967px] tracking-[-0.959px] text-[#0D1117] font-normal font-poppins">
-                    2024
-                  </h2>
-                  <p className="text-[21.322px] leading-[31.983px] tracking-[-0.213px] text-[#61656B] font-normal font-inter-tight">
-                    Launched
-                  </p>
-                </div>
-                <div className="bg-[#EEF5FE] p-5 w-full rounded-lg text-center">
-                  <h2 className="text-[47.975px] leading-[63.967px] tracking-[-0.959px] text-[#0D1117] font-normal font-poppins">
-                    $2.1M
-                  </h2>
-                  <p className="text-[21.322px] leading-[31.983px] tracking-[-0.213px] text-[#61656B] font-normal font-inter-tight">
-                    Pre-seed round
-                  </p>
-                </div>
+                {data?.contents?.map((content, index) => (
+                  <div
+                    key={content.id || index}
+                    className="bg-[#EEF5FE] p-5 w-full rounded-lg text-center"
+                  >
+                    <h2 className="text-[47.975px] leading-[63.967px] tracking-[-0.959px] text-[#0D1117] font-normal font-poppins">
+                      {content.title}
+                    </h2>
+                    <p className="text-[21.322px] leading-[31.983px] tracking-[-0.213px] text-[#61656B] font-normal font-inter-tight">
+                      {content.description}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

@@ -2,15 +2,16 @@ import { axiosPublic } from "@/lib/axios.config";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-export const useGetHomepage = () => {
+export const useGetHomepageSection = (section) => {
   return useQuery({
-    queryKey: ["hero-section"],
+    queryKey: ["home-page-section", section],
     queryFn: async () => {
-      const { data } = await axiosPublic.get("/cms/home-page/hero-section");
+      const { data } = await axiosPublic.get(`/cms/home-page/${section}`);
 
-      console.log(data);
+      console.log(`${section} data:`, data);
+
       if (!data?.status) {
-        throw new Error(data?.message || "Failed to fetch hero section");
+        throw new Error(data?.message || `Failed to fetch ${section}`);
       }
 
       return data.data;
@@ -19,7 +20,7 @@ export const useGetHomepage = () => {
       const message =
         error?.response?.data?.message ||
         error.message ||
-        "Something went wrong";
+        `Error loading ${section}`;
       toast.error(message);
     },
   });

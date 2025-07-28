@@ -2,12 +2,15 @@
 // import { motion } from 'framer-motion';
 import Marquee from "react-fast-marquee";
 import background from "@/assets/images/background-hero.svg";
-import homepageImg from "@/assets/images/homepageImg.svg";
 import vectorBottom from "@/assets/images/vectorbottom.svg";
 import circle from "@/assets/images/dot.svg";
 import trikon from "@/assets/images/trikon.svg";
+import { useGetHomepageSection } from "@/hooks/home.hook";
 
 export default function ShowcaseSection() {
+  const { data, isLoading } = useGetHomepageSection("trust-section");
+  console.log({ data });
+  if (isLoading) return <p>Loading...</p>;
   return (
     <section
       style={{
@@ -25,7 +28,7 @@ export default function ShowcaseSection() {
               className="ml-12 md:ml-24 lg:ml-32 w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6"
               src={circle}
             ></img>
-            <img className="mt-6" src={homepageImg} data-aos="zoom-in"></img>
+            <img className="mt-6" src={data?.image} data-aos="zoom-in"></img>
             <div className="absolute top-10 -right-6 md:top-20 md:-right-12 lg:top-20 lg:-right-16 xl:top-28 xl:-right-20">
               <img
                 className="w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"

@@ -1,40 +1,105 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
-import { UploadCloud } from "lucide-react";
+
 import PenIcon from "@/assets/svg/pen-icon";
-import { useRef } from "react";
 import UploadIcon from "@/assets/svg/upload-icon";
+import { useGenerateCoverLetter } from "@/hooks/coverletter.hook";
+import html2pdf from "html2pdf.js";
 
 const CoverLetterGenerator = () => {
   const [file, setFile] = useState(null);
   const [prompt, setPrompt] = useState("");
   const [showPreview, setShowPreview] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    name: "",
+    title: "",
+    email: "",
+    phone: "",
+    company: "",
+    companyAddress: "",
+    hiringManager: "",
+  });
 
-  // Ref to access the hidden file input
+  const [showDetails, setShowDetails] = useState(false);
+  const previewRef = useRef(null);
   const fileInputRef = useRef(null);
+  const { mutate, data, isPending, isSuccess, error } =
+    useGenerateCoverLetter();
 
   const handleFileChange = (e) => {
     const selected = e.target.files?.[0];
-    if (selected && selected.type.includes("pdf")) {
+
+    const allowedTypes = [
+      "application/pdf",
+      "application/msword", // .doc
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+      "text/plain", // .txt
+    ];
+
+    if (selected && allowedTypes.includes(selected.type)) {
       setFile(selected);
     } else {
-      alert("Only PDF files are supported for now.");
+      alert("Only DOC, DOCX, PDF, or TXT files are supported.");
     }
   };
 
   const handleGenerate = () => {
+    if (!form.name || !form.title || !form.company) {
+      alert("Please fill in your name, job title, and company name.");
+      return;
+    }
+
     if (file && prompt.trim() !== "") {
-      setLoading(true);
-      setTimeout(() => {
-        setShowPreview(true);
-        setLoading(false);
-      }, 2000);
+      mutate(
+        { prompt_text: prompt, file },
+        {
+          onSuccess: () => setShowPreview(true),
+        }
+      );
     }
   };
+  const handleDownloadPDF = () => {
+    if (!previewRef.current) return;
+
+    html2pdf()
+      .set({
+        margin: 0.5,
+        filename: `${form.name || "cover_letter"}.pdf`,
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+      })
+      .from(previewRef.current)
+      .save();
+  };
+
+  const handlePrint = () => {
+    if (!previewRef.current) return;
+
+    const printWindow = window.open("", "_blank", "width=800,height=600");
+    printWindow.document.write(`
+    <html>
+      <head>
+        <title>Print Cover Letter</title>
+        <style>
+          body {
+            font-family: 'Times New Roman', serif;
+            padding: 40px;
+            line-height: 1.6;
+            color: #1f2937;
+          }
+        </style>
+      </head>
+      <body>
+        ${previewRef.current.innerHTML}
+      </body>
+    </html>
+  `);
+  };
+
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
       {/* Header */}
@@ -51,12 +116,13 @@ const CoverLetterGenerator = () => {
       </div>
 
       {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto items-start">
         {/* Left Side */}
         <Card
-          className="p-6 flex flex-col justify-between gap-6 border-0 shadow-xl h-auto"
+          className="p-6 flex flex-col justify-between gap-6 border-0 shadow-xl h-auto max-h-[750px]"
           data-aos="fade-right"
         >
+          {/* Upload Area */}
           <div>
             <div className="border border-dashed border-gray-300 bg-[#F6F8FE] rounded-md p-6 flex flex-col items-center justify-center cursor-pointer">
               <UploadIcon className="w-10 h-5 text-gray-500" />
@@ -74,21 +140,19 @@ const CoverLetterGenerator = () => {
                 Select File
               </Button>
               <span className="text-[#6B7280] text-center font-poppins text-[14px] font-normal leading-none">
-                Supported formats: PDF, DOCX, TXT
+                Supported formats: PDF
               </span>
-              {/* Hidden file input */}
               <Input
                 ref={fileInputRef}
                 type="file"
-                accept=".pdf,.docx,.txt"
+                accept=".pdf,.doc,.docx,.txt"
                 className="hidden"
                 onChange={handleFileChange}
               />
             </div>
-
             {file && (
               <p className="text-sm text-green-600 mt-2 text-center md:text-left">
-                ✅ {file.name} selected
+                {file.name} selected
               </p>
             )}
           </div>
@@ -110,6 +174,61 @@ const CoverLetterGenerator = () => {
               onChange={(e) => setPrompt(e.target.value)}
             />
           </div>
+          {/* Toggle Button */}
+          <Button
+            variant="outline"
+            onClick={() => setShowDetails((prev) => !prev)}
+            className="w-full md:w-auto"
+          >
+            {showDetails ? "Hide Personal Info" : "Add Personal Info"}
+          </Button>
+
+          {/* Conditional Personal Info Form */}
+          {showDetails && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+              <Input
+                placeholder="Your Full Name"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+              />
+              <Input
+                placeholder="Your Job Title (e.g., Frontend Developer)"
+                value={form.title}
+                onChange={(e) => setForm({ ...form, title: e.target.value })}
+              />
+              <Input
+                placeholder="Email"
+                type="email"
+                value={form.email}
+                onChange={(e) => setForm({ ...form, email: e.target.value })}
+              />
+              <Input
+                placeholder="Phone Number"
+                type="tel"
+                value={form.phone}
+                onChange={(e) => setForm({ ...form, phone: e.target.value })}
+              />
+              <Input
+                placeholder="Company Name"
+                value={form.company}
+                onChange={(e) => setForm({ ...form, company: e.target.value })}
+              />
+              <Input
+                placeholder="Company Address"
+                value={form.companyAddress}
+                onChange={(e) =>
+                  setForm({ ...form, companyAddress: e.target.value })
+                }
+              />
+              <Input
+                placeholder="Hiring Manager's Name (optional)"
+                value={form.hiringManager}
+                onChange={(e) =>
+                  setForm({ ...form, hiringManager: e.target.value })
+                }
+              />
+            </div>
+          )}
 
           {/* Buttons */}
           <div className="flex flex-col md:flex-row items-center gap-4 mt-2">
@@ -122,9 +241,9 @@ const CoverLetterGenerator = () => {
             <Button
               onClick={handleGenerate}
               className="w-full md:w-auto bg-gradient-to-r from-primary to-secondary"
-              disabled={loading}
+              disabled={isPending}
             >
-              {loading ? (
+              {isPending ? (
                 <span className="flex items-center gap-2">
                   <svg
                     className="animate-spin h-4 w-4 text-white"
@@ -153,38 +272,76 @@ const CoverLetterGenerator = () => {
               )}
             </Button>
           </div>
+
+          {error && (
+            <p className="text-red-500 text-sm">
+              Something went wrong. Please try again.
+            </p>
+          )}
         </Card>
 
-        {/* Right Side */}
-        {showPreview && (
-          <Card className="p-6" data-aos="fade-left">
-            <CardContent className="space-y-4 text-sm text-gray-700">
-              <div className="text-right text-xs text-gray-400">
-                09 February 2024
+        {/* Right Side - Output */}
+        {showPreview && isSuccess && data?.data && (
+          <Card
+            ref={previewRef}
+            className="p-8 max-w-xl mx-auto"
+            data-aos="fade-left"
+            style={{ fontFamily: "'Times New Roman', serif" }}
+          >
+            <div className="max-w-xl mx-auto flex justify-end gap-3 mb-2">
+              <Button
+                onClick={handleDownloadPDF}
+                className="bg-blue-600 text-white hover:bg-blue-700"
+              >
+                Download as PDF
+              </Button>
+              <Button
+                onClick={handlePrint}
+                className="bg-gray-600 text-white hover:bg-gray-700"
+              >
+                Print Letter
+              </Button>
+            </div>
+
+            <CardContent className="space-y-6 text-gray-800 text-base leading-relaxed">
+              {/* Header: Your Name & Contact Info */}
+              <div className="mb-8">
+                <h1 className="text-3xl font-bold">{form.name}</h1>
+                <p className="text-lg font-medium">{form.title}</p>
+                <p>{form.email}</p>
+                <p>{form.phone}</p>
+                <p>{form.company}</p>
+                <p>{form.companyAddress}</p>
+                <p>{new Date().toLocaleDateString()}</p>
               </div>
-              <h1 className="text-xl font-bold">Nazmul Hasan</h1>
-              <p className="text-sm font-medium text-gray-600">UX Designer</p>
 
-              <p>Dear Hiring Manager,</p>
+              {/* Recipient Info */}
+              {/* <div className="mb-6">
+                <p>
+                  {form.hiringManager ? form.hiringManager : "Hiring Manager"}
+                </p>
+                <p>{form.company}</p>
+                <p>{form.companyAddress}</p>
+              </div> */}
 
-              <p>
-                I am excited to express my strong interest in the UX/UI Product
-                Designer role at Mixamprint. With a passion for creating
-                seamless digital experiences and a track record of delivering
-                innovative user-centered designs, I am confident in my ability
-                to contribute to your team’s success...
+              {/* Greeting */}
+              <p className="mb-6">
+                Dear{" "}
+                {form.hiringManager ? form.hiringManager : "Hiring Manager"},
               </p>
 
-              <p>
-                Thank you for your consideration, and I eagerly await the
-                opportunity to discuss this exciting opportunity further.
-              </p>
+              {/* Letter Body */}
+              <div className="space-y-4 mb-6">
+                <p>{data.data.intro}</p>
+                <p>{data.data.body}</p>
+                <p>{data.data.conclusion}</p>
+              </div>
 
-              <p>
-                Sincerely,
-                <br />
-                Nazmul Hasan
-              </p>
+              {/* Closing */}
+              <div>
+                <p>Sincerely,</p>
+                <p className="mt-4 font-semibold">{form.name}</p>
+              </div>
             </CardContent>
           </Card>
         )}

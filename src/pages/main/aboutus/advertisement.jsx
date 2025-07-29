@@ -1,7 +1,11 @@
 import { Button } from "@/components/ui/button";
 import image from "../../../assets/images/aboutbg.png";
+import { useGetAboutPageSection } from "@/hooks/about.hook";
 
 const Advertisement = () => {
+  const { data, isLoading } = useGetAboutPageSection("spotlight-section");
+  console.log({ data });
+  if (isLoading) return <p>Loading...</p>;
   return (
     <div className="relative w-full h-[50vh]">
       {/* Background image */}
@@ -22,22 +26,21 @@ const Advertisement = () => {
             data-aos="fade-right"
             data-aos-delay="200"
           >
-            Ready to land your dream job?
+            {data?.title}
           </h2>
           <p
             className="text-gray-700 mb-6 max-w-md"
             data-aos="fade-right"
             data-aos-delay="300"
           >
-            Build a standout resume in minutes and take the first step toward
-            your next big opportunity. Start now!
+            {data?.description}
           </p>
           <Button
             data-aos="fade-up"
             data-aos-delay="400"
             className="font-read flex gap-1 md:gap-2 py-2 px-3 md:py-5 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10 lg:mt-[45px] text-white bg-gradient-to-r from-primary to-secondary"
           >
-            Start for free
+            {data?.button_text}
           </Button>
         </div>
       </div>

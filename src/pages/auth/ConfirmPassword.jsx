@@ -112,7 +112,7 @@ function ConfirmPassword() {
 
             <Button
               type="submit"
-              className="bg-gradient-to-r from-primary to-secondary w-full rounded-[60px] py-4 text-white text-base lg:text-lg mt-[54px]"
+              className="bg-gradient-to-r from-primary to-secondary w-full rounded-[60px] py-7 text-white text-base lg:text-lg mt-[54px]"
             >
               Confirm Password
             </Button>

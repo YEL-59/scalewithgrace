@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { EyeIcon, EyeOffIcon } from "lucide-react";
 import logo from "@/assets/images/logosvg.svg";
 import { Link } from "react-router";
-import { useSendOtp, useSignUp } from "@/hooks/auth.hook";
+import { useSignUp } from "@/hooks/auth.hook";
 import {
   Form,
   FormControl,

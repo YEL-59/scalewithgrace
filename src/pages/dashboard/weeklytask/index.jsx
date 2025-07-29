@@ -1,4 +1,3 @@
-import { useForm, FormProvider } from "react-hook-form";
 import {
   FormField,
   FormItem,
@@ -7,87 +6,68 @@ import {
   FormMessage,
   Form,
 } from "@/components/ui/form";
-import { Link } from "react-router";
-import { Button } from "@/components/ui/button";
+
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { Navigate } from "react-router";
-import { Links } from "react-router";
+
+import { Button } from "@/components/ui/button";
+import { useWeeklyCareerGoalSet } from "@/hooks/weekly-task.hook";
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router";
 
 const WeeklyTask = () => {
-  const form = useForm({
-    defaultValues: {
-      roadmapName: "",
-      weeks: 4,
-      testArea: "",
-    },
+  const navigate = useNavigate();
+  const { form, mutate, isPending } = useWeeklyCareerGoalSet((id) => {
+    navigate(`/dashboard/task-manager/${id}`);
   });
 
   const onSubmit = (values) => {
-    console.log("submit", values);
-    // your generate logic here
-  };
-
-  const onRegenerate = () => {
-    console.log("regenerate clicked");
-    // your regenerate logic here
+    mutate(values);
   };
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
-      {/* Header */}
-      <div
-        className="max-w-7xl mx-auto text-center md:text-left mb-10"
-        data-aos="fade-up"
-      >
-        <h1 className="text-[#191919] font-poppins text-3xl md:text-5xl lg:text-[64px] font-semibold leading-tight max-w-5xl">
+      <div className="max-w-7xl mx-auto text-center md:text-left mb-10">
+        <h1 className="text-[#191919] text-3xl md:text-5xl font-semibold">
           Add New Weekly Task
         </h1>
-        <p className="text-[#717171] font-poppins text-lg md:text-xl lg:text-[24px] mt-4">
+        <p className="text-[#717171] text-lg md:text-xl mt-4">
           Let’s take the next step in your career today
         </p>
       </div>
-
+      {isPending && (
+        <div className="fixed inset-0 bg-white/70 flex items-center justify-center z-50">
+          <Loader2 className="h-8 w-8 text-primary animate-spin" />
+        </div>
+      )}
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-6 max-w-7xl mx-auto"
         >
-          {/* Roadmap Name */}
           <FormField
             control={form.control}
-            name="roadmapName"
+            name="title"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#1E1E1E] text-[18px] font-normal">
-                  Roadmap Name
-                </FormLabel>
+                <FormLabel>Roadmap Name</FormLabel>
                 <FormControl>
-                  <Input
-                    type="text"
-                    placeholder="Enter roadmap name"
-                    className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 py-5"
-                    {...field}
-                  />
+                  <Input placeholder="Enter task title" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          {/* Test Area */}
           <FormField
             control={form.control}
-            name="testArea"
+            name="description"
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="text-[#1E1E1E] text-[18px] font-normal">
-                  Task Description
-                </FormLabel>
+                <FormLabel>Task Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Enter prompt or notes…"
-                    className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 min-h-[120px]"
+                    placeholder="Enter task description..."
                     {...field}
                   />
                 </FormControl>
@@ -96,27 +76,14 @@ const WeeklyTask = () => {
             )}
           />
 
-          {/* Buttons */}
-          <div className="flex gap-4 mt-6">
+          <div className="flex gap-4 mt-6 ">
             <Button
-              type="button"
-              variant="secondary"
-              onClick={onRegenerate}
-              className="px-6 py-3 rounded-full"
+              type="submit"
+              className="px-6 py-5 rounded-full bg-secondary "
+              disabled={isPending}
             >
-              Regenerate
+              {isPending ? "Submitting..." : "Generate Weekly Task"}
             </Button>
-            <Link to="/dashboard/task-manager">
-              {" "}
-              <Button
-                type="submit"
-                variant="primary"
-                className="px-6 py-3 rounded-full"
-                // onClick={onRoadmap()}
-              >
-                Generate Weekly Task
-              </Button>
-            </Link>
           </div>
         </form>
       </Form>

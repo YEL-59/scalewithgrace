@@ -5,37 +5,41 @@ import authexpand from "@/assets/images/authexpanded.svg";
 
 export default function AuthLayout() {
   return (
-    <div className="py-10 h-screen overflow-hidden grid grid-cols-1 md:grid-cols-2">
-      <div className="flex items-start justify-center">
+    <div className="h-screen grid grid-cols-1 lg:grid-cols-2">
+      {/* Left Side - Form */}
+      <div className="flex flex-col justify-center items-center px-6 py-10 overflow-auto">
         <Outlet />
       </div>
 
-      <div className="h-full w-full">
-        <div className="hidden bg-[#EDFCFF] rounded-[20px] md:flex relative lg:h-5/6">
-          <div>
-            <img
-              className="w-4/5 md:w-full xl:w-fit  absolute z-30 bottom-0 right-0"
-              src={authdash}
-            ></img>
-          </div>
+      {/* Right Side - Illustrations (Only visible on lg and above) */}
+      <div className="hidden lg:flex bg-[#EDFCFF] rounded-l-[20px] relative items-end justify-center overflow-hidden">
+        {/* Main Dashboard Image */}
+        <img
+          src={authdash}
+          alt="Dashboard 1"
+          className="absolute bottom-0 right-0 w-4/5 xl:w-auto z-10"
+        />
 
-          <div className="relative overflow-hidden">
-            <img
-              className="z-40 lg:ml-0 md:mt-30 lg:mt-20 xl:m-0"
-              src={authdash2}
-            ></img>
-            <div className="absolute -bottom-64 md:-bottom-48 lg:-bottom-44 xl:bottom-0 left-3 z-50">
-              <img className="" src={authexpand}></img>
-            </div>
+        {/* Layered Illustration */}
+        <div className="relative ">
+          <img src={authdash2} alt="Dashboard 2" className="mt-20 z-20" />
+          <div className="absolute bottom-0 left-3">
+            <img src={authexpand} alt="Expanded Graphic" className="z-30" />
           </div>
-          <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-white z-60 "></div>
         </div>
-        <p className="font-medium text-[#1E1E1E] text-lg md:text-xl lg:text-[22px] xl:text-[26px]">
-          Sign in to Karially
-        </p>
-        <p className="text-[#959595] text-sm md:text-base lg:text-lg">
-          Your smart companion for career growth and productivity.
-        </p>
+
+        {/* Gradient overlay */}
+        <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-b from-transparent to-white z-40"></div>
+
+        {/* Desktop Text */}
+        <div className="absolute bottom-6 left-6 z-50">
+          <h1 className="font-medium text-[#1E1E1E] text-[22px] xl:text-[26px]">
+            Sign in to Karially
+          </h1>
+          <p className="text-[#959595] text-base xl:text-lg">
+            Your smart companion for career growth and productivity.
+          </p>
+        </div>
       </div>
     </div>
   );

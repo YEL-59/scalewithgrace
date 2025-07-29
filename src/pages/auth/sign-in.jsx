@@ -14,7 +14,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-import { useSignIn } from "@/hooks/auth.hook";
+import { useGoogleSignIn, useSignIn } from "@/hooks/auth.hook";
 import GoogleIcon from "@/assets/svg/google-icon";
 
 export default function SignIn() {
@@ -23,7 +23,7 @@ export default function SignIn() {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-
+  const googleSignIn = useGoogleSignIn();
   const { form, mutate } = useSignIn();
   const onSubmit = (data) => {
     mutate(data);
@@ -31,12 +31,12 @@ export default function SignIn() {
   };
 
   return (
-    <div className="font-poppins w-11/12 lg:w-3/4 xl:w-1/2 mx-auto">
+    <div className="font-poppins  mx-auto">
       <img className="mx-auto" src={logo}></img>
 
       {/* Sign-in form */}
       <div className="mx-auto my-4 md:my-5 lg:my-6 xl:my-[30px]">
-        <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center font-bold">
+        <h2 className="text-2xl  xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center font-bold">
           Welcome Back
         </h2>
         <p className="text-[#959595] text-xs md:text-sm lg:text-base xl:text-lg text-center pb-10">
@@ -119,7 +119,10 @@ export default function SignIn() {
           </form>
         </Form>
 
-        <button className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-[60px] py-3 text-center justify-center text-base lg:text-lg mb-8 md:mb-10 lg:mb-12  xl:mb-[54px]">
+        <button
+          onClick={googleSignIn}
+          className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-[60px] py-3 text-center justify-center text-base lg:text-lg mb-8 md:mb-10 lg:mb-12  xl:mb-[54px]"
+        >
           <GoogleIcon />
           Sign In with Google
         </button>

@@ -83,9 +83,9 @@ export default function MyDashboard() {
   const completedPercentage = dashboard?.completed_weekly_tasks_percentage ?? 0;
   const inProgressPercentage =
     dashboard?.in_progress_weekly_tasks_percentage ?? 0;
-
+  const overallProgress = dashboard?.completed_percentage ?? 0;
   console.log({ completedPercentage, inProgressPercentage });
-
+  const allgoals = dashboard?.user_career_goals ?? [];
   return (
     <div className="bg-[#F9F9F9] font-poppins">
       <div className="w-11/12 mx-auto py-8">
@@ -99,7 +99,11 @@ export default function MyDashboard() {
           Let’s take the next step in your career today
         </p>
 
-        <ProgressTracker currentStage={2} overallProgress={33} />
+        <ProgressTracker
+          currentStage={2}
+          overallProgress={overallProgress}
+          allgoals={allgoals}
+        />
 
         {/* upgrade cards part-1*/}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">

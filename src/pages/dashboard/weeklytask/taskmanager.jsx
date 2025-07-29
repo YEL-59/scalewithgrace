@@ -16,7 +16,7 @@ const TaskManager = () => {
   const [weeksData, setWeeksData] = useState([]);
 
   const [globalMeta, setGlobalMeta] = useState(null);
-
+  const [filter, setFilter] = useState("all");
   useEffect(() => {
     console.log("Fetched data:", data);
     if (data?.data?.data) {
@@ -25,23 +25,50 @@ const TaskManager = () => {
         setGlobalMeta(data.data.meta);
       }
 
-      const mappedWeeks = data.data.data.map((week) => ({
-        id: week.id,
-        week: `Week ${week.week_number}`,
-        title: week.title,
-        description: week.description,
-        createdAt: new Date(week.created_at).toDateString(),
-        tasks: Array.isArray(week.weekly_tasks)
-          ? week.weekly_tasks.map((t) => ({
-              id: t.id,
-              title: t.title,
-              is_completed: t.is_completed,
-            }))
-          : [],
-        completed: Array.isArray(week.weekly_tasks)
-          ? week.weekly_tasks.every((t) => t.is_completed)
-          : false,
-      }));
+      // const mappedWeeks = data.data.data.map((week) => ({
+      //   id: week.id,
+      //   week: `Week ${week.week_number}`,
+      //   title: week.title,
+      //   description: week.description,
+      //   createdAt: new Date(week.created_at).toDateString(),
+      //   tasks: Array.isArray(week.weekly_tasks)
+      //     ? week.weekly_tasks.map((t) => ({
+      //         id: t.id,
+      //         title: t.title,
+      //         is_completed: t.is_completed,
+      //       }))
+      //     : [],
+      //   completed: Array.isArray(week.weekly_tasks)
+      //     ? week.weekly_tasks.every((t) => t.is_completed)
+      //     : false,
+      // }));
+
+      const mappedWeeks = data.data.data
+        .map((week) => ({
+          id: week.id,
+          week: `Week ${week.week_number}`,
+          title: week.title,
+          description: week.description,
+          createdAt: new Date(week.created_at).toISOString(), // for easier sorting
+          tasks: Array.isArray(week.weekly_tasks)
+            ? week.weekly_tasks.map((t) => ({
+                id: t.id,
+                title: t.title,
+                is_completed: t.is_completed,
+              }))
+            : [],
+          completed: Array.isArray(week.weekly_tasks)
+            ? week.weekly_tasks.every((t) => t.is_completed)
+            : false,
+        }))
+        // 🧠 Sort: incomplete weeks first, then by date descending
+        .sort((a, b) => {
+          if (a.completed === b.completed) {
+            return new Date(b.createdAt) - new Date(a.createdAt); // recent first
+          }
+
+          return a.completed ? 1 : -1; // incomplete before complete
+        });
 
       setWeeksData(mappedWeeks);
     }
@@ -94,50 +121,84 @@ const TaskManager = () => {
               <p className="text-sm text-gray-500">Loading progress...</p>
             )}
           </div>
-          <Button className="bg-gradient-to-r from-primary to-secondary whitespace-nowrap">
-            Add New Task +
-          </Button>
+          <Link to="/dashboard/weekly-task">
+            {" "}
+            <Button className="bg-gradient-to-r from-primary to-secondary whitespace-nowrap">
+              Add New Task +
+            </Button>
+          </Link>
         </div>
+      </div>
+      <div className="flex gap-2 mb-4">
+        <Button
+          variant={filter === "all" ? "default" : "outline"}
+          onClick={() => setFilter("all")}
+          className="bg-gradient-to-r from-primary to-secondary whitespace-nowrap"
+        >
+          All
+        </Button>
+        <Button
+          variant={filter === "incomplete" ? "default" : "outline"}
+          onClick={() => setFilter("incomplete")}
+          className="bg-gradient-to-r from-primary to-secondary whitespace-nowrap"
+        >
+          Incomplete
+        </Button>
+        <Button
+          variant={filter === "completed" ? "default" : "outline"}
+          onClick={() => setFilter("completed")}
+          className="bg-gradient-to-r from-primary to-secondary whitespace-nowrap"
+        >
+          Completed
+        </Button>
       </div>
 
       <div className="  rounded-b-xl space-y-6">
         {weeksData.length === 0 && <p>No weekly tasks found.</p>}
-        {weeksData.map((week) => {
-          if (!Array.isArray(week.tasks)) return null; // 👈 Guard clause
+        {weeksData
+          .filter((week) => {
+            if (filter === "all") return true;
+            if (filter === "incomplete") return !week.completed;
+            if (filter === "completed") return week.completed;
+          })
+          .map((week) => {
+            if (!Array.isArray(week.tasks)) return null; // 👈 Guard clause
 
-          const progressPercent = Math.round(
-            (week.tasks.filter((t) => t.is_completed).length /
-              week.tasks.length) *
-              100
-          );
+            const progressPercent = Math.round(
+              (week.tasks.filter((t) => t.is_completed).length /
+                week.tasks.length) *
+                100
+            );
 
-          return (
-            <div
-              key={week.id}
-              className="bg-white border rounded-xl p-5 shadow-sm space-y-4"
-            >
-              <div className="flex justify-between items-center">
-                <div>
-                  <p className="font-semibold text-lg">{week.title} Progress</p>
-                  <p className="text-sm text-gray-500">
-                    {week.tasks.filter((t) => t.is_completed).length} of{" "}
-                    {week.tasks.length} tasks complete
-                  </p>
+            return (
+              <div
+                key={week.id}
+                className="bg-white border rounded-xl p-5 shadow-sm space-y-4"
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <p className="font-semibold text-lg">
+                      {week.title} Progress
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {week.tasks.filter((t) => t.is_completed).length} of{" "}
+                      {week.tasks.length} tasks complete
+                    </p>
+                  </div>
                 </div>
+
+                <Progress value={progressPercent} className="h-2" />
+
+                <Link to={`/dashboard/task/${week.id}`}>
+                  <TaskCard
+                    task={week}
+                    onToggle={(taskId) => toggleTaskCompletion(week.id, taskId)}
+                    onOpen={() => {}} // optional
+                  />
+                </Link>
               </div>
-
-              <Progress value={progressPercent} className="h-2" />
-
-              <Link to={`/dashboard/task/${week.id}`}>
-                <TaskCard
-                  task={week}
-                  onToggle={(taskId) => toggleTaskCompletion(week.id, taskId)}
-                  onOpen={() => {}} // optional
-                />
-              </Link>
-            </div>
-          );
-        })}
+            );
+          })}
       </div>
     </div>
   );

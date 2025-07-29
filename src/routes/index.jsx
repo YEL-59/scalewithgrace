@@ -8,7 +8,7 @@ import CommonLayout from "@/layouts/common-layout";
 import DashboardLayout from "@/layouts/dashboard-layout";
 import RootLayout from "@/layouts/root-layout";
 import CheckMail from "@/pages/auth/CheckMail";
-import Confirmation from "@/pages/auth/Confirmation";
+
 import ConfirmPassword from "@/pages/auth/ConfirmPassword";
 import ForgetPasswordOtpVerification from "@/pages/auth/ForgetPaswordOtpVarification";
 import ForgotPassword from "@/pages/auth/ForgotPassword";
@@ -40,6 +40,7 @@ import CancelPage from "@/pages/main/pricing/cancle";
 import SuccessPage from "@/pages/main/pricing/paymentsuccess";
 import { createBrowserRouter } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
+import Confirmation from "../pages/auth/Confirmation";
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -155,7 +156,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/confirmation",
-            element: <Confirmation></Confirmation>,
+            element: <Confirmation />,
           },
         ],
       },

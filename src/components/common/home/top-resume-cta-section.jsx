@@ -23,7 +23,7 @@ export default function TopResumeCTASection() {
               className="text-[#191919] font-normal text-[64px] leading-[70px] tracking-[-1.6px]"
               data-aos="fade-right"
             >
-              {data?.section_title}
+              {data?.title}
             </h3>
             <p className="text-[#191919] my-2 max-w-[560px] leading-4 md:leading-5 lg:leading-6">
               {data?.description}

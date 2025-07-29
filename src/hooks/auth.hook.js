@@ -6,6 +6,7 @@ import {
   signUpSchema,
 } from "@/schemas/auth.schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useGoogleLogin } from "@react-oauth/google";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
@@ -415,7 +416,7 @@ export const useResetPassword = () => {
 
       const { data } = await axiosPublic.post("/reset-password", payload);
 
-      if (!data?.success) {
+      if (!data?.status) {
         throw new Error(data?.message || "Reset failed");
       }
 
@@ -452,3 +453,110 @@ export const useGetUser = () => {
 
   return { user: data?.data, isLoading };
 };
+
+//google sogn in
+export const useGoogleSignIn = () => {
+  const navigate = useNavigate();
+
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async (tokenResponse) => {
+      try {
+        const token = tokenResponse.access_token;
+
+        // Step 1: Send token + provider to your backend
+        const { data } = await axiosPublic.post(
+          "https://www.dashboard.karially.com/api/social-login",
+          {
+            token,
+            provider: "google", // ✅ Make sure this matches your backend
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+          }
+        );
+
+        const access_token = data?.data?.token?.original?.access_token;
+        if (!access_token)
+          throw new Error("Access token not returned from backend");
+
+        // Step 2: Store token and redirect
+        localStorage.setItem("token", access_token);
+        toast.success("Google sign-in successful");
+        navigate("/");
+      } catch (error) {
+        console.error("Google login error:", error);
+        toast.error("Google login failed");
+      }
+    },
+
+    onError: () => {
+      toast.error("Google sign-in was cancelled or failed");
+      console.error("Google login failed");
+    },
+
+    flow: "implicit", // or "auth-code" if you switch to backend token exchange
+  });
+
+  return handleGoogleLogin;
+};
+// export const useGoogleSignIn = () => {
+//   const navigate = useNavigate();
+
+//   const handleGoogleLogin = useGoogleLogin({
+//     onSuccess: async (tokenResponse) => {
+//       try {
+//         // Step 1: Get user info from Google
+//         const { data: googleUser } = await axiosPublic.get(
+//           "https://www.googleapis.com/oauth2/v3/userinfo",
+//           {
+//             headers: {
+//               Authorization: `Bearer ${tokenResponse.access_token}`,
+//             },
+//           }
+//         );
+
+//         const { given_name, family_name, email } = googleUser;
+
+//         // Step 2: Send user info to your backend
+//         const { data } = await axiosPublic.post(
+//           "https://www.dashboard.karially.com/social-login",
+//           {
+//             first_name: given_name,
+//             last_name: family_name,
+//             email,
+//           },
+//           {
+//             headers: {
+//               "Content-Type": "application/json",
+//               Accept: "application/json",
+//             },
+//           }
+//         );
+
+//         // Step 3: Store access token and navigate
+//         const access_token = data?.data?.token?.original?.access_token;
+//         if (!access_token) throw new Error("Token not found in response");
+
+//         localStorage.setItem("token", access_token);
+
+//         toast.success("Google sign-in successful");
+//         navigate("/");
+//       } catch (error) {
+//         console.error("Google login error:", error);
+//         toast.error("Google login failed");
+//       }
+//     },
+
+//     onError: () => {
+//       toast.error("Google sign-in was cancelled or failed");
+//       console.error("Google login failed");
+//     },
+
+//     flow: "implicit", // can be "auth-code" for higher security
+//   });
+
+//   return handleGoogleLogin;
+// };

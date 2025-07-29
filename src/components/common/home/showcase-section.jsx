@@ -26,13 +26,13 @@ export default function ShowcaseSection() {
         <div className="flex">
           <div className="w-3/4 mx-auto relative">
             <img
-              className="ml-12 md:ml-24 lg:ml-32 w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6"
+              className="ml-12 md:ml-24 lg:ml-32 w-3 h-3 md:w-4 md:h-4 lg:w-5 lg:h-5 xl:w-6 xl:h-6 animate-bounce"
               src={circle}
             ></img>
             <img className="mt-6" src={img?.image} data-aos="zoom-in"></img>
             <div className="absolute top-10 -right-6 md:top-20 md:-right-12 lg:top-20 lg:-right-16 xl:top-28 xl:-right-20">
               <img
-                className="w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12"
+                className="w-5 h-5 md:w-8 md:h-8 lg:w-10 lg:h-10 xl:w-12 xl:h-12 "
                 src={trikon}
               ></img>
             </div>

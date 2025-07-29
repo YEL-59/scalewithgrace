@@ -415,7 +415,7 @@ export const useResetPassword = () => {
 
       const { data } = await axiosPublic.post("/reset-password", payload);
 
-      if (!data?.success) {
+      if (!data?.status) {
         throw new Error(data?.message || "Reset failed");
       }
 

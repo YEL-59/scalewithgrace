@@ -36,12 +36,12 @@ function Stepper() {
     }
   };
 
-  const completedTasks = tasks.filter((task) => task.completed).length;
+  // const completedTasks = tasks.filter((task) => task.completed).length;
 
   return (
-    <div className="bg-gray-50 p-3">
+    <div className=" p-3">
       <div className="col-span-1 lg:col-span-2">
-        {weeklyPlan && (
+        {/* {weeklyPlan && (
           <div className="mb-6">
             <h3 className="text-2xl md:text-3xl lg:text-4xl font-semibold text-[#191919]">
               Week {weeklyPlan.week_number}: {weeklyPlan.title}
@@ -50,19 +50,9 @@ function Stepper() {
               {weeklyPlan.description}
             </p>
           </div>
-        )}
+        )} */}
 
-        <div className="shadow-lg my-4 rounded-[36px] p-11 bg-white space-y-6 text-[#717171] font-medium relative">
-          {/* Vertical Line */}
-          <div className="absolute left-[54px] top-[44px] bottom-[44px] w-0.5 bg-[#E9E9EA]">
-            <div
-              className="w-full bg-[#4ECDC4] transition-all duration-500 ease-out"
-              style={{
-                height: `${(currentStep / (tasks.length - 1)) * 100}%`,
-              }}
-            />
-          </div>
-
+        <div>
           {tasks.length > 0 ? (
             <div className="shadow-lg my-4 rounded-[36px] p-11 bg-white space-y-6 text-[#717171] font-medium relative">
               {/* Vertical Line */}
@@ -115,7 +105,7 @@ function Stepper() {
                         />
                       )}
                       {index === currentStep && !task.completed && (
-                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white rounded-full" />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2  bg-white rounded-full" />
                       )}
                     </div>
 
@@ -144,14 +134,14 @@ function Stepper() {
         </div>
 
         {/* Completion Message */}
-        {tasks.length > 0 && completedTasks === tasks.length && (
+        {/* {tasks.length > 0 && completedTasks === tasks.length && (
           <div className="mt-6 p-6 bg-gradient-to-r from-[#4ECDC4] to-[#6A5ACD] rounded-[36px] text-white text-center animate-fade-in">
             <h4 className="text-xl font-semibold mb-2">🎉 Congratulations!</h4>
             <p className="text-lg">
               You've completed all your tasks for this week!
             </p>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

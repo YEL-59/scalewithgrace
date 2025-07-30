@@ -13,7 +13,6 @@ const CoachingCall = () => {
         "ATS-friendly structure",
       ],
       button_text: "Try Now",
-      image: "/images/ai-resume.png",
     },
 
     {
@@ -115,11 +114,7 @@ const CoachingCall = () => {
 
                 {/* Image Side */}
                 <div className="flex-1">
-                  <img
-                    src={item.image}
-                    alt={item.section_title}
-                    className="w-full h-auto"
-                  />
+                  <img src={item.image} className="w-full h-auto" />
                   <div className="mt-20 border-b-2 xl:hidden"></div>
                 </div>
               </div>

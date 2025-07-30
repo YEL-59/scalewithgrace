@@ -85,7 +85,7 @@ export default function OurFeaturesSection() {
                     </div>
                   ))}
 
-                  <Link to="/coming">
+                  <Link to="/dashboard">
                     <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
                       {item.button_text}
                     </button>

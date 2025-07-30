@@ -29,7 +29,7 @@ export default function TopResumeCTASection() {
               {data?.description}
             </p>
 
-            <Link to="/coming">
+            <Link to="/dashboard">
               <button
                 className="rounded-[100px] text-sm md:text-bas text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-2 md:mt-8"
                 data-aos="zoom-in"

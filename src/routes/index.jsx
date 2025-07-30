@@ -41,6 +41,7 @@ import SuccessPage from "@/pages/main/pricing/paymentsuccess";
 import { createBrowserRouter } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import Confirmation from "../pages/auth/Confirmation";
+import DynamicPage from "@/pages/dynamicpage";
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -88,6 +89,7 @@ export const router = createBrowserRouter([
             index: true,
             element: <Home />,
           },
+          { path: "/page/:slug", element: <DynamicPage /> },
           {
             path: "/about-Us",
             element: <AboutUs />,

@@ -2,9 +2,7 @@ import { Link } from "react-router";
 import { useGetHomepageSection } from "@/hooks/home.hook";
 
 export default function OurFeaturesSection() {
-  const { data, isLoading } = useGetHomepageSection("feature-section");
-
-  if (isLoading) return <p>Loading...</p>;
+  const { data } = useGetHomepageSection("feature-section");
 
   return (
     <section className="w-11/12 mt-16 mb-10 md:mb-16 lg:mt-32 lg:mb-[72px] md:mt-24 xl:mt-40 xl:mb-[85px] mx-auto font-poppins">

@@ -18,6 +18,7 @@ Aos.init({
   once: true,
 });
 const GOOGLE_CLIENT_ID =
+  import.meta.env.VITE_GOOGLE_CLIENT_ID ||
   "60562972328-8kpco9n7i6eupnpjin578jtafb3jgdms.apps.googleusercontent.com";
 createRoot(document.getElementById("root")).render(
   <StrictMode>

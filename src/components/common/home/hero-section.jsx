@@ -9,9 +9,8 @@ import { Link } from "react-router";
 // import image4 from "@/assets/images/4.png";
 
 export default function HeroSection() {
-  const { data, isLoading } = useGetHomepageSection("hero-section");
+  const { data } = useGetHomepageSection("hero-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
   return (
     <section
       id="hero"
@@ -20,35 +19,37 @@ export default function HeroSection() {
       <div className="container mx-auto">
         {/* image showing with shadcn ui blocks */}
         <div
-          className="flex items-center justify-center mx-auto text-center"
+          className="flex flex-col md:flex-row items-center justify-center mx-auto text-center"
           data-aos="fade-down"
         >
-          <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
-            <AvatarImage src={image4} alt="@shadcn" />
-            <AvatarFallback className="bg-indigo-500 text-white">
-              CN
-            </AvatarFallback>
-          </Avatar>
-          <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
-            <AvatarImage src={image3} alt="@shadcn" />
-            <AvatarFallback className="bg-green-600 text-white">
-              CN
-            </AvatarFallback>
-          </Avatar>
-          <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
-            <AvatarImage src={image2} alt="@shadcn" />
-            <AvatarFallback className="bg-red-500 text-white">
-              AB
-            </AvatarFallback>
-          </Avatar>
-          <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
-            <AvatarImage src={image1} alt="@shadcn" />
-            <AvatarFallback className="bg-indigo-500 text-white">
-              VK
-            </AvatarFallback>
-          </Avatar>
+          <div className="flex items-center justify-center ">
+            <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
+              <AvatarImage src={image4} alt="@shadcn" />
+              <AvatarFallback className="bg-indigo-500 text-white">
+                CN
+              </AvatarFallback>
+            </Avatar>
+            <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
+              <AvatarImage src={image3} alt="@shadcn" />
+              <AvatarFallback className="bg-green-600 text-white">
+                CN
+              </AvatarFallback>
+            </Avatar>
+            <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
+              <AvatarImage src={image2} alt="@shadcn" />
+              <AvatarFallback className="bg-red-500 text-white">
+                AB
+              </AvatarFallback>
+            </Avatar>
+            <Avatar className="-ml-4 first:ml-0 cursor-pointer border-2 border-white">
+              <AvatarImage src={image1} alt="@shadcn" />
+              <AvatarFallback className="bg-indigo-500 text-white">
+                VK
+              </AvatarFallback>
+            </Avatar>
+          </div>
 
-          <p className="ml-2 text-sm md:text-base font-read text-[#0D1117]">
+          <p className="ml-2 text-xs md:text-base font-read text-[#0D1117]">
             {data?.counter_text}
           </p>
         </div>
@@ -68,7 +69,7 @@ export default function HeroSection() {
           >
             Karially gives you the plan
           </h2>{" "}
-          <p className=" text-[#6C6C6C] text-lg md:text-xl lg:text-2xl leading-[34px]">
+          <p className=" text-[#6C6C6C] text-sm md:text-xl lg:text-2xl leading-[34px]">
             {data?.description}
           </p>
           <Link to="/dashboard">

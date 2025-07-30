@@ -8,9 +8,9 @@ import { useGetHomepageSection } from "@/hooks/home.hook";
 import { Link } from "react-router";
 
 export default function PricingFaq() {
-  const { data, isLoading } = useGetHomepageSection("faqs-section");
+  const { data } = useGetHomepageSection("faqs-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
+
   return (
     <section className="w-full py-16 md:py-24 lg:py-32 font-poppins">
       <div className="container w-11/12 mx-auto flex flex-col lg:flex-row gap-7 lg:gap-10 xl:gap-20">

@@ -8,10 +8,9 @@ import trikon from "@/assets/images/trikon.svg";
 import { useGetHomepageSection } from "@/hooks/home.hook";
 
 export default function ShowcaseSection() {
-  const { data, isLoading } = useGetHomepageSection("trust-section");
+  const { data } = useGetHomepageSection("trust-section");
   const { data: img } = useGetHomepageSection("hero-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
   return (
     <section
       style={{
@@ -42,18 +41,18 @@ export default function ShowcaseSection() {
         </div>
 
         {/* trusted brands */}
-        <div className="pt-12 md:pt-20 lg:pt-[115px] text-center">
+        <div className="pt-12 md:pt-20 lg:pt-[115px] text-center p-2 md:p-0">
           <img src={vectorBottom}></img>
           <h3
-            className="text-5xl leading-8 font-medium font-read "
+            className="text-2xl md:text-5xl leading-8 font-medium font-read "
             data-aos="zoom-out-down"
           >
             {data?.section_title}
           </h3>
 
           {/* company logos */}
-          <Marquee className="mt-8 md:mt-10 lg:mt-16 xl:mt-20 bg-gradient-to-r from-primary to-secondary p-4 rounded-full">
-            <div className="flex items-center gap-8 md:gap-12 lg:gap-16">
+          <Marquee className="mt-8 md:mt-10 lg:mt-16 xl:mt-20 bg-gradient-to-r from-primary to-secondary p-4  rounded-full">
+            <div className="flex items-center gap-8 md:gap-12 lg:gap-10">
               {data?.tags?.map((tag, index) => (
                 <span
                   key={index}

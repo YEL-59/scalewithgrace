@@ -2,9 +2,8 @@ import { Link } from "react-router";
 import { useGetHomepageSection } from "@/hooks/home.hook";
 
 const FeaturesTool = () => {
-  const { data, isLoading } = useGetHomepageSection("feature-section");
+  const { data } = useGetHomepageSection("feature-section");
 
-  if (isLoading) return <p>Loading...</p>;
   return (
     <section className="w-11/12 mt-16 mb-10 md:mb-16 lg:mt-32 lg:mb-[72px] md:mt-24 xl:mt-40 xl:mb-[85px] mx-auto font-poppins">
       <div className="container mx-auto space-y-10 md:space-y-16 lg:space-y-[70px] xl:space-y-[85px]">

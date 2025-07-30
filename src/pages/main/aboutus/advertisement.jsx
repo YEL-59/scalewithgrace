@@ -3,9 +3,9 @@ import image from "../../../assets/images/aboutbg.png";
 import { useGetAboutPageSection } from "@/hooks/about.hook";
 
 const Advertisement = () => {
-  const { data, isLoading } = useGetAboutPageSection("spotlight-section");
+  const { data } = useGetAboutPageSection("spotlight-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
+
   return (
     <div className="relative w-full h-[50vh]">
       {/* Background image */}

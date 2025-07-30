@@ -45,7 +45,7 @@ export const useGetSinglePage = (slug) => {
   const result = useQuery({
     queryKey: ["dynamic_page", slug],
     queryFn: async () => {
-      const res = await axiosPublic.get(`dynamic-pages/single/${slug}`);
+      const res = await axiosPublic.get(`/dynamic-pages/single/${slug}`);
       return res.data;
     },
     enabled: !!slug,

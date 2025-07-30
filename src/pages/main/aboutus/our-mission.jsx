@@ -1,9 +1,9 @@
 import { useGetAboutPageSection } from "@/hooks/about.hook";
 import image from "../../../assets/images/about-mission.png";
 const OurMission = () => {
-  const { data, isLoading } = useGetAboutPageSection("our-mission-section");
+  const { data } = useGetAboutPageSection("our-mission-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
+
   return (
     <>
       <div className="bg-white">

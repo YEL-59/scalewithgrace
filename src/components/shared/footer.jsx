@@ -75,10 +75,7 @@ export default function Footer() {
             <div className="w-full sm:w-1/2 md:w-1/3 lg:w-[200px]">
               <p className="text-[18px] font-medium text-primary">Resources</p>
               <ul>
-                {[
-                  { name: "Pricing", href: "/" },
-                  { name: "FAQs", href: "/" },
-                ].map((link, index) => (
+                {[{ name: "Pricing", href: "/pricing" }].map((link, index) => (
                   <li key={index} className="mt-4">
                     <a
                       className="text-[15px] text-white/80 hover:text-white"
@@ -88,7 +85,7 @@ export default function Footer() {
                     </a>
                   </li>
                 ))}
-                {pages?.data?.map((page) => (
+                {pages?.map((page) => (
                   <li key={page.id} className="mt-4">
                     <Link
                       to={`/page/${page.page_slug}`}

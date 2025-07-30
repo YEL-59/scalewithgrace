@@ -75,7 +75,7 @@ const PricingPlan = () => {
 const PricingCards = ({ plans }) => {
   const { mutate: checkoutSubscription, isLoading: isCheckoutLoading } =
     useCheckoutSubscription();
-
+  const [loadingPlanId, setLoadingPlanId] = useState(null);
   if (!plans?.length) return <p className="text-white">No plans available.</p>;
 
   const handleCheckout = (planId) => {
@@ -83,7 +83,11 @@ const PricingCards = ({ plans }) => {
       toast.error("Invalid plan.");
       return;
     }
-    checkoutSubscription(planId);
+    // checkoutSubscription(planId);
+    setLoadingPlanId(planId);
+    checkoutSubscription(planId, {
+      onSettled: () => setLoadingPlanId(null), // reset loading state after done
+    });
   };
 
   return (
@@ -127,14 +131,14 @@ const PricingCards = ({ plans }) => {
 
             <Button
               onClick={() => handleCheckout(plan.id)}
-              disabled={isCheckoutLoading}
+              disabled={loadingPlanId === plan.id}
               className="w-full rounded-full py-5 bg-gradient-to-r from-primary to-secondary text-white text-md font-medium"
             >
               {plan.price === "0.00"
-                ? isCheckoutLoading
+                ? loadingPlanId === plan.id
                   ? "Starting..."
                   : "Start for Free"
-                : isCheckoutLoading
+                : loadingPlanId === plan.id
                 ? "Processing..."
                 : "Choose Plan"}
             </Button>

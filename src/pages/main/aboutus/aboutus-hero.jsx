@@ -2,10 +2,9 @@ import { useGetAboutPageSection } from "@/hooks/about.hook";
 import image from "../../../assets/images/abouthero.png";
 
 const AboutUsHero = () => {
-  const { data, isLoading } = useGetAboutPageSection("hero-section");
+  const { data } = useGetAboutPageSection("hero-section");
   console.log({ data });
 
-  if (isLoading) return <p>Loading...</p>;
   return (
     <section className="bg-[#F1F4FF]">
       {/* Text Section */}

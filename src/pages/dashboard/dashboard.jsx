@@ -5,6 +5,7 @@ import { Link } from "react-router";
 import ProgressTracker from "./DashprogressTracker";
 import Stepper from "./Stepper";
 import { useGetDashboard } from "@/hooks/subscription.hook";
+import { useGetUser } from "@/hooks/auth.hook";
 
 const CircularProgress = ({
   value,
@@ -79,6 +80,7 @@ const CircularProgress = ({
 
 export default function MyDashboard() {
   const { data: dashboard } = useGetDashboard();
+  const { user } = useGetUser();
 
   const completedPercentage = dashboard?.completed_weekly_tasks_percentage ?? 0;
   const inProgressPercentage =
@@ -93,7 +95,7 @@ export default function MyDashboard() {
           className="font-semibold text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 text-[#191919]"
           data-aos="fade-right"
         >
-          Welcome back, Scarlet
+          Welcome back, {user?.name || "User"}!
         </h1>
         <p className="text-[#717171] text-base md:text-lg lg:text-xl xl:text-2xl">
           Let’s take the next step in your career today
@@ -108,72 +110,75 @@ export default function MyDashboard() {
         {/* upgrade cards part-1*/}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
           {/* card 1 */}
-          <div className="bg-gradient-to-r from-primary to-secondary p-11 relative rounded-[36px] text-white col-span-1 xl:col-span-2">
-            <h4 className="text-3xl md:text-4xl lg:text-[40px] xl:text-5xl font-semibold">
-              Why upgrade Karially?
-            </h4>
-            <div className="absolute top-6 left-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="45"
-                height="42"
-                viewBox="0 0 45 42"
-                fill="none"
-              >
-                <path
-                  d="M24.822 35.4544C19.2522 34.7218 13.7166 33.8306 8.15924 32.8669"
-                  stroke="white"
-                  stroke-width="3.21791"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M30.0805 24.5313C24.3297 21.7248 19.0388 18.0427 13.556 14.7133"
-                  stroke="white"
-                  stroke-width="3.21791"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M38.6297 15.7749C35.453 11.6365 32.5873 7.0722 30.8186 2.21549"
-                  stroke="white"
-                  stroke-width="3.21791"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-            <p className="text-base md:text-lg lg:text-xl xl:text-2xl my-4">
-              Unlock features that help you build a stronger resume, <br /> prep
-              smarter for interviews.
-            </p>
 
-            <div className="bg-white rounded-[100px] py-[10px] px-4 mt-3 flex gap-4 items-center w-fit">
-              <p className="bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text-sm md:text-base lg:text-lg font-medium">
-                Try for free
-              </p>
-              <button>
+          <div className="bg-gradient-to-r from-primary to-secondary p-11 relative rounded-[36px] text-white col-span-1 xl:col-span-2">
+            <Link to={"/dashboard/billing"}>
+              <h4 className="text-3xl md:text-4xl lg:text-[40px] xl:text-5xl font-semibold">
+                Why upgrade Karially?
+              </h4>
+              <div className="absolute top-6 left-2">
                 <svg
-                  className="bg-gradient-to-r from-primary to-secondary rounded-full p-2 size-9"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
+                  width="45"
+                  height="42"
+                  viewBox="0 0 45 42"
                   fill="none"
                 >
                   <path
-                    d="M3.375 14.625L14.625 3.375M14.625 3.375V11.25M14.625 3.375H6.75"
+                    d="M24.822 35.4544C19.2522 34.7218 13.7166 33.8306 8.15924 32.8669"
                     stroke="white"
-                    stroke-width="1.6875"
+                    stroke-width="3.21791"
+                    stroke-miterlimit="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M30.0805 24.5313C24.3297 21.7248 19.0388 18.0427 13.556 14.7133"
+                    stroke="white"
+                    stroke-width="3.21791"
+                    stroke-miterlimit="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M38.6297 15.7749C35.453 11.6365 32.5873 7.0722 30.8186 2.21549"
+                    stroke="white"
+                    stroke-width="3.21791"
+                    stroke-miterlimit="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   />
                 </svg>
-              </button>
-            </div>
+              </div>
+              <p className="text-base md:text-lg lg:text-xl xl:text-2xl my-4">
+                Unlock features that help you build a stronger resume, <br />{" "}
+                prep smarter for interviews.
+              </p>
+
+              <div className="bg-white rounded-[100px] py-[10px] px-4 mt-3 flex gap-4 items-center w-fit">
+                <p className="bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text-sm md:text-base lg:text-lg font-medium">
+                  Try for free
+                </p>
+                <button>
+                  <svg
+                    className="bg-gradient-to-r from-primary to-secondary rounded-full p-2 size-9"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                  >
+                    <path
+                      d="M3.375 14.625L14.625 3.375M14.625 3.375V11.25M14.625 3.375H6.75"
+                      stroke="white"
+                      stroke-width="1.6875"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </Link>
           </div>
 
           {/* card-2 */}
@@ -657,8 +662,8 @@ export default function MyDashboard() {
               <div>
                 <CircularProgress
                   value={completedPercentage}
-                  size={144}
-                  strokeWidth={14}
+                  size={180}
+                  strokeWidth={20}
                   showLabel
                   labelClassName="text-xl font-bold"
                   renderLabel={(val) => `${val}%`}
@@ -688,8 +693,8 @@ export default function MyDashboard() {
               <div>
                 <CircularProgress
                   value={inProgressPercentage}
-                  size={144}
-                  strokeWidth={14}
+                  size={180}
+                  strokeWidth={20}
                   showLabel
                   labelClassName="text-xl font-bold"
                   progressClassName={cn("stroke-secondary")}

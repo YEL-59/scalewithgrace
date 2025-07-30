@@ -461,13 +461,13 @@ export const useGoogleSignIn = () => {
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        const token = tokenResponse.access_token;
+        const code = tokenResponse.access_token;
 
         // Step 1: Send token + provider to your backend
         const { data } = await axiosPublic.post(
           "https://www.dashboard.karially.com/api/social-login",
           {
-            token,
+            token: code,
             provider: "google", // ✅ Make sure this matches your backend
           },
           {
@@ -497,7 +497,10 @@ export const useGoogleSignIn = () => {
       console.error("Google login failed");
     },
 
-    flow: "implicit", // or "auth-code" if you switch to backend token exchange
+    // or "auth-code" if you switch to backend token exchange
+    //flow: "auth-code", // ✅ MUST use this for backend login
+    redirect_uri:
+      "https://www.dashboard.karially.com/api/social-login/google/callback",
   });
 
   return handleGoogleLogin;

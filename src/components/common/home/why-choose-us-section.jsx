@@ -1,9 +1,7 @@
 import { useGetHomepageSection } from "@/hooks/home.hook";
 
 export default function WhyChooseUsSection() {
-  const { data, isLoading } = useGetHomepageSection("why-choose-us-section");
-
-  if (isLoading) return <p>Loading...</p>;
+  const { data } = useGetHomepageSection("why-choose-us-section");
 
   return (
     <section className="w-full bg-[#F7F7F8] font-poppins">

@@ -1,7 +1,7 @@
 import React from "react";
 import footerLogo from "@/assets/images/footer-logo.svg";
 import { Link } from "react-router";
-import { useGetSystemSection } from "@/hooks/system.hook";
+import { useGetDynamicPages, useGetSystemSection } from "@/hooks/system.hook";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useSubscribeNewsletter } from "@/hooks/useNewsletter";
@@ -9,6 +9,8 @@ import { useSubscribeNewsletter } from "@/hooks/useNewsletter";
 export default function Footer() {
   const { data, isLoading } = useGetSystemSection("system-info");
   const { data: social_link } = useGetSystemSection("social-link");
+  const { data: pages } = useGetDynamicPages();
+  console.log("dynamic-page", pages);
   console.log({ data });
   const [email, setEmail] = useState("");
   const { mutate: subscribe, isPending } = useSubscribeNewsletter();
@@ -61,13 +63,39 @@ export default function Footer() {
             </div>
 
             {/* others list */}
-            <div className="">
+            {/* <div className="">
               <h6 className="font-medium">Others</h6>
               <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
                 <Link>Privacy policy</Link>
                 <Link>Terms of policies</Link>
                 <Link>Cookies settings</Link>
               </div>
+            </div> */}
+            {/* Resources */}
+            <div className="w-full sm:w-1/2 md:w-1/3 lg:w-[200px]">
+              <p className="text-[18px] font-medium text-primary">Resources</p>
+              <ul>
+                {[{ name: "Pricing", href: "/pricing" }].map((link, index) => (
+                  <li key={index} className="mt-4">
+                    <a
+                      className="text-[15px] text-white/80 hover:text-white"
+                      href={link.href}
+                    >
+                      {link.name}
+                    </a>
+                  </li>
+                ))}
+                {pages?.map((page) => (
+                  <li key={page.id} className="mt-4">
+                    <Link
+                      to={`/page/${page.page_slug}`}
+                      className="text-[15px] text-white/80 hover:text-white"
+                    >
+                      {page.page_title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* follow us list */}
@@ -88,7 +116,7 @@ export default function Footer() {
                     <img
                       src={content.image}
                       alt={content.title}
-                      className="h-10 w-10"
+                      className="h-5 w-5"
                     />
                     {content.title}
                   </a>

@@ -3,9 +3,9 @@ import image from "../../../assets/images/aboutbg.png";
 import { useGetAboutPageSection } from "@/hooks/about.hook";
 
 const Advertisement = () => {
-  const { data, isLoading } = useGetAboutPageSection("spotlight-section");
+  const { data } = useGetAboutPageSection("spotlight-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
+
   return (
     <div className="relative w-full h-[50vh]">
       {/* Background image */}
@@ -22,7 +22,7 @@ const Advertisement = () => {
           data-aos="fade-up"
         >
           <h2
-            className="text-3xl md:text-4xl font-semibold text-gray-900 mb-4"
+            className="text-xl md:text-4xl font-semibold text-gray-900 mb-4"
             data-aos="fade-right"
             data-aos-delay="200"
           >

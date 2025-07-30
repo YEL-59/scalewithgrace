@@ -7,11 +7,11 @@ const OurMission = () => {
   return (
     <>
       <div className="bg-white">
-        <div className="container mx-auto flex flex-col lg:flex-row justify-between gap-10 py-20 px-4">
+        <div className="container mx-auto flex flex-col lg:flex-row justify-between gap-10 py-5 md:py-20 px-4">
           {/* Text Content */}
           <div className="flex-1">
             <h1
-              className="text-[63.967px] leading-[85.289px] font-semibold tracking-[-1.599px] text-[#0D1117] font-poppins"
+              className="text-3xl md:text-[63.967px] md:leading-[85.289px] font-semibold tracking-[-1.599px] text-[#0D1117] font-poppins"
               data-aos="fade-up"
             >
               {data?.section_title || " Our mission"}

@@ -26,24 +26,22 @@ const PricingPlan = () => {
         <div className="container mx-auto text-center mb-14">
           <Tabs defaultValue="monthly" onValueChange={setActiveTab}>
             <div className="flex justify-center">
-              <TabsList className="bg-white p-1 rounded-full inline-flex mb-6">
+              <TabsList className="bg-transparent rounded-full inline-flex mb-6 border border-gray-300">
                 <TabsTrigger
                   value="monthly"
-                  className="px-5 py-2 rounded-full data-[state=active]:bg-gradient-to-r from-primary to-secondary data-[state=active]:text-white text-gray-700"
+                  className="relative px-5 py-2 rounded-full text-sm font-normal text-gray-700 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white"
                 >
                   Monthly
                 </TabsTrigger>
+
                 <TabsTrigger
                   value="yearly"
-                  className="px-5 py-2 rounded-full data-[state=active]:bg-gradient-to-r from-primary to-secondary data-[state=active]:text-white text-gray-700"
+                  className=" px-2 py-2 rounded-full text-sm font-normal text-gray-700 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white flex items-center gap-2 "
                 >
-                  Yearly
-                </TabsTrigger>
-                <TabsTrigger
-                  value="lifetime"
-                  className="px-5 py-2 rounded-full data-[state=active]:bg-gradient-to-r from-primary to-secondary data-[state=active]:text-white text-gray-700"
-                >
-                  Lifetime
+                  <span>Yearly</span>
+                  <span className="  text-[10px] font-semibold bg-black text-white px-2 py-[2px] rounded-full">
+                    20% OFF
+                  </span>
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -73,8 +71,7 @@ const PricingPlan = () => {
 };
 
 const PricingCards = ({ plans }) => {
-  const { mutate: checkoutSubscription, isLoading: isCheckoutLoading } =
-    useCheckoutSubscription();
+  const { mutate: checkoutSubscription } = useCheckoutSubscription();
   const [loadingPlanId, setLoadingPlanId] = useState(null);
   if (!plans?.length) return <p className="text-white">No plans available.</p>;
 

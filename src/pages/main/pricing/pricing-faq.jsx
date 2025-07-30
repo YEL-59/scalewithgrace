@@ -26,14 +26,14 @@ export default function PricingFaq() {
             {data?.description}
           </p>
 
-          <Link to="/coming">
+          {/* <Link to="/coming">
             <button
               className="rounded-[100px] text-sm md:text-base text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-5 md:mt-7 lg:mt-8 xl:mt-10 font-read"
               data-aos="zoom-in"
             >
               {data?.button_text}
             </button>
-          </Link>
+          </Link> */}
         </div>
 
         {/* accrodian part */}
@@ -47,7 +47,7 @@ export default function PricingFaq() {
             <AccordionItem
               key={index}
               value={`item-${index}`}
-              className="border-none bg-[#F7F7F8] rounded-[100px] py-3 md:py-2 px-6 md:px-8"
+              className="border-none bg-[#F7F7F8] rounded-lg py-3 md:py-2 px-6 md:px-8"
             >
               <AccordionTrigger className="text-sm md:text-xl lg:text-2xl xl:text-[26px] flex items-center font-normal">
                 {content?.question}

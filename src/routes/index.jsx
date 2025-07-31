@@ -74,6 +74,7 @@ export const PRODUCTION_READY_PATHS = [
   "/dashboard/task/:id",
   "/dashboard/resumeBuild-step",
   "/dashboard/cv-preview/:templateSlug",
+  "/dashboard/page/:slug",
 ];
 
 export const router = createBrowserRouter([

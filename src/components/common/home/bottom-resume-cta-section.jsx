@@ -21,7 +21,7 @@ export default function BottomResumeCTASection() {
               {data?.description}
             </p>
 
-            <Link to="/coming">
+            <Link to="/dashboard">
               <button
                 className="rounded-[100px] text-sm md:text-base bg-white py-3 px-5 mt-8"
                 data-aos="zoom-in"

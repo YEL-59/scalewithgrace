@@ -90,7 +90,7 @@ export default function MyDashboard() {
   const allgoals = dashboard?.user_career_goals ?? [];
   return (
     <div className="bg-[#F9F9F9] font-poppins">
-      <div className="container mx-auto lg:overflow-y-auto py-8">
+      <div className="container mx-auto  py-8">
         <h1
           className="font-semibold text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 text-[#191919]"
           data-aos="fade-right"
@@ -108,7 +108,7 @@ export default function MyDashboard() {
         />
 
         {/* upgrade cards part-1*/}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
           {/* card 1 */}
 
           <div className="bg-gradient-to-r from-primary to-secondary p-11 relative rounded-[36px] text-white col-span-1 xl:col-span-2">
@@ -294,7 +294,7 @@ export default function MyDashboard() {
         </div>
 
         {/* upgrade cards part-2 */}
-        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-8 my-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8 my-8">
           {/* card-1 */}
           <Link to="/dashboard/career-goal">
             <div className="bg-white py-[34px] px-[28px] rounded-[36px] col-span-1">
@@ -632,7 +632,7 @@ export default function MyDashboard() {
           </Link>
         </div>
 
-        <div className="my-3 grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-8">
+        <div className="my-3 grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
           <div className="col-span-1 lg:col-span-2">
             <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-[40px] font-medium text-[#191919] mb-3">
               This Week’s Tasks
@@ -642,14 +642,14 @@ export default function MyDashboard() {
             </p>
           </div>
 
-          <div className="col-span-1 mt-10 xl:inline-block hidden">
+          <div className="col-span-1 mt-10">
             <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">
               Task Status
             </h3>
           </div>
         </div>
 
-        <div className="my-3 grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-8">
+        <div className="my-3 grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
           {/* stepper but functionality stillhave to implement */}
           <div className="col-span-1 lg:col-span-2 max-h-[400px] overflow-y-scroll">
             <Stepper></Stepper>
@@ -657,13 +657,8 @@ export default function MyDashboard() {
 
           {/* progress circle  */}
           <div className="col-span-1 mb-4">
-            <div className="col-span-1 mt-10 inline-block xl:hidden">
-              <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">
-                Task Status
-              </h3>
-            </div>
             {/* <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">Task Status</h3> */}
-            <div className="w-full h-full flex flex-col md:flex-row items-center justify-center font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
+            <div className="w-full h-full flex items-center justify-center font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
               <div>
                 <CircularProgress
                   value={completedPercentage}
@@ -694,6 +689,7 @@ export default function MyDashboard() {
                   </span>
                 </div>
               </div>
+
               <div>
                 <CircularProgress
                   value={inProgressPercentage}

@@ -14,7 +14,7 @@ export default function DashboardLayout() {
     <div className="flex h-screen w-full overflow-hidden">
       {/* Sidebar for md+ screens */}
       <aside
-        className={`hidden md:block transition-all duration-300 ${
+        className={`hidden lg:block transition-all duration-300 ${
           collapsed ? "w-20" : "w-64"
         } bg-white border-r h-full`}
       >

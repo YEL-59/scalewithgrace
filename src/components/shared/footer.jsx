@@ -26,7 +26,7 @@ export default function Footer() {
       <div className="w-11/12 mx-auto py-6 md:py-8 lg:py-12 xl:py-16">
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 xl:gap-40 border-b border-[#45494F] py-16">
           <div className="flex-2/5 text-sm md:text-[16.5px] lg:text-[18.5px] xl:text-[19px]">
-            <img src={data?.logo || footerLogo}></img>
+            <img className="h-20" src={data?.logo || footerLogo}></img>
             <p className="mt-6 md:mt-9 lg:mt-11  xl:mt-[52px]">
               {data?.description ||
                 " Join our newsletter to stay up to date on features and releases."}
@@ -55,10 +55,9 @@ export default function Footer() {
               <h6 className="font-medium">Company</h6>
               <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
                 <Link to="/">Home</Link>
-                <Link to="#">About Us</Link>
-                <Link to="#">Features</Link>
-                <Link to="#">Pricing</Link>
-                <Link to="#">Contact</Link>
+                <Link to="/about-Us">About Us</Link>
+                <Link to="/all-features">Features</Link>
+                <Link to="/pricing">Pricing</Link>
               </div>
             </div>
 

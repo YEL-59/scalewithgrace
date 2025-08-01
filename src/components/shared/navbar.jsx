@@ -107,9 +107,9 @@ export default function Navbar() {
                 <ChevronDown className="ml-6 h-6 w-6" />
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuLabel className="text-xs text-muted-foreground">
+                {/* <DropdownMenuLabel className="text-xs text-muted-foreground">
                   Logged in as {user?.email}
-                </DropdownMenuLabel>
+                </DropdownMenuLabel> */}
                 <DropdownMenuItem asChild>
                   <Link to="/dashboard">Go to Dashboard</Link>
                 </DropdownMenuItem>

@@ -53,11 +53,24 @@ export default function Footer() {
             {/* Company List */}
             <div className="">
               <h6 className="font-medium">Company</h6>
-              <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
-                <Link to="/">Home</Link>
-                <Link to="/about-Us">About Us</Link>
-                <Link to="/all-features">Features</Link>
-                <Link to="/pricing">Pricing</Link>
+              <div className="mt-[21.5px] font-light flex flex-col gap-2.5 text-[16px] text-white hover:text-white/80">
+                <ul>
+                  {[
+                    { name: "Home", href: "/" },
+                    { name: "About Us", href: "/about-Us" },
+                    { name: "Features", href: "/all-features" },
+                    { name: "Pricing", href: "/pricing" },
+                  ].map((link, index) => (
+                    <li key={index} className="mt-0 py-2">
+                      <Link
+                        className="text-[16px] text-white hover:text-white/80"
+                        to={link.href}
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
@@ -72,23 +85,23 @@ export default function Footer() {
             </div> */}
             {/* Resources */}
             <div className="w-full sm:w-1/2 md:w-1/3 lg:w-[200px]">
-              <p className="text-[18px] font-medium text-primary">Resources</p>
+              <p className="text-[18px] font-medium ">Resources</p>
               <ul>
                 {[{ name: "Pricing", href: "/pricing" }].map((link, index) => (
                   <li key={index} className="mt-4">
-                    <a
-                      className="text-[15px] text-white/80 hover:text-white"
-                      href={link.href}
+                    <Link
+                      className="text-[16px] text-white hover:text-white/80"
+                      to={link.href}
                     >
                       {link.name}
-                    </a>
+                    </Link>
                   </li>
                 ))}
                 {pages?.map((page) => (
-                  <li key={page.id} className="mt-4">
+                  <li key={page.id} className="mt-2">
                     <Link
                       to={`/page/${page.page_slug}`}
-                      className="text-[15px] text-white/80 hover:text-white"
+                      className="text-[16px] text-white hover:text-white/80"
                     >
                       {page.page_title}
                     </Link>

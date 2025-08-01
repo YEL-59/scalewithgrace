@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import image from "../../../assets/images/aboutbg.png";
 import { useGetAboutPageSection } from "@/hooks/about.hook";
+import { Link } from "react-router";
 
 const Advertisement = () => {
   const { data } = useGetAboutPageSection("spotlight-section");
@@ -35,13 +36,15 @@ const Advertisement = () => {
           >
             {data?.description}
           </p>
-          <Button
-            data-aos="fade-up"
-            data-aos-delay="400"
-            className="font-read flex gap-1 md:gap-2 py-2 px-3 md:py-5 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10 lg:mt-[45px] text-white bg-gradient-to-r from-primary to-secondary"
-          >
-            {data?.button_text}
-          </Button>
+          <Link to="/dashboard">
+            <Button
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className="font-read flex gap-1 md:gap-2 py-2 px-3 md:py-5 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10 lg:mt-[45px] text-white bg-gradient-to-r from-primary to-secondary"
+            >
+              {data?.button_text}
+            </Button>
+          </Link>
         </div>
       </div>
     </div>

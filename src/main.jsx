@@ -60,18 +60,39 @@ Aos.init({
 
 const GOOGLE_CLIENT_ID =
   import.meta.env.VITE_GOOGLE_CLIENT_ID ||
+  // "1053786954619-q3p51rsigjibg8lrstk99bqklqh3psi0.apps.googleusercontent.com";
   "60562972328-8kpco9n7i6eupnpjin578jtafb3jgdms.apps.googleusercontent.com";
 
 // ✅ Simple wrapper using hook and effect
 function AppWrapper() {
   const { data } = useGetSystemSection("system-info");
 
+  // const getPageTitle = (path) => {
+  //   const map = {
+  //     "/": "Home",
+  //     "/about-Us": "About Us",
+  //     "/pricing": "Pricing",
+  //     "/all-features": "All Features",
+  //     "/contact": "Contact",
+  //     "/sign-in": "Login",
+  //     "/sign-up": "Register",
+  //     // Add more paths as needed
+  //   };
+  //   return map[path] || "Page";
+  // };
+
   useEffect(() => {
-    const faviconUrl = data?.data?.favicon;
-    if (faviconUrl) {
-      setFavicon(faviconUrl);
+    if (!data?.system_name) return;
+
+    // Update title on every route change
+    // const title = `${getPageTitle(location.pathname)} – ${data.system_name}`;
+    // document.title = title;
+
+    // Set favicon only once
+    if (data.favicon) {
+      setFavicon(data.favicon);
     }
-  }, [data]);
+  }, [location.pathname, data]);
 
   const setFavicon = (url) => {
     let link = document.querySelector("link[rel~='icon']");

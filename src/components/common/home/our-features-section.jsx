@@ -30,7 +30,7 @@ export default function OurFeaturesSection() {
               key={item.id}
               className={`flex flex-col md:flex-row ${
                 !isEven ? "md:flex-row-reverse" : ""
-              } gap-5 md:gap-10 lg:gap-16 xl:gap-20 py-7 md:py-10 xl:py-24`}
+              } gap-5 md:gap-10 lg:gap-16 xl:gap-20 py-5`}
             >
               {/* Text Side */}
               <div

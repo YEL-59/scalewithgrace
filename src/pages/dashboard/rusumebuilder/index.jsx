@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Loader2 } from "lucide-react";
 import { useResumeBuilderSummeryText } from "@/hooks/resumebuild.hook";
 import { FormProvider } from "react-hook-form";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const ResumeBuilder = () => {
   const { form, mutate, isPending } = useResumeBuilderSummeryText();
@@ -19,7 +20,10 @@ const ResumeBuilder = () => {
   const onSubmit = (values) => {
     mutate(values); // ✅ trigger API call
   };
-
+  usePageMeta({
+    title: "ResumeBuilder – Karially",
+    description: "Create and customize your resume with Karially.",
+  });
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
       {/* Header */}

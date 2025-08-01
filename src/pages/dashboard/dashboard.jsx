@@ -6,6 +6,7 @@ import ProgressTracker from "./DashprogressTracker";
 import Stepper from "./Stepper";
 import { useGetDashboard } from "@/hooks/subscription.hook";
 import { useGetUser } from "@/hooks/auth.hook";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const CircularProgress = ({
   value,
@@ -88,6 +89,11 @@ export default function MyDashboard() {
   const overallProgress = dashboard?.completed_percentage ?? 0;
   console.log({ completedPercentage, inProgressPercentage });
   const allgoals = dashboard?.user_career_goals ?? [];
+
+  usePageMeta({
+    title: "My Dashboard – Karially",
+    description: "Overview of your progress and goals on Karially.",
+  });
   return (
     <div className="bg-[#F9F9F9] font-poppins">
       <div className="container mx-auto lg:overflow-y-auto py-8">

@@ -14,8 +14,13 @@ import {
 import PricingPlan from "@/components/common/home/pricing-plan-section";
 import Paymenthistory from "@/assets/svg/paymenthistory";
 import Pricing from "@/assets/svg/pricing";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const Billing = () => {
+  usePageMeta({
+    title: "Billing – Karially",
+    description: "Manage your billing and subscription details on Karially.",
+  });
   return (
     <div className=" w-full min-h-screen">
       <section className="relative z-10 py-20 px-4 text-white">

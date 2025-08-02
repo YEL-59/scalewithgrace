@@ -69,7 +69,7 @@ export default function HeroSection() {
           >
             Karially gives you the plan
           </h2>{" "}
-          <p className=" text-[#6C6C6C] text-sm md:text-xl lg:text-2xl leading-[34px]">
+          <p className=" text-[#6C6C6C] text-sm md:text-xl lg:text-2xl leading-[34px] px-2 md:px-0">
             {data?.description}
           </p>
           <Link to="/dashboard">

@@ -8,6 +8,7 @@ import PenIcon from "@/assets/svg/pen-icon";
 import UploadIcon from "@/assets/svg/upload-icon";
 import { useGenerateCoverLetter } from "@/hooks/coverletter.hook";
 import html2pdf from "html2pdf.js";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const CoverLetterGenerator = () => {
   const [file, setFile] = useState(null);
@@ -100,6 +101,10 @@ const CoverLetterGenerator = () => {
   `);
   };
 
+  usePageMeta({
+    title: "Cover Letter – Karially",
+    description: "Generate and customize your cover letter with Karially.",
+  });
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
       {/* Header */}

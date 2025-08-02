@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { useWeeklyCareerGoalSet } from "@/hooks/weekly-task.hook";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const WeeklyTask = () => {
   const navigate = useNavigate();
@@ -24,7 +25,10 @@ const WeeklyTask = () => {
   const onSubmit = (values) => {
     mutate(values);
   };
-
+  usePageMeta({
+    title: "Weekly Task – Karially",
+    description: "Manage your weekly tasks on Karially.",
+  });
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
       <div className="max-w-7xl mx-auto text-center md:text-left mb-10">

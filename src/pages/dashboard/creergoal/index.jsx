@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useCareerGoalSet } from "@/hooks/career-goal.hook";
 import { Loader2 } from "lucide-react";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const CareerGoal = () => {
   const { form, mutate, isPending } = useCareerGoalSet();
@@ -24,7 +25,10 @@ const CareerGoal = () => {
   const onRegenerate = () => {
     console.log("regenerate clicked");
   };
-
+  usePageMeta({
+    title: "Career Goal – Karially",
+    description: "Set and manage your career goals on Karially.",
+  });
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
       <div

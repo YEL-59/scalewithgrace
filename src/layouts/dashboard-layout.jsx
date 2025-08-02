@@ -5,11 +5,12 @@ import { Outlet } from "react-router";
 
 // Import your Sheet UI component (example from shadcn/ui)
 import { Sheet, SheetContent, SheetClose } from "@/components/ui/sheet";
+import useScrollToTop from "@/hooks/scroll-top-hook";
 
 export default function DashboardLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [sheetOpen, setSheetOpen] = useState(false); // For mobile sheet open
-
+  useScrollToTop(); // Hook to scroll to top on path change
   return (
     <div className="flex h-screen w-full overflow-hidden">
       {/* Sidebar for md+ screens */}

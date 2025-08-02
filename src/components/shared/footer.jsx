@@ -119,11 +119,11 @@ export default function Footer() {
                   key={id}
                   className="mt-[21.5px] font-light flex flex-col gap-2.5"
                 >
-                  <a
-                    href={content.link_url}
+                  <Link
+                    to={content.link_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 md:gap-2"
+                    className="flex items-center gap-2 text-lg"
                   >
                     <img
                       src={content.image}
@@ -131,7 +131,7 @@ export default function Footer() {
                       className="h-5 w-5"
                     />
                     {content.title}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>

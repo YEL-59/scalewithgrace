@@ -60,17 +60,16 @@ const ResumeBuilderStepper = () => {
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className="p-6 space-y-6">
-        {/* Stepper */}
-        <div className="flex w-full overflow-x-auto">
+        {/* Stepper */}<div className="flex w-full overflow-x-auto gap-2">
           {steps.map((label, index) => {
             const isActive = index === step;
             return (
               <div
                 key={index}
-                className={`relative flex items-center px-6 py-2 text-sm font-medium 
+                className={`relative flex items-center px-6 py-3.5 text-sm font-medium 
               ${
                 isActive
-                  ? "bg-white text-blue-600 border border-blue-400 z-10"
+                  ? "bg-white text-[#4a7c9a] border border-[#488099] z-10"
                   : "bg-blue-50 text-gray-500"
               }
               ${index === 0 ? "rounded-l-full" : ""}
@@ -79,7 +78,7 @@ const ResumeBuilderStepper = () => {
               ${
                 index < steps.length - 1
                   ? isActive
-                    ? "after:bg-white after:clip-path-triangle-right border-r"
+                    ? "after:bg-white after:clip-path-triangle-right"
                     : "after:bg-blue-50 after:clip-path-triangle-right"
                   : "after:hidden"
               }
@@ -98,6 +97,7 @@ const ResumeBuilderStepper = () => {
             );
           })}
         </div>
+        
 
         {/* Grid Layout */}
         <div className="grid grid-cols-1  gap-6">

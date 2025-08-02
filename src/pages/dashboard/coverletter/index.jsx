@@ -7,8 +7,9 @@ import { Card, CardContent } from "@/components/ui/card";
 import PenIcon from "@/assets/svg/pen-icon";
 import UploadIcon from "@/assets/svg/upload-icon";
 import { useGenerateCoverLetter } from "@/hooks/coverletter.hook";
-import html2pdf from "html2pdf.js";
 import { usePageMeta } from "@/hooks/usePageMeta.hook";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import CoverLetterPDF from "./CoverLetterPDF";
 
 const CoverLetterGenerator = () => {
   const [file, setFile] = useState(null);
@@ -62,20 +63,7 @@ const CoverLetterGenerator = () => {
       );
     }
   };
-  const handleDownloadPDF = () => {
-    if (!previewRef.current) return;
-
-    html2pdf()
-      .set({
-        margin: 0.5,
-        filename: `${form.name || "cover_letter"}.pdf`,
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-      })
-      .from(previewRef.current)
-      .save();
-  };
+  const handleDownloadPDF = () => {};
 
   const handlePrint = () => {
     if (!previewRef.current) return;
@@ -237,12 +225,12 @@ const CoverLetterGenerator = () => {
 
           {/* Buttons */}
           <div className="flex flex-col md:flex-row items-center gap-4 mt-2">
-            <Button variant="outline" className="w-full md:w-auto">
+            {/* <Button variant="outline" className="w-full md:w-auto">
               Sample Prompts
             </Button>
             <Button variant="outline" className="w-full md:w-auto">
               Job Description
-            </Button>
+            </Button> */}
             <Button
               onClick={handleGenerate}
               className="w-full md:w-auto bg-gradient-to-r from-primary to-secondary"
@@ -273,7 +261,7 @@ const CoverLetterGenerator = () => {
                   Generating...
                 </span>
               ) : (
-                "Generate Cover"
+                "Generate Cover Letter"
               )}
             </Button>
           </div>
@@ -287,41 +275,33 @@ const CoverLetterGenerator = () => {
 
         {/* Right Side - Output */}
         {showPreview && isSuccess && data?.data && (
-          <Card
-            ref={previewRef}
-            className="p-8 max-w-xl mx-auto"
-            data-aos="fade-left"
-            style={{ fontFamily: "'Times New Roman', serif" }}
-          >
-            <div className="max-w-xl mx-auto flex justify-end gap-3 mb-2">
-              <Button
-                onClick={handleDownloadPDF}
-                className="bg-blue-600 text-white hover:bg-blue-700"
-              >
-                Download as PDF
-              </Button>
-              <Button
-                onClick={handlePrint}
-                className="bg-gray-600 text-white hover:bg-gray-700"
-              >
-                Print Letter
-              </Button>
-            </div>
+          <div>
+            <Card
+              ref={previewRef}
+              className="p-2 max-w-xl mx-auto"
+              data-aos="fade-left"
+              // style={{ fontFamily: "'Times New Roman', serif" }}
+            >
+              <CardContent className="space-y-6 text-gray-800 text-base leading-relaxed">
+                {/* Header: Your Name & Contact Info */}
+                <div className="mb-8">
+                  {/* <p>{form.company}</p>
+                <p>{form.companyAddress}</p> */}
+                </div>
+                <div className="flex justify-between items-center mb-6">
+                  <div>
+                    <h1 className="text-2xl font-medium">{form.name}</h1>
+                    <p className="text-lg font-medium">{form.title}</p>
+                  </div>
+                  <div className="text-xs">
+                    <p>{new Date().toLocaleDateString()}</p>
+                    <p>{form.email}</p>
+                    <p>{form.phone}</p>
+                  </div>
+                </div>
 
-            <CardContent className="space-y-6 text-gray-800 text-base leading-relaxed">
-              {/* Header: Your Name & Contact Info */}
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold">{form.name}</h1>
-                <p className="text-lg font-medium">{form.title}</p>
-                <p>{form.email}</p>
-                <p>{form.phone}</p>
-                <p>{form.company}</p>
-                <p>{form.companyAddress}</p>
-                <p>{new Date().toLocaleDateString()}</p>
-              </div>
-
-              {/* Recipient Info */}
-              {/* <div className="mb-6">
+                {/* Recipient Info */}
+                {/* <div className="mb-6">
                 <p>
                   {form.hiringManager ? form.hiringManager : "Hiring Manager"}
                 </p>
@@ -329,26 +309,48 @@ const CoverLetterGenerator = () => {
                 <p>{form.companyAddress}</p>
               </div> */}
 
-              {/* Greeting */}
-              <p className="mb-6">
-                Dear{" "}
-                {form.hiringManager ? form.hiringManager : "Hiring Manager"},
-              </p>
+                {/* Greeting */}
+                <p className="mb-6">
+                  Dear{" "}
+                  {form.hiringManager ? form.hiringManager : "Hiring Manager"},
+                </p>
 
-              {/* Letter Body */}
-              <div className="space-y-4 mb-6">
-                <p>{data.data.intro}</p>
-                <p>{data.data.body}</p>
-                <p>{data.data.conclusion}</p>
-              </div>
+                {/* Letter Body */}
+                <div className="space-y-4 mb-6">
+                  <p>{data.data.intro}</p>
+                  <p>{data.data.body}</p>
+                  <p>{data.data.conclusion}</p>
+                </div>
 
-              {/* Closing */}
-              <div>
-                <p>Sincerely,</p>
-                <p className="mt-4 font-semibold">{form.name}</p>
-              </div>
-            </CardContent>
-          </Card>
+                {/* Closing */}
+                <div>
+                  <p>Sincerely,</p>
+                  <p className="mt-4 font-semibold">{form.name}</p>
+                </div>
+              </CardContent>
+            </Card>
+            <div
+              style={{ fontFamily: "'Times New Roman', serif" }}
+              className="max-w-xl mx-auto flex justify-end gap-3 mt-2"
+            >
+              <PDFDownloadLink
+                document={<CoverLetterPDF form={form} data={data} />}
+                fileName={`${form.name || "cover_letter"}.pdf`}
+              >
+                {({ loading }) => (
+                  <Button className="bg-gradient-to-r from-primary to-secondary text-white">
+                    {loading ? "Preparing PDF..." : "Download as PDF"}
+                  </Button>
+                )}
+              </PDFDownloadLink>
+              <Button
+                onClick={handlePrint}
+                className="bg-gradient-to-r from-primary to-secondary text-white "
+              >
+                Print
+              </Button>
+            </div>
+          </div>
         )}
       </div>
     </div>

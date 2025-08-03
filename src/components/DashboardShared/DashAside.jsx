@@ -33,7 +33,7 @@ const menuItems = [
     icon: "CoverLetterIcon",
   },
   {
-    path: "/dashboard/career-goal",
+    path: "/dashboard/career-road-map",
     label: "Career Goal",
     icon: "CareerGoalIcon",
   },

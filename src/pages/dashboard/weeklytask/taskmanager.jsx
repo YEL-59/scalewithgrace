@@ -134,7 +134,7 @@ const TaskManager = () => {
           </Link>
         </div>
       </div>
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 text-white">
         <Button
           variant={filter === "all" ? "default" : "outline"}
           onClick={() => setFilter("all")}

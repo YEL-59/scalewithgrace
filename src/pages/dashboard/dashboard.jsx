@@ -89,6 +89,24 @@ export default function MyDashboard() {
   const overallProgress = dashboard?.completed_percentage ?? 0;
   console.log({ completedPercentage, inProgressPercentage });
   const allgoals = dashboard?.user_career_goals ?? [];
+  // 1. Sort: in_progress first, then completed
+  const sortedGoals = [...allgoals].sort((a, b) => {
+    const aInProgress = a.status === "in_progress";
+    const bInProgress = b.status === "in_progress";
+    return aInProgress === bInProgress ? 0 : aInProgress ? -1 : 1;
+  });
+
+  // 2. First in_progress goal = active
+  const firstIncompleteGoal =
+    sortedGoals.find((g) => g.status === "in_progress") || null;
+  const currentStage = firstIncompleteGoal?.id ?? null;
+
+  // Find the first "in_progress" goal
+  // const firstIncompleteGoal =
+  //allgoals.find((goal) => goal.status === "in_progress") || null;
+
+  // Pass its id as currentStage (or null if all are complete)
+  // const currentStage = firstIncompleteGoal?.id ?? null;
 
   usePageMeta({
     title: "My Dashboard – Karially",
@@ -108,9 +126,9 @@ export default function MyDashboard() {
         </p>
 
         <ProgressTracker
-          currentStage={2}
+          currentStage={currentStage}
           overallProgress={overallProgress}
-          allgoals={allgoals}
+          allgoals={sortedGoals}
         />
 
         {/* upgrade cards part-1*/}

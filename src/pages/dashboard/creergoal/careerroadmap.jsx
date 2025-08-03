@@ -14,22 +14,29 @@ import { useNavigate } from "react-router";
 
 export default function CareerRoadmap() {
   const navigate = useNavigate();
+  // Track which roadmap is selected
   const [selectedRoadmapId, setSelectedRoadmapId] = useState(null);
+
+  // Track locally completed weeks for the current roadmap
   const [completedWeeks, setCompletedWeeks] = useState([]);
 
-  const { data: goals, isLoading, isError } = useGetCareerGoals();
-  const { data: goalData } = useCareerGoalDetails(selectedRoadmapId);
-  const { mutate: completeWeek } = useWeekTaskComplete(completedWeeks);
+  const { data: goals, isLoading, isError } = useGetCareerGoals(); // Fetch all roadmaps
+  const { data: goalData } = useCareerGoalDetails(selectedRoadmapId); // Fetch selected roadmap details
+  const { mutate: completeWeek } = useWeekTaskComplete(completedWeeks); // API to mark week as complete
 
+  // Reset completed weeks when switching roadmap
   useEffect(() => {
     setCompletedWeeks([]);
   }, [selectedRoadmapId]);
+
+  // Auto-select the first roadmap if none is selected
   useEffect(() => {
     if (goals && goals.length > 0 && !selectedRoadmapId) {
       setSelectedRoadmapId(goals[0].id);
     }
   }, [goals, selectedRoadmapId]);
 
+  // Sync local completed weeks with backend data
   useEffect(() => {
     if (goalData?.weeks) {
       const backendCompleted = goalData.weeks
@@ -39,17 +46,23 @@ export default function CareerRoadmap() {
     }
   }, [goalData]);
 
+  // Handle completing a week (checkbox click)
   const handleWeekToggle = (week) => {
     const weekId = week.id;
-    setCompletedWeeks((prev) =>
-      prev.includes(weekId)
-        ? prev.filter((id) => id !== weekId)
-        : [...prev, weekId]
+    // Toggle in local state for instant UI update
+    setCompletedWeeks(
+      (prev) =>
+        prev.includes(weekId)
+          ? prev.filter((id) => id !== weekId) // uncheck
+          : [...prev, weekId] // check
     );
+    // Call API to mark week as complete in backend
     completeWeek(weekId);
   };
 
+  // Get weeks of selected roadmap
   const selectedWeeks = goalData?.weeks || [];
+  // Calculate overall progress %
   const progressPercent =
     selectedWeeks.length > 0
       ? Math.round((completedWeeks.length / selectedWeeks.length) * 100)
@@ -62,6 +75,7 @@ export default function CareerRoadmap() {
     <div className="p-6 ">
       <div className="w-full flex justify-between">
         <div>
+          {/* ---------- Left: Roadmap List ---------- */}
           <h1 className="text-[#020817] font-poppins text-2xl font-bold leading-none">
             Career Roadmap
           </h1>
@@ -87,6 +101,13 @@ export default function CareerRoadmap() {
             </h2>
             {goals.map((goal) => {
               const isSelected = selectedRoadmapId === goal.id;
+              // 🔹 Dynamic percentage for real-time updates
+              const dynamicPercent =
+                isSelected && selectedWeeks.length > 0
+                  ? Math.round(
+                      (completedWeeks.length / selectedWeeks.length) * 100
+                    )
+                  : goal.completion_percentage || 0;
               return (
                 <Button
                   key={goal.id}
@@ -107,13 +128,13 @@ export default function CareerRoadmap() {
                     <span className="text-left">{goal.roadmap_name}</span>
                   </div>
                   <Badge className="text-xs px-2 py-1 bg-blue-100 text-blue-800">
-                    {goal.completion_percentage}%
+                    {dynamicPercent}%
                   </Badge>
                 </Button>
               );
             })}
           </div>
-
+          {/* Progress Card for selected roadmap */}
           {selectedWeeks.length > 0 && (
             <div className="bg-white rounded-md p-5 shadow">
               <h4 className="font-semibold text-sm text-muted-foreground mb-2">
@@ -129,7 +150,7 @@ export default function CareerRoadmap() {
           )}
         </div>
 
-        {/* Right: Weekly Goals */}
+        {/* ---------- Right: Weekly Goals (Stepper) ---------- */}
         <div className="md:w-2/3 space-y-6 mt-6 md:mt-0">
           <h2 className="text-xl font-bold">Weekly Goals</h2>
           <p className="text-sm text-muted-foreground mb-4">
@@ -137,12 +158,13 @@ export default function CareerRoadmap() {
           </p>
 
           <div className="relative pl-5">
-            {/* vertical line */}
+            {/* Vertical line for stepper */}
             <div className="absolute left-[30px] top-[18px] bottom-0 w-px bg-muted-foreground/30 z-0" />
 
             <div className="flex flex-col gap-8 relative z-10">
               {selectedWeeks.map((week, index) => {
                 const isCompleted = completedWeeks.includes(week.id);
+                // Highlight the next incomplete week
                 const nextIncompleteIndex = selectedWeeks.findIndex(
                   (w) => !completedWeeks.includes(w.id)
                 );

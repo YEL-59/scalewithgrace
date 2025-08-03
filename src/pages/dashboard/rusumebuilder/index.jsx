@@ -52,17 +52,17 @@ const ResumeBuilder = () => {
               name="prompt_text"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-[#1E1E1E] text-[18px] font-medium">
+                  <FormLabel className="text-[#020817] text-[18px] font-bold">
                     Let AI do the work!
                   </FormLabel>
-                  <FormLabel className="text-[#1E1E1E] text-[12px] font-normal">
+                  <FormLabel className="text-[#4B5563] text-base max-w-xl font-poppins font-normal">
                     Describe your role in a few words, and we'll generate
                     tailored content for your work experience section.
                   </FormLabel>
                   <FormControl>
                     <Textarea
                       placeholder="Enter prompt or notes…"
-                      className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 min-h-[120px]"
+                      className="bg-[#fff] p-4 rounded-lg w-full focus-visible:ring-0 shadow-none mt-2 min-h-[120px] placeholder:text-base font-poppins"
                       {...field}
                     />
                   </FormControl>
@@ -72,31 +72,35 @@ const ResumeBuilder = () => {
             />
 
             {/* Buttons */}
-            <div className="flex gap-4 mt-6">
-              <Button
+            <div className="flex items-center justify-end gap-4 mt-6">
+              {/* <Button
                 type="button"
                 variant="secondary"
                 className="px-6 py-3 rounded-full"
                 onClick={() => form.reset()}
               >
                 Regenerate
-              </Button>
+              </Button> */}
 
-              <Button
+              <button
                 type="submit"
                 variant="primary"
-                className="px-6 py-3 rounded-full"
+                className="px-6 py-3 rounded-full text-white font-poppins cursor-pointer"
+                style={{
+                  backgroundImage:
+                    "linear-gradient(267deg, #504999 -19.63%, #44a199 110.8%)",
+                }}
                 disabled={isPending}
               >
                 {isPending ? (
-                  <>
+                  <div className="flex items-center justify-center gap-2">
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     Generating...
-                  </>
+                  </div>
                 ) : (
                   "Generate Resume"
                 )}
-              </Button>
+              </button>
             </div>
           </form>
         </Form>

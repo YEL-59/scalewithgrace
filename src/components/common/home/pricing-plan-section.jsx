@@ -29,17 +29,17 @@ const PricingPlan = () => {
               <TabsList className="bg-transparent rounded-full inline-flex mb-6 border border-gray-300">
                 <TabsTrigger
                   value="monthly"
-                  className="relative px-5 py-2 rounded-full text-sm font-normal text-gray-700 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white"
+                  className="relative px-5 py-2 rounded-full text-sm font-light text-white data-[state=active]:font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white"
                 >
                   Monthly
                 </TabsTrigger>
 
                 <TabsTrigger
                   value="yearly"
-                  className=" px-2 py-2 rounded-full text-sm font-normal text-gray-700 data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white flex items-center gap-2 "
+                  className=" px-2 py-2 rounded-full text-sm font-light text-white data-[state=active]:font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white flex items-center gap-2 "
                 >
                   <span>Yearly</span>
-                  <span className="  text-[10px] font-semibold bg-black text-white px-2 py-[2px] rounded-full">
+                  <span className="  text-[10px] font-semibold bg-black/50 text-white px-2 py-[2px] rounded-full">
                     20% OFF
                   </span>
                 </TabsTrigger>

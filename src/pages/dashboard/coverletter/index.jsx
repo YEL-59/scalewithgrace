@@ -8,7 +8,7 @@ import PenIcon from "@/assets/svg/pen-icon";
 import UploadIcon from "@/assets/svg/upload-icon";
 import { useGenerateCoverLetter } from "@/hooks/coverletter.hook";
 import { usePageMeta } from "@/hooks/usePageMeta.hook";
-import { PDFDownloadLink } from "@react-pdf/renderer";
+import { PDFDownloadLink, PDFViewer } from "@react-pdf/renderer";
 import CoverLetterPDF from "./CoverLetterPDF";
 
 const CoverLetterGenerator = () => {
@@ -26,7 +26,7 @@ const CoverLetterGenerator = () => {
   });
 
   const [showDetails, setShowDetails] = useState(false);
-  const previewRef = useRef(null);
+  //const previewRef = useRef(null);
   const fileInputRef = useRef(null);
   const { mutate, data, isPending, isSuccess, error } =
     useGenerateCoverLetter();
@@ -63,31 +63,30 @@ const CoverLetterGenerator = () => {
       );
     }
   };
-  const handleDownloadPDF = () => {};
 
-  const handlePrint = () => {
-    if (!previewRef.current) return;
+  // const handlePrint = () => {
+  //   if (!previewRef.current) return;
 
-    const printWindow = window.open("", "_blank", "width=800,height=600");
-    printWindow.document.write(`
-    <html>
-      <head>
-        <title>Print Cover Letter</title>
-        <style>
-          body {
-            font-family: 'Times New Roman', serif;
-            padding: 40px;
-            line-height: 1.6;
-            color: #1f2937;
-          }
-        </style>
-      </head>
-      <body>
-        ${previewRef.current.innerHTML}
-      </body>
-    </html>
-  `);
-  };
+  //   const printWindow = window.open("", "_blank", "width=800,height=600");
+  //   printWindow.document.write(`
+  //   <html>
+  //     <head>
+  //       <title>Print Cover Letter</title>
+  //       <style>
+  //         body {
+  //           font-family: 'Times New Roman', serif;
+  //           padding: 40px;
+  //           line-height: 1.6;
+  //           color: #1f2937;
+  //         }
+  //       </style>
+  //     </head>
+  //     <body>
+  //       ${previewRef.current.innerHTML}
+  //     </body>
+  //   </html>
+  // `);
+  // };
 
   usePageMeta({
     title: "Cover Letter – Karially",
@@ -276,59 +275,14 @@ const CoverLetterGenerator = () => {
         {/* Right Side - Output */}
         {showPreview && isSuccess && data?.data && (
           <div>
-            <Card
-              ref={previewRef}
-              className="p-2 max-w-xl mx-auto"
-              data-aos="fade-left"
-              // style={{ fontFamily: "'Times New Roman', serif" }}
+            {/* Live PDF Preview */}
+            <PDFViewer
+              width="100%"
+              height="700"
+              style={{ border: "1px solid #ccc", borderRadius: "8px" }}
             >
-              <CardContent className="space-y-6 text-gray-800 text-base leading-relaxed">
-                {/* Header: Your Name & Contact Info */}
-                <div className="mb-8">
-                  {/* <p>{form.company}</p>
-                <p>{form.companyAddress}</p> */}
-                </div>
-                <div className="flex justify-between items-center mb-6">
-                  <div>
-                    <h1 className="text-2xl font-medium">{form.name}</h1>
-                    <p className="text-lg font-medium">{form.title}</p>
-                  </div>
-                  <div className="text-xs">
-                    <p>{new Date().toLocaleDateString()}</p>
-                    <p>{form.email}</p>
-                    <p>{form.phone}</p>
-                  </div>
-                </div>
-
-                {/* Recipient Info */}
-                {/* <div className="mb-6">
-                <p>
-                  {form.hiringManager ? form.hiringManager : "Hiring Manager"}
-                </p>
-                <p>{form.company}</p>
-                <p>{form.companyAddress}</p>
-              </div> */}
-
-                {/* Greeting */}
-                <p className="mb-6">
-                  Dear{" "}
-                  {form.hiringManager ? form.hiringManager : "Hiring Manager"},
-                </p>
-
-                {/* Letter Body */}
-                <div className="space-y-4 mb-6">
-                  <p>{data.data.intro}</p>
-                  <p>{data.data.body}</p>
-                  <p>{data.data.conclusion}</p>
-                </div>
-
-                {/* Closing */}
-                <div>
-                  <p>Sincerely,</p>
-                  <p className="mt-4 font-semibold">{form.name}</p>
-                </div>
-              </CardContent>
-            </Card>
+              <CoverLetterPDF form={form} data={data} />
+            </PDFViewer>
             <div
               style={{ fontFamily: "'Times New Roman', serif" }}
               className="max-w-xl mx-auto flex justify-end gap-3 mt-2"
@@ -343,12 +297,12 @@ const CoverLetterGenerator = () => {
                   </Button>
                 )}
               </PDFDownloadLink>
-              <Button
+              {/* <Button
                 onClick={handlePrint}
                 className="bg-gradient-to-r from-primary to-secondary text-white "
               >
                 Print
-              </Button>
+              </Button> */}
             </div>
           </div>
         )}

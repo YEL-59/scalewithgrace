@@ -88,12 +88,11 @@ export const useMarkWeekCompleted = () => {
   });
 };
 
-// hooks/use-task-completion.hook.js
-
+// hooks/use-task-completion.hook.js single task complete.
 export const useTaskCompletion = () => {
   const { mutate: markWeekCompleted } = useMarkWeekCompleted();
 
-  const { mutate: toggleTask, isPending } = useMutation({
+  const { mutate: completeTask, isPending } = useMutation({
     mutationFn: async ({ taskId }) => {
       const { data } = await axiosPrivate.post(
         `/weekly-tasks/mark-as-complete-single-task/${taskId}`
@@ -105,46 +104,94 @@ export const useTaskCompletion = () => {
     },
   });
 
-  const handleToggle = ({
-    taskId,
-    weekId,
-    currentStatus,
-    tasks,
-    setTaskData,
-  }) => {
-    toggleTask(
+  const handleComplete = ({ taskId, weekId, tasks, setTaskData }) => {
+    completeTask(
       { taskId },
       {
         onSuccess: () => {
+          // ✅ Mark the clicked task as completed (no toggle)
           const updatedTasks = tasks.map((task) =>
-            task.id === taskId
-              ? { ...task, is_completed: !currentStatus }
-              : task
+            task.id === taskId ? { ...task, is_completed: true } : task
           );
 
+          // ✅ Check if all tasks are done
           const allCompleted = updatedTasks.every((task) => task.is_completed);
 
-          // Step 3: If all are done, mark week completed
           if (allCompleted) {
-            markWeekCompleted(weekId);
+            markWeekCompleted(weekId); // backend call
           }
 
-          // Step 4: Update UI
-          setTaskData((prev) => ({
-            ...prev,
+          // ✅ Update UI
+          setTaskData({
             tasks: updatedTasks,
             completed: allCompleted,
-          }));
+          });
         },
       }
     );
   };
 
   return {
-    toggleTask: handleToggle,
+    completeTask: handleComplete,
     isPending,
   };
 };
+
+// export const useTaskCompletion = () => {
+//   const { mutate: markWeekCompleted } = useMarkWeekCompleted();
+
+//   const { mutate: toggleTask, isPending } = useMutation({
+//     mutationFn: async ({ taskId }) => {
+//       const { data } = await axiosPrivate.post(
+//         `/weekly-tasks/mark-as-complete-single-task/${taskId}`
+//       );
+//       return data;
+//     },
+//     onError: () => {
+//       toast.error("Failed to update task");
+//     },
+//   });
+
+//   const handleToggle = ({
+//     taskId,
+//     weekId,
+//     currentStatus,
+//     tasks,
+//     setTaskData,
+//   }) => {
+//     toggleTask(
+//       { taskId },
+//       {
+//         onSuccess: () => {
+//           const updatedTasks = tasks.map((task) =>
+//             task.id === taskId
+//               ? { ...task, is_completed: !currentStatus }
+//               : task
+//           );
+
+//           const allCompleted = updatedTasks.every((task) => task.is_completed);
+
+//           // Step 3: If all are done, mark week completed
+//           if (allCompleted) {
+//             markWeekCompleted(weekId);
+//           }
+
+//           // Step 4: Update UI
+//           setTaskData((prev) => ({
+//             ...prev,
+//             tasks: updatedTasks,
+//             completed: allCompleted,
+//           }));
+//         },
+//       }
+//     );
+//   };
+
+//   return {
+//     toggleTask: handleToggle,
+//     isPending,
+//   };
+// };
 
 // ✅ Create a new weekly task
 export const useAddWeeklyTask = (onSuccessCallback) => {

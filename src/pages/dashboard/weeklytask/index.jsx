@@ -18,8 +18,8 @@ import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const WeeklyTask = () => {
   const navigate = useNavigate();
-  const { form, mutate, isPending } = useWeeklyCareerGoalSet((id) => {
-    navigate(`/dashboard/task-manager/${id}`);
+  const { form, mutate, isPending } = useWeeklyCareerGoalSet(() => {
+    navigate(`/dashboard/task-manager`);
   });
 
   const onSubmit = (values) => {

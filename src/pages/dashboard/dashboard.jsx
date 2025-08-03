@@ -416,7 +416,7 @@ export default function MyDashboard() {
 
           {/* card 2 */}
           <Link to="/dashboard/resume-builder">
-            <div className="bg-white py-[34px] px-[28px] rounded-[36px] col-span-1">
+            <div className="bg-white py-[34px] px-[28px] rounded-[36px] col-span-1 h-full">
               <svg
                 className="bg-[#DCDBEB] rounded-full p-5 size-20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -669,18 +669,18 @@ export default function MyDashboard() {
               </h3>
             </div>
             {/* <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">Task Status</h3> */}
-            <div className="w-full h-full flex flex-col md:flex-row items-center justify-center font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
+            <div className="w-full h-full flex flex-col md:flex-row items-center justify-center font-read shadow-lg my-4 rounded-[20px] p-[46px] bg-white">
               <div>
                 <CircularProgress
                   value={completedPercentage}
-                  size={180}
+                  size={170}
                   strokeWidth={20}
                   showLabel
                   labelClassName="text-xl font-bold"
                   renderLabel={(val) => `${val}%`}
                   style={{ color: "#3BB515" }}
                 />
-                <div className="flex gap-2 items-center text-base md:text-lg xl:text-2xl font-medium">
+                <div className="flex gap-2 items-center justify-center text-base md:text-lg xl:text-2xl font-medium">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="13"
@@ -695,7 +695,7 @@ export default function MyDashboard() {
                       fill="#3BB515"
                     />
                   </svg>
-                  <span className="text-sm md:text-base xl:text-xl">
+                  <span className="text-sm md:text-base  text-center 2xl:text-xl">
                     Complete
                   </span>
                 </div>
@@ -703,7 +703,7 @@ export default function MyDashboard() {
               <div>
                 <CircularProgress
                   value={inProgressPercentage}
-                  size={180}
+                  size={170}
                   strokeWidth={20}
                   showLabel
                   labelClassName="text-xl font-bold"
@@ -738,7 +738,7 @@ export default function MyDashboard() {
                       </linearGradient>
                     </defs>
                   </svg>
-                  <span className="text-sm md:text-base xl:text-xl">
+                  <span className="text-sm md:text-base text-center 2xl:text-xl">
                     In Progress
                   </span>
                 </div>

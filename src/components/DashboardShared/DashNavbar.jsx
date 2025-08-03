@@ -14,6 +14,7 @@ import logo from "../../assets/images/logosvg.svg";
 import { Input } from "../ui/input";
 import { useGetUser } from "@/hooks/auth.hook";
 import { User } from "lucide-react";
+import { useLocation } from "react-router";
 const workspaces = [
   {
     id: 1,
@@ -25,7 +26,15 @@ const workspaces = [
     name: "Logout",
   },
 ];
-
+const routeTitles = [
+  { path: "/dashboard/weeklytask/taskdetails", title: "Task Details" },
+  { path: "/dashboard/weeklytask", title: "Weekly Task" },
+  { path: "/dashboard/resume-builder", title: "Resume Builder" },
+  { path: "/dashboard/cover-letter", title: "Cover Letter" },
+  { path: "/dashboard/career-goal", title: "Career Goal" },
+  { path: "/dashboard/billing", title: "Billing" },
+  { path: "/dashboard", title: "Dashboard" },
+];
 function DashNavbar({ collapsed, onMobileMenuClick }) {
   const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
   const { user, isLoading } = useGetUser();
@@ -40,9 +49,16 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
     }
   };
 
+  const location = useLocation().pathname;
+
+  // Find the first matching route
+  const matchedRoute = routeTitles.find((route) =>
+    location.startsWith(route.path)
+  );
+
   return (
     <div className="bg-[#FFF] w-full text-sm md:text-base sticky top-0 z-50 py-7">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
+      <div className="container mx-auto  flex items-center justify-between">
         {/* Mobile hamburger menu button (visible on small screens) */}
         <button
           onClick={onMobileMenuClick}
@@ -70,12 +86,12 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
           <img src={logo}></img>
         ) : (
           <h2 className="text-[#0A0E1A] text-xl md:text-2xl lg:text-[26px] xl:text-3xl leading-6 md:leading-7 lg:leading-8 xl:leading-9 font-read">
-            Dashboard
+            {matchedRoute?.title || ""}
           </h2>
         )}
 
         {/* search div for dashboard collapsed */}
-        {collapsed && (
+        {/* {collapsed && (
           <div className="hidden sm:flex relative items-center rounded-[40px] border focus-within:ring-1 focus-within:ring-ring pl-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -99,7 +115,7 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
               className="border-0 focus-visible:ring-0 shadow-none px-2"
             />
           </div>
-        )}
+        )} */}
 
         <div className="flex items-center gap-5 overflow-x-auto">
           <div>

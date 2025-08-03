@@ -198,16 +198,16 @@ export const router = createBrowserRouter([
                 path: "resume-builder",
                 element: <ResumeBuilder />,
               },
-              {
-                path: "task-manager",
-                element: <TaskManagerRedirect />,
-              },
+              // {
+              //   path: "task-manager",
+              //   element: <TaskManagerRedirect />,
+              // },
               {
                 path: "weekly-task",
                 element: <WeeklyTask />,
               },
               {
-                path: "task-manager/:weekId",
+                path: "task-manager",
                 element: <TaskManager />,
               },
               {

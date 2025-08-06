@@ -15,7 +15,9 @@ import { Loader2 } from "lucide-react";
 import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const CareerGoal = () => {
+  //const navigate = useNavigate();
   const { form, mutate, isPending } = useCareerGoalSet();
+  //const { data: goals, isLoading } = useGetCareerGoals();
 
   const onSubmit = (values) => {
     mutate(values); // ✅ trigger the mutation with form data
@@ -122,6 +124,7 @@ const CareerGoal = () => {
 
             {/* Buttons */}
             <div className="flex gap-4 mt-6">
+              {/* <Button
               {/* <Button
                 type="button"
                 variant="secondary"

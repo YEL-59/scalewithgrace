@@ -13,11 +13,10 @@ export default function OurFeaturesSection() {
             className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2"
             data-aos="zoom-out-down"
           >
-            Our features
+            {data?.title}
           </h2>
           <p className="text-[#61656B] text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8">
-            Elevate your profile with smart resumes for faster results & more
-            interviews.
+            {data?.description}
           </p>
         </div>
 

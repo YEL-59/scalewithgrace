@@ -24,28 +24,44 @@ export default function Footer() {
   return (
     <footer className="bg-[#191919] text-white font-read">
       <div className="w-11/12 mx-auto py-6 md:py-8 lg:py-12 xl:py-16">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 xl:gap-40 border-b border-[#45494F] py-16">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 xl:gap-40 border-b border-[#45494F] py-5">
           <div className="flex-2/5 text-sm md:text-[16.5px] lg:text-[18.5px] xl:text-[19px]">
-            <img className="h-20" src={data?.logo || footerLogo}></img>
+            <img
+              className="h-20 rounded-md"
+              src={data?.logo || footerLogo}
+            ></img>
             <p className="mt-6 md:mt-9 lg:mt-11  xl:mt-[52px]">
               {data?.description ||
                 " Join our newsletter to stay up to date on features and releases."}
             </p>
 
-            <div className="mt-5 flex gap-3 lg:gap-4 xl:gap-5 font-poppins">
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter Your Mail"
-                className="border border-[#717171] rounded-[133px] py-3 px-4 md:py-4 md:px-5 w-full text-start"
-              />
-              <button
-                disabled={isPending}
-                onClick={handleSubscribe}
-                className="bg-gradient-to-r border-black from-primary to-secondary py-3 px-4 md:py-4 md:px-8 rounded-[133px] disabled:opacity-60"
-              >
-                {isPending ? "Submitting..." : "Subscribe"}
-              </button>
+            <div>
+              <div className="mt-5 flex gap-3 lg:gap-4 xl:gap-5 font-poppins">
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter Your Mail"
+                  className="border border-[#717171] rounded-[133px] py-3 px-4 md:py-4 md:px-5 w-full text-start"
+                />
+                <button
+                  disabled={isPending}
+                  onClick={handleSubscribe}
+                  className="bg-gradient-to-r border-black from-primary to-secondary py-3 px-4 md:py-4 md:px-8 rounded-[133px] disabled:opacity-60"
+                >
+                  {isPending ? "Submitting..." : "Subscribe"}
+                </button>
+              </div>
+
+              <div className="mt-2 rounded-lg bg-gradient-to-r from-primary to-secondary font-light flex flex-col gap-2.5 py-3">
+                <Link
+                  to="https://join.slack.com/t/kariallycommunity/shared_invite/zt-3aiv1dqmq-XgB6CcTEBj1x5FXmmtdM8w"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-lg px-5"
+                >
+                  Join Community
+                </Link>
+              </div>
             </div>
           </div>
 

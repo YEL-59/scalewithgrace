@@ -48,6 +48,57 @@ export default function CareerRoadmap() {
     }
   }, [goalData]);
 
+  // Handle completing a week (checkbox click)
+  // const handleWeekToggle = (week) => {
+  //   const weekId = week.id;
+  //   const isCompleted = completedWeeks.includes(weekId);
+
+  //   // 1️⃣ Local optimistic update
+  //   const newCompletedWeeks = isCompleted
+  //     ? completedWeeks.filter((id) => id !== weekId)
+  //     : [...completedWeeks, weekId];
+
+  //   setCompletedWeeks(newCompletedWeeks);
+
+  //   // 2️⃣ Update the selected roadmap cache
+  //   queryClient.setQueryData(["career-goal", selectedRoadmapId], (oldData) => {
+  //     if (!oldData) return oldData;
+  //     return {
+  //       ...oldData,
+  //       weeks: oldData.weeks.map((w) =>
+  //         w.id === weekId
+  //           ? { ...w, status: isCompleted ? "pending" : "completed" }
+  //           : w
+  //       ),
+  //     };
+  //   });
+
+  //   // 3️⃣ Update the global goals list (for left-side badges)
+  //   queryClient.setQueryData(["career-goals"], (oldGoals) => {
+  //     if (!oldGoals) return oldGoals;
+
+  //     return oldGoals.map((goal) => {
+  //       if (goal.id === selectedRoadmapId) {
+  //         const totalWeeks = goal.total_weeks || 0;
+  //         const completed = newCompletedWeeks.length;
+  //         const percentage = totalWeeks
+  //           ? Math.round((completed / totalWeeks) * 100)
+  //           : 0;
+
+  //         return {
+  //           ...goal,
+  //           completed_weeks: completed,
+  //           completion_percentage: percentage,
+  //         };
+  //       }
+  //       return goal;
+  //     });
+  //   });
+
+  //   // 4️⃣ Call API
+  //   completeWeek(weekId);
+  // };
+
   const handleWeekComplete = (week) => {
     const weekId = week.id;
     if (completedWeeks.includes(weekId)) return; // already completed, do nothing
@@ -100,12 +151,6 @@ export default function CareerRoadmap() {
     selectedWeeks.length > 0
       ? Math.round((completedWeeks.length / selectedWeeks.length) * 100)
       : 0;
-  // const progressHeight =
-  //   selectedWeeks.length > 1
-  //     ? ((completedWeeks.length - 1) / (selectedWeeks.length - 1)) * 100
-  //     : completedWeeks.length > 0
-  //     ? 100
-  //     : 0;
 
   if (isLoading) return <p className="p-4">Loading goals...</p>;
   if (isError) return <p className="p-4 text-red-500">Failed to load goals.</p>;
@@ -131,7 +176,7 @@ export default function CareerRoadmap() {
           </Button>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row gap-8 pt-5">
+      <div className="flex gap-8 pt-5">
         {/* Left: Roadmap List */}
         <div className="md:w-1/3 space-y-4">
           <div className="space-y-2 bg-white rounded-md p-5 shadow">
@@ -190,13 +235,14 @@ export default function CareerRoadmap() {
             Click on each step to mark it as completed.
           </p>
 
-          <div className="relative pl-12">
-            {/* Base Line */}
-            <div className="absolute left-14.5 top-3 bottom-3 w-1 bg-gray-200 rounded-full z-0" />
+          <div className="relative pl-5">
+            {/* Vertical line for stepper */}
+            {/* Full Vertical Line */}
+            <div className="absolute left-7 top-5 bottom-0 w-1 bg-gray-200 rounded-full z-0" />
 
-            {/* Gradient Line */}
+            {/* Gradient Fill */}
             <div
-              className="absolute left-14.5 top-3 w-1 rounded-full bg-gradient-to-b from-primary to-secondary transition-all duration-700 z-0"
+              className="absolute left-7 top-5 w-1 rounded-full bg-gradient-to-b from-purple-500 to-teal-400 transition-all duration-700 z-0"
               style={{
                 height: `${
                   selectedWeeks.length
@@ -206,9 +252,10 @@ export default function CareerRoadmap() {
               }}
             />
 
-            <div className="flex flex-col gap-10 relative z-10">
+            <div className="flex flex-col gap-8 relative z-10">
               {selectedWeeks.map((week, index) => {
                 const isCompleted = completedWeeks.includes(week.id);
+                // Highlight the next incomplete week
                 const nextIncompleteIndex = selectedWeeks.findIndex(
                   (w) => !completedWeeks.includes(w.id)
                 );
@@ -217,53 +264,54 @@ export default function CareerRoadmap() {
                 return (
                   <div
                     key={week.id}
-                    className="relative flex items-start gap-6"
+                    className="relative flex items-start gap-4 pl-6"
                   >
-                    {/* Step Circle */}
-                    <div className="relative z-10 flex items-center justify-center w-6 h-6 rounded-full border-2 border-gray-300 bg-white">
+                    <div className="absolute left-0 top-1.5 z-10">
                       <Checkbox
                         checked={isCompleted}
-                        disabled={isCompleted}
+                        disabled={isCompleted} // ✅ once completed, can't uncheck
                         onCheckedChange={() => handleWeekComplete(week)}
-                        className="w-4 h-4 rounded-full border-gray-400 
-                         data-[state=checked]:bg-primary 
-                         z-10"
+                        className="w-5 h-5 data-[state=checked]:bg-primary rounded border-muted-foreground"
                       />
                     </div>
 
-                    {/* Step Card */}
                     <Card
                       className={cn(
-                        "flex-1 px-6 py-4 rounded-xl shadow-sm transition-colors",
+                        "w-full px-6  rounded-xl shadow-sm transition-colors",
                         isCompleted
                           ? "bg-gradient-to-r from-primary to-secondary text-white"
                           : "bg-white"
                       )}
                     >
-                      <span
-                        className={cn(
-                          "text-sm font-medium",
-                          isActive ? "text-primary" : ""
-                        )}
-                      >
-                        Week {index + 1}
-                      </span>
-                      <h4
-                        className={cn(
-                          "text-lg font-semibold",
-                          isCompleted ? "text-white" : "text-gray-800"
-                        )}
-                      >
-                        {week.title}
-                      </h4>
-                      <p
-                        className={cn(
-                          "text-sm",
-                          isCompleted ? "text-white/80" : "text-gray-600"
-                        )}
-                      >
-                        {week.description}
-                      </p>
+                      <div>
+                        <span
+                          className={`text-sm font-medium ${
+                            isActive ? "text-primary" : ""
+                          }`}
+                        >
+                          Week {index + 1}
+                        </span>
+                        <h4
+                          className={cn(
+                            "text-lg font-semibold ",
+                            isCompleted
+                              ? "text-white"
+                              : "text-gray-800 dark:text-gray-100"
+                          )}
+                        >
+                          {week.title}
+                        </h4>
+                        <p
+                          className={cn(
+                            "text-sm",
+                            isCompleted
+                              ? "text-white/80"
+                              : "text-muted-foreground dark:text-gray-300"
+                          )}
+                        >
+                          {week.description}
+                        </p>
+                      </div>
                     </Card>
                   </div>
                 );

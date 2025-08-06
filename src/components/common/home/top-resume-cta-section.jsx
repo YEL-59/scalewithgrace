@@ -12,7 +12,7 @@ export default function TopResumeCTASection() {
       <div className="container w-11/12 mx-auto flex flex-col-reverse md:flex-row gap-5">
         <div className="relative flex-1">
           <div className="">
-            <img src={resumeTop}></img>
+            <img src={data?.image || resumeTop} className="rounded-md"></img>
           </div>
         </div>
 

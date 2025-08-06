@@ -61,49 +61,51 @@ const styles = StyleSheet.create({
   },
 });
 
-const CoverLetterPDF = ({ form, data }) => (
-  <Document>
-    <Page size="A4" style={styles.page}>
-      {/* Header with Stylish Line */}
-      <View style={styles.header}>
-        <View style={styles.topRow}>
-          <View style={styles.nameBlock}>
-            <Text style={styles.name}>{form.name}</Text>
-            <Text style={styles.title}>{form.title}</Text>
+const CoverLetterPDF = ({ data, form }) => {
+  console.log("Rendering PDF with data:", data, "and form:", form);
+  return (
+    <Document>
+      <Page size="A4" style={styles.page}>
+        {/* Header */}
+        <View style={styles.header}>
+          <View style={styles.topRow}>
+            <View style={styles.nameBlock}>
+              <Text style={styles.name}>{form.full_name}</Text>
+              <Text style={styles.title}>{form.title}</Text>
+            </View>
+            <View>
+              <Text style={styles.contact}>{form.email}</Text>
+              <Text style={styles.contact}>{form.phone}</Text>
+            </View>
           </View>
-          <View>
-            <Text style={styles.contact}>{form.email}</Text>
-            <Text style={styles.contact}>{form.phone}</Text>
-          </View>
+          <View style={styles.headerLine} />
         </View>
-        <View style={styles.headerLine} />
-      </View>
 
-      {/* Date and Recipient */}
-      <View style={styles.recipientBlock}>
-        <Text style={styles.dateText}>{new Date().toLocaleDateString()}</Text>
-        {form.hiringManager && <Text>{form.hiringManager}</Text>}
-        {form.company && <Text>{form.company}</Text>}
-        {form.companyAddress && <Text>{form.companyAddress}</Text>}
-      </View>
+        {/* Recipient */}
+        <View style={styles.recipientBlock}>
+          <Text style={styles.dateText}>{new Date().toLocaleDateString()}</Text>
+          {form.company && <Text>{form.company}</Text>}
+          {form.companyAddress && <Text>{form.companyAddress}</Text>}
+        </View>
 
-      {/* Greeting */}
-      <Text style={styles.section}>
-        Dear {form.hiringManager || "Hiring Manager"},
-      </Text>
+        {/* Greeting */}
+        <Text style={styles.section}>
+          Dear {form.hiringManager || "Hiring Manager"},
+        </Text>
 
-      {/* Letter Body */}
-      <Text style={styles.section}>{data?.data?.intro}</Text>
-      <Text style={styles.section}>{data?.data?.body}</Text>
-      <Text style={styles.section}>{data?.data?.conclusion}</Text>
+        {/* Body from AI summary */}
+        <Text style={styles.section}>{data?.intro}</Text>
+        <Text style={styles.section}>{data?.body}</Text>
+        <Text style={styles.section}>{data?.conclusion}</Text>
 
-      {/* Closing */}
-      <View style={styles.closing}>
-        <Text>Sincerely,</Text>
-        <Text style={styles.signature}>{form.name}</Text>
-      </View>
-    </Page>
-  </Document>
-);
+        {/* Closing */}
+        <View style={styles.closing}>
+          <Text>Sincerely,</Text>
+          <Text style={styles.signature}>{form.full_name}</Text>
+        </View>
+      </Page>
+    </Document>
+  );
+};
 
 export default CoverLetterPDF;

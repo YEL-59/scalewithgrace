@@ -1,5 +1,5 @@
 import { axiosPrivate } from "@/lib/axios.config";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 export function useGenerateCoverLetter() {
@@ -39,3 +39,85 @@ export function useGenerateCoverLetter() {
     },
   });
 }
+
+//update  cover letter
+export function useUpdateCoverLetter() {
+  return useMutation({
+    mutationFn: async ({ prompt_text, type }) => {
+      const formData = new FormData();
+      formData.append("prompt_text", prompt_text);
+      formData.append("type", type);
+      console.log("FormData:");
+      for (let pair of formData.entries()) {
+        console.log(pair[0], pair[1]);
+      }
+
+      const response = await axiosPrivate.post(
+        "/cover-letters/generate-text",
+        formData
+      );
+
+      return response.data;
+    },
+    onError: (error) => {
+      if (axios.isAxiosError(error)) {
+        console.error("Axios error message:", error.message);
+        if (error.code === "ECONNABORTED") {
+          console.error("Request timed out");
+        }
+      } else {
+        console.error("Unexpected error:", error);
+      }
+    },
+  });
+}
+//post coverletter
+
+export const useCreateCoverLetter = () => {
+  const { mutate, isPending, isSuccess, data, error } = useMutation({
+    mutationFn: async (payload) => {
+      const response = await axiosPrivate.post("/cover-letters", payload);
+      return response.data;
+    },
+    onSuccess: (res) => {
+      console.log("✅ Resume Created:", res.data);
+    },
+    onError: (err) => {
+      console.error("❌ Resume Creation Failed:", err);
+    },
+  });
+
+  return {
+    createCoverLetter: mutate,
+    isPending,
+    isSuccess,
+    data,
+    error,
+  };
+};
+
+//get single coverletter details data
+export const useCoverLetterDetails = () => {
+  return useQuery({
+    queryKey: ["allCoverLetter"],
+    queryFn: async () => {
+      const { data } = await axiosPrivate.get(`/cover-letters`);
+      return data?.data;
+    },
+  });
+};
+//delete single cover letter
+export const useDeleteCoverLetter = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async (id) => {
+      const { data } = await axiosPrivate.delete(`/cover-letters/${id}`);
+      return data;
+    },
+    onSuccess: () => {
+      // Refetch the cover letter list after deletion
+      queryClient.invalidateQueries(["allCoverLetter"]);
+    },
+  });
+};

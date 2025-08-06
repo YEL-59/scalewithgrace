@@ -30,8 +30,8 @@ const routeTitles = [
   { path: "/dashboard/weeklytask/taskdetails", title: "Task Details" },
   { path: "/dashboard/weeklytask", title: "Weekly Task" },
   { path: "/dashboard/resume-builder", title: "Resume Builder" },
-  { path: "/dashboard/cover-letter", title: "Cover Letter" },
-  { path: "/dashboard/career-goal", title: "Career Goal" },
+  { path: "/dashboard/all-cover-letters", title: "Cover Letter" },
+  { path: "/dashboard/career-road-map", title: "Career Goal" },
   { path: "/dashboard/billing", title: "Billing" },
   { path: "/dashboard", title: "Dashboard" },
 ];

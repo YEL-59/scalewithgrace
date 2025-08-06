@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { axiosPrivate } from "@/lib/axios.config";
 import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router";
 export const useCareerGoalSet = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const form = useForm({
     defaultValues: {
       roadmap_name: "",
@@ -31,6 +32,9 @@ export const useCareerGoalSet = () => {
       toast.success(data?.message || "Goal set successfully!");
       form.reset(); // Optional: reset form on success
       dispatch(setRoadmap(data?.data)); // ✅ Store in Redux
+      // ✅ Invalidate the cache to refetch updated goals
+      queryClient.invalidateQueries(["career-goals"]);
+
       navigate("/dashboard/career-road-map"); // ✅ Redirect
     },
     onError: (error) => {

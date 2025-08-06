@@ -1,8 +1,8 @@
+import { useGetFeaturePageSection } from "@/hooks/feature.hoook";
 import { Link } from "react-router";
-import { useGetHomepageSection } from "@/hooks/home.hook";
 
 const FeaturesTool = () => {
-  const { data } = useGetHomepageSection("feature-section");
+  const { data } = useGetFeaturePageSection("feature-section");
 
   return (
     <section className="w-11/12 mt-16 mb-10 md:mb-16 lg:mt-32 lg:mb-[72px] md:mt-24 xl:mt-40 xl:mb-[85px] mx-auto font-poppins">
@@ -13,11 +13,10 @@ const FeaturesTool = () => {
             className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2"
             data-aos="zoom-out-down"
           >
-            Unlock the tools to succeed
+            {data?.title}
           </h2>
           <p className="text-[#61656B] text-base md:text-lg lg:text-[16px]  leading-5 md:leading-6 lg:leading-8">
-            Discover how ResuMate AI transforms the way you create, customize,
-            and optimize your resume.
+            {data?.description}
           </p>
         </div>
 

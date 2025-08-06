@@ -19,7 +19,7 @@ import SignUp from "@/pages/auth/sign-up";
 import Home from "@/pages/common/home";
 import Billing from "@/pages/dashboard/billing";
 import CoachingCallBooking from "@/pages/dashboard/coaching-call-booking";
-import CoverLetterGenerator from "@/pages/dashboard/coverletter";
+
 import CareerGoal from "@/pages/dashboard/creergoal";
 import CareerRoadmap from "@/pages/dashboard/creergoal/careerroadmap";
 import MyDashboard from "@/pages/dashboard/dashboard";
@@ -42,6 +42,9 @@ import { createBrowserRouter } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import Confirmation from "../pages/auth/Confirmation";
 import DynamicPage from "@/pages/dynamicpage";
+import ShowAllCoverLetter from "@/pages/dashboard/coverletter/ShowallCoverLetter";
+import CoverLetterGenerator from "@/pages/dashboard/coverletter";
+import CoverLetterDetails from "@/pages/dashboard/coverletter/coverletterdetails";
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -186,6 +189,15 @@ export const router = createBrowserRouter([
                 path: "cover-letter",
                 element: <CoverLetterGenerator />,
               },
+              {
+                path: "all-cover-letters",
+                element: <ShowAllCoverLetter />,
+              },
+              {
+                path: "single-cover-letter/:id",
+                element: <CoverLetterDetails />,
+              },
+
               {
                 path: "career-goal",
                 element: <CareerGoal />,

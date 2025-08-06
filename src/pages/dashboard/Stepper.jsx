@@ -9,7 +9,7 @@ function Stepper() {
   const { data: dashboard } = useGetDashboard();
   const weeklyPlan = dashboard?.running_weekly_tasks?.[0]; // First weekly plan
   const weeklyTasks = weeklyPlan?.weekly_tasks ?? [];
-  console.log("Weekly Tasks:", weeklyPlan);
+  console.log("Weekly Tasks:", dashboard);
   const [tasks, setTasks] = useState([]);
   const [currentStep, setCurrentStep] = useState(0);
 

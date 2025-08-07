@@ -49,7 +49,18 @@ export const useCheckoutSubscription = () => {
     },
   });
 };
+//get my-subscription
 
+export const useGetMySubscription = () => {
+  return useQuery({
+    queryKey: ["mysubscription"],
+    queryFn: async () => {
+      const res = await axiosPrivate.get("/my-subscription");
+      return res.data.data;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+};
 //Dashboard Data
 
 export const useGetDashboard = () => {

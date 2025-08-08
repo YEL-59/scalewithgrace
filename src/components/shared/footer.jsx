@@ -5,6 +5,7 @@ import { useGetDynamicPages, useGetSystemSection } from "@/hooks/system.hook";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useSubscribeNewsletter } from "@/hooks/useNewsletter";
+import GradientButton from "./GradientButton";
 
 export default function Footer() {
   const { data, isLoading } = useGetSystemSection("system-info");
@@ -43,13 +44,21 @@ export default function Footer() {
                   placeholder="Enter Your Mail"
                   className="border border-[#717171] rounded-[133px] py-3 px-4 md:py-4 md:px-5 w-full text-start"
                 />
-                <button
+                {/* <button
                   disabled={isPending}
                   onClick={handleSubscribe}
                   className="bg-gradient-to-r border-black from-primary to-secondary py-3 px-4 md:py-4 md:px-8 rounded-[133px] disabled:opacity-60"
                 >
                   {isPending ? "Submitting..." : "Subscribe"}
-                </button>
+                </button> */}
+
+                <GradientButton
+                  label={isPending ? "Submitting..." : "Subscribe"}
+                  variant="primary"
+                  size="md"
+                  disabled={isPending}
+                  onClick={handleSubscribe}
+                />
               </div>
 
               <div className="mt-2 rounded-lg bg-gradient-to-r from-primary to-secondary font-light flex flex-col gap-2.5 py-3">

@@ -2,6 +2,7 @@
 import { useGetHomepageSection } from "@/hooks/home.hook";
 import resumeTop from "../../../assets/images/herosection.png";
 import { Link } from "react-router";
+import GradientButton from "@/components/shared/GradientButton";
 
 export default function TopResumeCTASection() {
   const { data } = useGetHomepageSection("trust-section");
@@ -30,12 +31,35 @@ export default function TopResumeCTASection() {
             </p>
 
             <Link to="/dashboard">
-              <button
+              {/* <button
                 className="rounded-[100px] text-sm md:text-bas text-white bg-gradient-to-r  from-primary to-secondary py-3 px-5 mt-2 md:mt-8"
                 data-aos="zoom-in"
               >
                 {data?.button_text}
-              </button>
+              </button> */}
+              <GradientButton
+                label={data?.button_text}
+                variant="primary"
+                size="md"
+                disabled={false}
+                icon={
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                  >
+                    <path
+                      d="M13.0013 7L18.0013 12M18.0013 12L13.0013 17M18.0013 12H2.66797"
+                      stroke="white"
+                      stroke-width="1.5"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                }
+              />
             </Link>
           </div>
         </div>

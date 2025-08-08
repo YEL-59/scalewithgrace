@@ -129,7 +129,12 @@ const PricingCards = ({ plans }) => {
             <Button
               onClick={() => handleCheckout(plan.id)}
               disabled={loadingPlanId === plan.id}
-              className="w-full rounded-full py-5 bg-gradient-to-r from-primary to-secondary text-white text-md font-medium"
+              className={`px-6 py-3 rounded-full text-white font-poppins cursor-pointer
+      transition-all duration-300 ease-in-out
+      hover:scale-105 hover:shadow-lg hover:shadow-green-300/50
+      active:scale-95
+      bg-gradient-to-r from-[#504999] to-[#44a199]
+      disabled:opacity-70 disabled:cursor-not-allowed`}
             >
               {plan.price === "0.00"
                 ? loadingPlanId === plan.id

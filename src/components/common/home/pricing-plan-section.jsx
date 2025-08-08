@@ -88,7 +88,7 @@ const PricingCards = ({ plans }) => {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 container mx-auto">
+    <div className="container mx-auto grid [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))] gap-6 justify-items-center">
       {plans.map((plan) => (
         <div
           key={plan.id}

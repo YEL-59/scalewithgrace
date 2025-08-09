@@ -16,10 +16,65 @@ import { useNavigate } from "react-router";
 //import { useSearchParams } from "react-router";
 
 //sign in
+// export const useSignIn = () => {
+//   //const [params] = useSearchParams();
+//   const navigate = useNavigate();
+//   //const redirectUrl = params.get("redirect");
+
+//   const form = useForm({
+//     resolver: zodResolver(signInSchema),
+//     defaultValues: {
+//       email: "",
+//       password: "",
+//     },
+//   });
+
+//   const { mutate, isPending } = useMutation({
+//     mutationFn: async (credentials) => {
+//       const res = await axiosPublic.post("/login", credentials);
+//       return res.data;
+//     },
+//     onSuccess: (data) => {
+//       if (data?.status) {
+//         toast.success(data?.message || "Sign in successfully");
+//         const token = data?.token;
+//         localStorage.setItem("token", token);
+//         const user = data?.data;
+//         localStorage.setItem("user", JSON.stringify(user));
+
+//         if (data?.status) {
+//           navigate("/dashboard");
+//         } else {
+//           navigate("/");
+//         }
+//       } else {
+//         toast.error(data?.message || "Failed to sign in");
+//       }
+//     },
+//     onError: (error) => {
+//       const message =
+//         error?.response?.data?.message ||
+//         error?.response?.data?.error || // fallback to `data.error`
+//         error.message ||
+//         "Failed to sign in";
+
+//       // Handle email-specific error
+//       if (
+//         typeof message === "string" &&
+//         message.toLowerCase().includes("email")
+//       ) {
+//         form.setError("email", { message });
+//       } else {
+//         toast.error(message);
+//       }
+//     },
+//   });
+
+//   return { form, mutate, isPending };
+// };
+
 export const useSignIn = () => {
-  //const [params] = useSearchParams();
   const navigate = useNavigate();
-  //const redirectUrl = params.get("redirect");
 
   const form = useForm({
     resolver: zodResolver(signInSchema),
@@ -29,6 +84,23 @@ export const useSignIn = () => {
     },
   });
 
+  // 🔹 Resend OTP mutation
+  const { mutate: resendOtp } = useMutation({
+    mutationFn: async (email) => {
+      const res = await axiosPublic.post("/resend-otp", { email });
+      return res.data;
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message || "OTP sent to your email");
+    },
+    onError: (error) => {
+      toast.error(
+        error?.response?.data?.message || error?.message || "Failed to send OTP"
+      );
+    },
+  });
+
+  // 🔹 Sign in mutation
   const { mutate, isPending } = useMutation({
     mutationFn: async (credentials) => {
       const res = await axiosPublic.post("/login", credentials);
@@ -37,28 +109,48 @@ export const useSignIn = () => {
     onSuccess: (data) => {
       if (data?.status) {
         toast.success(data?.message || "Sign in successfully");
-        const token = data?.token;
-        localStorage.setItem("token", token);
-        const user = data?.data;
-        localStorage.setItem("user", JSON.stringify(user));
-
-        if (data?.status) {
-          navigate("/dashboard");
-        } else {
-          navigate("/");
-        }
+        localStorage.setItem("token", data?.token);
+        localStorage.setItem("user", JSON.stringify(data?.data));
+        navigate("/dashboard");
       } else {
-        toast.error(data?.message || "Failed to sign in");
+        // ✅ Handle unverified email
+        if (
+          data?.message?.toLowerCase().includes("not been verified") ||
+          data?.message?.toLowerCase().includes("verify your account")
+        ) {
+          toast.error(data.message);
+          const email = data?.data?.email || form.getValues("email");
+
+          // Auto resend OTP
+          resendOtp(email);
+
+          // Redirect to verify page with email
+          navigate("/otp-verify", { state: { email } });
+        } else {
+          toast.error(data?.message || "Failed to sign in");
+        }
       }
     },
     onError: (error) => {
+      const statusCode = error?.response?.status;
       const message =
         error?.response?.data?.message ||
-        error?.response?.data?.error || // fallback to `data.error`
+        error?.response?.data?.error ||
         error.message ||
         "Failed to sign in";
 
-      // Handle email-specific error
+      const email =
+        error?.response?.data?.data?.email || form.getValues("email");
+
+      // ✅ If 403 → auto resend OTP + redirect
+      if (statusCode === 403) {
+        toast.error(message);
+        resendOtp(email); // auto resend OTP
+        navigate("/otp-verify", { state: { email } });
+        return;
+      }
+
+      // ✅ Handle field errors
       if (
         typeof message === "string" &&
         message.toLowerCase().includes("email")
@@ -461,13 +553,13 @@ export const useGoogleSignIn = () => {
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       try {
-        const token = tokenResponse.access_token;
+        const code = tokenResponse.access_token;
 
         // Step 1: Send token + provider to your backend
         const { data } = await axiosPublic.post(
           "https://www.dashboard.karially.com/api/social-login",
           {
-            token,
+            token: code,
             provider: "google", // ✅ Make sure this matches your backend
           },
           {
@@ -497,7 +589,10 @@ export const useGoogleSignIn = () => {
       console.error("Google login failed");
     },
 
-    flow: "implicit", // or "auth-code" if you switch to backend token exchange
+    // or "auth-code" if you switch to backend token exchange
+    //flow: "auth-code", // ✅ MUST use this for backend login
+    redirect_uri:
+      "https://www.dashboard.karially.com/api/social-login/google/callback",
   });
 
   return handleGoogleLogin;

@@ -2,19 +2,25 @@ import { useState, useRef } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 import PenIcon from "@/assets/svg/pen-icon";
 import UploadIcon from "@/assets/svg/upload-icon";
-import { useGenerateCoverLetter } from "@/hooks/coverletter.hook";
-import html2pdf from "html2pdf.js";
+import {
+  useCreateCoverLetter,
+  useGenerateCoverLetter,
+  useUpdateCoverLetter,
+} from "@/hooks/coverletter.hook";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import CoverLetterPDF from "./CoverLetterPDF";
+import { Link } from "react-router";
 
 const CoverLetterGenerator = () => {
   const [file, setFile] = useState(null);
   const [prompt, setPrompt] = useState("");
-  const [showPreview, setShowPreview] = useState(false);
   const [form, setForm] = useState({
-    name: "",
+    full_name: "",
     title: "",
     email: "",
     phone: "",
@@ -22,21 +28,32 @@ const CoverLetterGenerator = () => {
     companyAddress: "",
     hiringManager: "",
   });
-
   const [showDetails, setShowDetails] = useState(false);
-  const previewRef = useRef(null);
   const fileInputRef = useRef(null);
-  const { mutate, data, isPending, isSuccess, error } =
-    useGenerateCoverLetter();
 
+  const [aiLetter, setAiLetter] = useState(null);
+  const [originalLetter, setOriginalLetter] = useState(null);
+  const [hasChanges, setHasChanges] = useState(false); //hide the btn
+  const [isSaved, setIsSaved] = useState(false);
+
+  const { mutate: generateCoverLetter, isPending: isGenerating } =
+    useGenerateCoverLetter();
+  const {
+    createCoverLetter, // mutate function
+    isPending: isSaving,
+  } = useCreateCoverLetter();
+
+  const { mutate: updateCoverLetter, isPending: isUpdating } =
+    useUpdateCoverLetter();
+
+  // 📂 Handle file selection
   const handleFileChange = (e) => {
     const selected = e.target.files?.[0];
-
     const allowedTypes = [
       "application/pdf",
-      "application/msword", // .doc
-      "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-      "text/plain", // .txt
+      "application/msword",
+      "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "text/plain",
     ];
 
     if (selected && allowedTypes.includes(selected.type)) {
@@ -46,67 +63,114 @@ const CoverLetterGenerator = () => {
     }
   };
 
+  // 🎯 Generate AI cover letter
   const handleGenerate = () => {
-    if (!form.name || !form.title || !form.company) {
-      alert("Please fill in your name, job title, and company name.");
+    if (!form.full_name || !form.title || !form.company) {
+      return alert("Please fill in your name, job title, and company name.");
+    }
+    if (!file) return alert("Please upload a resume or job description file.");
+    if (!prompt.trim()) return alert("Please enter a prompt.");
+
+    generateCoverLetter(
+      { prompt_text: prompt, file },
+      {
+        onSuccess: (res) => {
+          const aiBody = res?.data || {};
+          const newLetter = {
+            intro: aiBody.intro || "",
+            body: aiBody.body || "",
+            conclusion: aiBody.conclusion || "",
+          };
+          setAiLetter(newLetter);
+          setOriginalLetter(newLetter); // snapshot for change detection
+        },
+      }
+    );
+  };
+
+  // 🕵 Detect which section changed
+  const getChangedSection = () => {
+    if (!originalLetter || !aiLetter) return null;
+    if (aiLetter.intro !== originalLetter.intro) return "intro";
+    if (aiLetter.body !== originalLetter.body) return "body";
+    if (aiLetter.conclusion !== originalLetter.conclusion) return "conclusion";
+    return null;
+  };
+
+  // 🔄 Update only the changed section
+  const handlePartialUpdate = () => {
+    const changedSection = getChangedSection();
+    if (!changedSection) {
+      alert("No changes detected.");
       return;
     }
 
-    if (file && prompt.trim() !== "") {
-      mutate(
-        { prompt_text: prompt, file },
-        {
-          onSuccess: () => setShowPreview(true),
-        }
-      );
-    }
-  };
-  const handleDownloadPDF = () => {
-    if (!previewRef.current) return;
+    const prompt_text = aiLetter[changedSection]; // only the changed section's current text
 
-    html2pdf()
-      .set({
-        margin: 0.5,
-        filename: `${form.name || "cover_letter"}.pdf`,
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-      })
-      .from(previewRef.current)
-      .save();
+    updateCoverLetter(
+      { prompt_text, type: "cv" },
+      {
+        onSuccess: (res) => {
+          const updatedText = res?.data || prompt_text;
+
+          // Replace only changed section in aiLetter state
+          setAiLetter((prev) => ({
+            ...prev,
+            [changedSection]: updatedText,
+          }));
+
+          // Update originalLetter snapshot too, so next diff works correctly
+          setOriginalLetter((prev) => ({
+            ...prev,
+            [changedSection]: updatedText,
+          }));
+
+          alert(`${changedSection} updated successfully!`);
+          setHasChanges(false);
+        },
+        onError: () => {
+          alert(`Failed to update ${changedSection}`);
+        },
+      }
+    );
   };
 
-  const handlePrint = () => {
-    if (!previewRef.current) return;
+  // 💾 Save final cover letter
+  const handleSave = () => {
+    // if (!aiLetter) return alert("Please generate a cover letter first.");
 
-    const printWindow = window.open("", "_blank", "width=800,height=600");
-    printWindow.document.write(`
-    <html>
-      <head>
-        <title>Print Cover Letter</title>
-        <style>
-          body {
-            font-family: 'Times New Roman', serif;
-            padding: 40px;
-            line-height: 1.6;
-            color: #1f2937;
-          }
-        </style>
-      </head>
-      <body>
-        ${previewRef.current.innerHTML}
-      </body>
-    </html>
-  `);
+    const finalLetter = {
+      intro: aiLetter.intro || "",
+      body: aiLetter.body || "",
+      conclusion: aiLetter.conclusion || "",
+    };
+
+    const payload = {
+      ...form,
+      summary: finalLetter,
+      template_name: "1",
+    };
+
+    createCoverLetter(payload, {
+      onSuccess: (res) => {
+        setIsSaved(true);
+        // alert("Cover letter saved successfully!");
+      },
+      onError: () => {
+        // alert("Failed to save cover letter.");
+      },
+    });
   };
+
+  usePageMeta({
+    title: "Cover Letter – Karially",
+    description: "Generate and customize your cover letter with Karially.",
+  });
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
       {/* Header */}
-      <div
-        className="max-w-7xl mx-auto text-center md:text-left mb-10"
-        data-aos="fade-up"
-      >
+      <div className="max-w-7xl mx-auto text-center md:text-left mb-10">
         <h1 className="text-[#191919] font-poppins text-3xl md:text-5xl lg:text-[64px] font-semibold leading-tight max-w-5xl">
           Build Your Professional Cover Letter
         </h1>
@@ -115,32 +179,21 @@ const CoverLetterGenerator = () => {
         </p>
       </div>
 
-      {/* Main Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto items-start">
-        {/* Left Side */}
-        <Card
-          className="p-6 flex flex-col justify-between gap-6 border-0 shadow-xl h-auto max-h-[750px]"
-          data-aos="fade-right"
-        >
-          {/* Upload Area */}
+        {/* Left Side - Input Area */}
+        <Card className="p-6 flex flex-col gap-6 border-0 shadow-xl">
+          {/* File Upload */}
           <div>
-            <div className="border border-dashed border-gray-300 bg-[#F6F8FE] rounded-md p-6 flex flex-col items-center justify-center cursor-pointer">
+            <div
+              className="border border-dashed border-gray-300 bg-[#F6F8FE] rounded-md p-6 flex flex-col items-center justify-center cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}
+            >
               <UploadIcon className="w-10 h-5 text-gray-500" />
-              <h2 className="text-[#020817] text-center font-poppins text-[16px] font-normal leading-none mb-2 mt-2">
+              <h2 className="text-[#020817] text-center font-poppins text-[16px] font-normal mb-2 mt-2">
                 Upload your Resume / Job Description
               </h2>
-              <span className="text-[#6B7280] text-center font-poppins text-[14px] font-normal leading-none mb-2">
-                Drag and drop your resume/job description or click to browse
-              </span>
-              <Button
-                type="button"
-                onClick={() => fileInputRef.current?.click()}
-                className="bg-gradient-to-r from-primary to-secondary rounded-full font-normal mb-1"
-              >
-                Select File
-              </Button>
-              <span className="text-[#6B7280] text-center font-poppins text-[14px] font-normal leading-none">
-                Supported formats: PDF
+              <span className="text-[#6B7280] text-center font-poppins text-[14px]">
+                Supported formats: PDF, DOC, DOCX, TXT
               </span>
               <Input
                 ref={fileInputRef}
@@ -174,7 +227,8 @@ const CoverLetterGenerator = () => {
               onChange={(e) => setPrompt(e.target.value)}
             />
           </div>
-          {/* Toggle Button */}
+
+          {/* Personal Info */}
           <Button
             variant="outline"
             onClick={() => setShowDetails((prev) => !prev)}
@@ -183,168 +237,200 @@ const CoverLetterGenerator = () => {
             {showDetails ? "Hide Personal Info" : "Add Personal Info"}
           </Button>
 
-          {/* Conditional Personal Info Form */}
           {showDetails && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-              <Input
-                placeholder="Your Full Name"
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-              />
-              <Input
-                placeholder="Your Job Title (e.g., Frontend Developer)"
-                value={form.title}
-                onChange={(e) => setForm({ ...form, title: e.target.value })}
-              />
-              <Input
-                placeholder="Email"
-                type="email"
-                value={form.email}
-                onChange={(e) => setForm({ ...form, email: e.target.value })}
-              />
-              <Input
-                placeholder="Phone Number"
-                type="tel"
-                value={form.phone}
-                onChange={(e) => setForm({ ...form, phone: e.target.value })}
-              />
-              <Input
-                placeholder="Company Name"
-                value={form.company}
-                onChange={(e) => setForm({ ...form, company: e.target.value })}
-              />
-              <Input
-                placeholder="Company Address"
-                value={form.companyAddress}
-                onChange={(e) =>
-                  setForm({ ...form, companyAddress: e.target.value })
-                }
-              />
-              <Input
-                placeholder="Hiring Manager's Name (optional)"
-                value={form.hiringManager}
-                onChange={(e) =>
-                  setForm({ ...form, hiringManager: e.target.value })
-                }
-              />
+              {[
+                { key: "full_name", placeholder: "Your Full Name" },
+                { key: "title", placeholder: "Your Job Title" },
+                { key: "email", placeholder: "Email", type: "email" },
+                { key: "phone", placeholder: "Phone Number", type: "tel" },
+                { key: "company", placeholder: "Company Name" },
+                { key: "companyAddress", placeholder: "Company Address" },
+                { key: "hiringManager", placeholder: "Hiring Manager's Name" },
+              ].map((field) => (
+                <Input
+                  key={field.key}
+                  placeholder={field.placeholder}
+                  type={field.type || "text"}
+                  value={form[field.key]}
+                  onChange={(e) =>
+                    setForm({ ...form, [field.key]: e.target.value })
+                  }
+                />
+              ))}
             </div>
           )}
 
-          {/* Buttons */}
-          <div className="flex flex-col md:flex-row items-center gap-4 mt-2">
-            <Button variant="outline" className="w-full md:w-auto">
-              Sample Prompts
-            </Button>
-            <Button variant="outline" className="w-full md:w-auto">
-              Job Description
-            </Button>
-            <Button
-              onClick={handleGenerate}
-              className="w-full md:w-auto bg-gradient-to-r from-primary to-secondary"
-              disabled={isPending}
-            >
-              {isPending ? (
-                <span className="flex items-center gap-2">
-                  <svg
-                    className="animate-spin h-4 w-4 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                  >
-                    <circle
-                      className="opacity-25"
-                      cx="12"
-                      cy="12"
-                      r="10"
-                      stroke="currentColor"
-                      strokeWidth="4"
-                    />
-                    <path
-                      className="opacity-75"
-                      fill="currentColor"
-                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                    />
-                  </svg>
-                  Generating...
-                </span>
-              ) : (
-                "Generate Cover"
-              )}
-            </Button>
-          </div>
-
-          {error && (
-            <p className="text-red-500 text-sm">
-              Something went wrong. Please try again.
-            </p>
-          )}
+          {/* Generate Button */}
+          <Button
+            onClick={handleGenerate}
+            className="w-full md:w-auto bg-gradient-to-r from-primary to-secondary"
+            disabled={isGenerating}
+          >
+            {isGenerating ? "Generating..." : "Generate Cover Letter"}
+          </Button>
         </Card>
 
-        {/* Right Side - Output */}
-        {showPreview && isSuccess && data?.data && (
-          <Card
-            ref={previewRef}
-            className="p-8 max-w-xl mx-auto"
-            data-aos="fade-left"
-            style={{ fontFamily: "'Times New Roman', serif" }}
-          >
-            <div className="max-w-xl mx-auto flex justify-end gap-3 mb-2">
-              <Button
-                onClick={handleDownloadPDF}
-                className="bg-blue-600 text-white hover:bg-blue-700"
-              >
-                Download as PDF
-              </Button>
-              <Button
-                onClick={handlePrint}
-                className="bg-gray-600 text-white hover:bg-gray-700"
-              >
-                Print Letter
-              </Button>
-            </div>
+        {/* Right Side - Editable Preview */}
+        <div>
+          {aiLetter ? (
+            <>
+              <div className="bg-white border border-gray-300 rounded-md shadow-sm p-8 h-[700px] overflow-auto font-serif">
+                {/* Header */}
+                <div className="flex justify-between items-start mb-4 border-b border-gray-400 pb-2">
+                  <div>
+                    <h2 className="text-xl font-bold uppercase">
+                      {form.full_name}
+                    </h2>
+                    <p className="text-sm">{form.title}</p>
+                  </div>
+                  <div className="text-right text-xs leading-4">
+                    <p>{form.email}</p>
+                    <p>{form.phone}</p>
+                  </div>
+                </div>
 
-            <CardContent className="space-y-6 text-gray-800 text-base leading-relaxed">
-              {/* Header: Your Name & Contact Info */}
-              <div className="mb-8">
-                <h1 className="text-3xl font-bold">{form.name}</h1>
-                <p className="text-lg font-medium">{form.title}</p>
-                <p>{form.email}</p>
-                <p>{form.phone}</p>
-                <p>{form.company}</p>
-                <p>{form.companyAddress}</p>
-                <p>{new Date().toLocaleDateString()}</p>
-              </div>
-
-              {/* Recipient Info */}
-              {/* <div className="mb-6">
-                <p>
-                  {form.hiringManager ? form.hiringManager : "Hiring Manager"}
+                {/* Date & Company */}
+                <p className="text-xs mb-2">
+                  {new Date().toLocaleDateString()}
                 </p>
-                <p>{form.company}</p>
-                <p>{form.companyAddress}</p>
-              </div> */}
+                {form.company && (
+                  <p className="font-semibold text-sm">{form.company}</p>
+                )}
+                {form.companyAddress && (
+                  <p className="text-xs mb-4">{form.companyAddress}</p>
+                )}
 
-              {/* Greeting */}
-              <p className="mb-6">
-                Dear{" "}
-                {form.hiringManager ? form.hiringManager : "Hiring Manager"},
-              </p>
+                {/* Greeting */}
+                <p className="mb-4">
+                  Dear {form.hiringManager || "Hiring Manager"},
+                </p>
 
-              {/* Letter Body */}
-              <div className="space-y-4 mb-6">
-                <p>{data.data.intro}</p>
-                <p>{data.data.body}</p>
-                <p>{data.data.conclusion}</p>
+                {/* Editable Sections */}
+                {/* <Textarea
+                  className="mb-4 text-justify w-full border-none shadow-none focus:ring-0 resize-none"
+                  rows={4}
+                  value={aiLetter.intro}
+                  onChange={(e) =>
+                    setAiLetter({ ...aiLetter, intro: e.target.value })
+                  }
+                /> */}
+                <Textarea
+                  className="mb-4 text-justify w-full border-none shadow-none focus:ring-0 resize-none"
+                  rows={4}
+                  value={aiLetter.intro}
+                  onChange={(e) => {
+                    const updated = { ...aiLetter, intro: e.target.value };
+                    setAiLetter(updated);
+                    setHasChanges(
+                      updated.intro !== originalLetter?.intro ||
+                        updated.body !== originalLetter?.body ||
+                        updated.conclusion !== originalLetter?.conclusion
+                    );
+                  }}
+                />
+
+                {/* <Textarea
+                  className="mb-4 text-justify w-full border-none shadow-none focus:ring-0 resize-none"
+                  rows={6}
+                  value={aiLetter.body}
+                  onChange={(e) =>
+                    setAiLetter({ ...aiLetter, body: e.target.value })
+                  }
+                /> */}
+                <Textarea
+                  className="mb-4 text-justify w-full border-none shadow-none focus:ring-0 resize-none"
+                  rows={6}
+                  value={aiLetter.body}
+                  onChange={(e) => {
+                    const updated = { ...aiLetter, body: e.target.value };
+                    setAiLetter(updated);
+                    setHasChanges(
+                      updated.intro !== originalLetter?.intro ||
+                        updated.body !== originalLetter?.body ||
+                        updated.conclusion !== originalLetter?.conclusion
+                    );
+                  }}
+                />
+                {/* <Textarea
+                  className="mb-4 text-justify w-full border-none shadow-none focus:ring-0 resize-none"
+                  rows={4}
+                  value={aiLetter.conclusion}
+                  onChange={(e) =>
+                    setAiLetter({ ...aiLetter, conclusion: e.target.value })
+                  }
+                    
+                /> */}
+                <Textarea
+                  className="mb-4 text-justify w-full border-none shadow-none focus:ring-0 resize-none"
+                  rows={6}
+                  value={aiLetter.conclusion}
+                  onChange={(e) => {
+                    const updated = { ...aiLetter, conclusion: e.target.value };
+                    setAiLetter(updated);
+                    setHasChanges(
+                      updated.intro !== originalLetter?.intro ||
+                        updated.body !== originalLetter?.body ||
+                        updated.conclusion !== originalLetter?.conclusion
+                    );
+                  }}
+                />
+
+                {/* Closing */}
+                <div className="mt-6">
+                  <p>Sincerely,</p>
+                  <p className="font-bold mt-2">{form.full_name}</p>
+                </div>
               </div>
 
-              {/* Closing */}
-              <div>
-                <p>Sincerely,</p>
-                <p className="mt-4 font-semibold">{form.name}</p>
+              {/* Action Buttons */}
+              <div className="max-w-xl mx-auto flex justify-between gap-3 mt-2">
+                <Button
+                  onClick={handleSave}
+                  className="bg-green-600 text-white"
+                  disabled={isSaving}
+                >
+                  {isSaving ? "Saving..." : "Save Changes"}
+                </Button>
+
+                {hasChanges && (
+                  <Button
+                    onClick={handlePartialUpdate}
+                    className="bg-blue-600 text-white"
+                    disabled={isUpdating}
+                  >
+                    {isUpdating ? "Updating..." : "Update Changed Section"}
+                  </Button>
+                )}
+
+                {/* <PDFDownloadLink
+                  document={<CoverLetterPDF form={form} data={aiLetter} />}
+                  fileName={`${form.full_name || "cover_letter"}.pdf`}
+                >
+                  {({ loading }) => (
+                    <Button className="bg-gradient-to-r from-primary to-secondary text-white">
+                      {loading ? "Preparing PDF..." : "Download as PDF"}
+                    </Button>
+                  )}
+                </PDFDownloadLink> */}
+                {/* ✅ Navigation to All Cover Letters based after successful save  */}
+                {isSaved && (
+                  <>
+                    <Link to="/dashboard/all-cover-letters">
+                      <Button className="bg-purple-600 text-white">
+                        Go to All Cover Letters
+                      </Button>
+                    </Link>
+                  </>
+                )}
               </div>
-            </CardContent>
-          </Card>
-        )}
+            </>
+          ) : (
+            <div className="w-full h-[700px] flex items-center justify-center border border-dashed border-gray-300 bg-[#F6F8FE] rounded-md text-gray-500">
+              Cover Letter Preview will appear here after generation
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

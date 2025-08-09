@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
 
 const EducationModal = ({ open, onClose, onSave, initialData }) => {
   const { register, handleSubmit, reset } = useForm();
@@ -17,7 +18,7 @@ const EducationModal = ({ open, onClose, onSave, initialData }) => {
     if (initialData) {
       reset(initialData);
     } else {
-      reset(); // Clear form when adding new
+      reset(); // clear form when adding new
     }
   }, [initialData, reset, open]);
 
@@ -62,12 +63,15 @@ const EducationModal = ({ open, onClose, onSave, initialData }) => {
               required
             />
           </div>
-          <Input
+          <Textarea
             {...register("description")}
             placeholder="Optional description or achievements"
           />
+
           <DialogFooter>
-            <Button type="submit">{initialData ? "Update" : "Add"}</Button>
+            <Button type="submit" className="w-full">
+              {initialData ? "Update" : "Add"}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

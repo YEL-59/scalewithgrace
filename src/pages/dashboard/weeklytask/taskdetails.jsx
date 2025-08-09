@@ -37,10 +37,10 @@ const TaskDetail = () => {
     setOpenModal(false);
   });
 
-  const { toggleTask } = useTaskCompletion();
-
+  const { completeTask } = useTaskCompletion();
+  //sorry for the naming convention, this is a bit confusing here are toggle are one time complete toggle not complete.
   const toggleStep = (taskId, isCompleted) => {
-    toggleTask({
+    completeTask({
       taskId,
       weekId,
       currentStatus: isCompleted,

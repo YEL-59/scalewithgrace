@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import image from "../../../assets/images/aboutbg.png";
 import { useGetAboutPageSection } from "@/hooks/about.hook";
+import { Link } from "react-router";
+import GradientButton from "@/components/shared/GradientButton";
 
 const Advertisement = () => {
-  const { data, isLoading } = useGetAboutPageSection("spotlight-section");
+  const { data } = useGetAboutPageSection("spotlight-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
+
   return (
     <div className="relative w-full h-[50vh]">
       {/* Background image */}
@@ -22,7 +24,7 @@ const Advertisement = () => {
           data-aos="fade-up"
         >
           <h2
-            className="text-3xl md:text-4xl font-semibold text-gray-900 mb-4"
+            className="text-xl md:text-4xl font-semibold text-gray-900 mb-4"
             data-aos="fade-right"
             data-aos-delay="200"
           >
@@ -35,13 +37,39 @@ const Advertisement = () => {
           >
             {data?.description}
           </p>
-          <Button
-            data-aos="fade-up"
-            data-aos-delay="400"
-            className="font-read flex gap-1 md:gap-2 py-2 px-3 md:py-5 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10 lg:mt-[45px] text-white bg-gradient-to-r from-primary to-secondary"
-          >
-            {data?.button_text}
-          </Button>
+          <Link to="/dashboard">
+            {/* <Button
+              data-aos="fade-up"
+              data-aos-delay="400"
+              className="font-read flex gap-1 md:gap-2 py-2 px-3 md:py-5 lg:px-7 xl:px-[45px] rounded-[100px] text-sm md:text-base lg:text-lg font-medium lg:font-semibold mt-7 md:mt-10 lg:mt-[45px] text-white bg-gradient-to-r from-primary to-secondary"
+            >
+              {data?.button_text}
+            </Button> */}
+
+            <GradientButton
+              label={data?.button_text}
+              variant="primary"
+              size="md"
+              disabled={false}
+              icon={
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                >
+                  <path
+                    d="M13.0013 7L18.0013 12M18.0013 12L13.0013 17M18.0013 12H2.66797"
+                    stroke="white"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              }
+            />
+          </Link>
         </div>
       </div>
     </div>

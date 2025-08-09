@@ -5,9 +5,9 @@ import image1 from "../../../assets/images/goal1.png";
 import { useGetAboutPageSection } from "@/hooks/about.hook";
 
 const OurGoal = () => {
-  const { data, isLoading } = useGetAboutPageSection("success-story-section");
+  const { data } = useGetAboutPageSection("success-story-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
+
   return (
     <section className="py-20 px-4 bg-white text-center">
       <div className="max-w-4xl mx-auto mb-12">

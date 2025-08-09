@@ -5,16 +5,17 @@ import { Outlet } from "react-router";
 
 // Import your Sheet UI component (example from shadcn/ui)
 import { Sheet, SheetContent, SheetClose } from "@/components/ui/sheet";
+import useScrollToTop from "@/hooks/scroll-top-hook";
 
 export default function DashboardLayout() {
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true); // For sidebar collapse state
   const [sheetOpen, setSheetOpen] = useState(false); // For mobile sheet open
-
+  useScrollToTop(); // Hook to scroll to top on path change
   return (
     <div className="flex h-screen w-full overflow-hidden">
       {/* Sidebar for md+ screens */}
       <aside
-        className={`hidden md:block transition-all duration-300 ${
+        className={`hidden lg:block transition-all duration-300 ${
           collapsed ? "w-20" : "w-64"
         } bg-white border-r h-full`}
       >
@@ -61,7 +62,7 @@ export default function DashboardLayout() {
         </header>
 
         {/* Page Content */}
-        <main className="flex-1 overflow-y-auto bg-gray-50 p-6">
+        <main className="flex-1 overflow-y-auto bg-gray-50 px-4">
           <Outlet />
         </main>
       </div>

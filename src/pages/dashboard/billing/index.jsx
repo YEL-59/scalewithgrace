@@ -14,8 +14,15 @@ import {
 import PricingPlan from "@/components/common/home/pricing-plan-section";
 import Paymenthistory from "@/assets/svg/paymenthistory";
 import Pricing from "@/assets/svg/pricing";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
+import { useGetMySubscription } from "@/hooks/subscription.hook";
+import { format } from "date-fns";
 
 const Billing = () => {
+  usePageMeta({
+    title: "Billing – Karially",
+    description: "Manage your billing and subscription details on Karially.",
+  });
   return (
     <div className=" w-full min-h-screen">
       <section className="relative z-10 py-20 px-4 text-white">
@@ -62,108 +69,74 @@ const Billing = () => {
 };
 
 export function BillingHistoryTable() {
-  const transactions = [
-    {
-      refId: "456789356",
-      date: "Sep 9, 2024, 04:30pm",
-      from: "Mastercard - 3345xxx",
-      plan: "1 month",
-      amount: "$19.00",
-      status: "Pending",
-    },
-    {
-      refId: "456789356",
-      date: "Sep 8, 2024, 03:13pm",
-      from: "Visa - 5466xxxx",
-      plan: "1 month",
-      amount: "$19.00",
-      status: "Completed",
-    },
-    {
-      refId: "456789356",
-      date: "Sep 7, 2024, 01:00pm",
-      from: "Mastercard - 3345xxx",
-      plan: "1 month",
-      amount: "$19.00",
-      status: "Cancelled",
-    },
-    {
-      refId: "456789356",
-      date: "Sep 6, 2024, 07:00am",
-      from: "Mastercard - 3345xxx",
-      plan: "1 month",
-      amount: "$19.00",
-      status: "Pending",
-    },
-    {
-      refId: "456789356",
-      date: "Sep 8, 2024, 03:13pm",
-      from: "Visa - 5466xxxx",
-      plan: "1 Year",
-      amount: "$39.99",
-      status: "Completed",
-    },
-  ];
+  const { data, isLoading, isError } = useGetMySubscription();
 
   const getStatusClass = (status) => {
     switch (status.toLowerCase()) {
-      case "completed":
+      case "active":
         return "bg-green-100 text-green-800";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
       case "cancelled":
         return "bg-red-100 text-red-800";
+      case "inactive":
+        return "bg-yellow-100 text-yellow-800";
       default:
         return "bg-gray-100 text-gray-800";
     }
   };
 
+  if (isLoading) return <div>Loading...</div>;
+  if (isError || !data?.length)
+    return <div>No subscription history found.</div>;
+
   return (
     <Table>
-      {/* <TableCaption>A list of your recent transactions.</TableCaption> */}
-      <TableHeader className="bg-gradient-to-r from-primary to-secondary  h-20 px-5">
-        <TableRow className="hover:bg-transparent ">
-          <TableHead className="text-white rounded-l-md">Ref ID</TableHead>
-          <TableHead className="text-white">Transaction Date</TableHead>
-          <TableHead className="text-white">From</TableHead>
-          <TableHead className="text-white">Plan</TableHead>
-          <TableHead className="text-white">Amount</TableHead>
-          <TableHead className="text-white">Status</TableHead>
-          <TableHead className="text-white rounded-r-md">Actions</TableHead>
+      <TableHeader className="bg-gradient-to-r from-primary to-secondary h-20 px-5">
+        <TableRow className="hover:bg-transparent">
+          <TableHead className="text-white rounded-l-md text-center">
+            Ref ID
+          </TableHead>
+          <TableHead className="text-white text-center">
+            Transaction Date
+          </TableHead>
+          <TableHead className="text-white text-center">From</TableHead>
+          <TableHead className="text-white text-center">Plan</TableHead>
+          <TableHead className="text-white text-center">Amount</TableHead>
+          <TableHead className="text-white rounded-r-md">Status</TableHead>
+          {/* <TableHead className="text-white rounded-r-md">Actions</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>
-        {transactions.map((transaction, index) => (
-          <TableRow key={index}>
+        {data.map((subscription) => (
+          <TableRow key={subscription.id}>
             <TableCell className="font-medium text-black py-5">
-              {transaction.refId}
+              {subscription.stripe_subscription_id || "N/A"}
             </TableCell>
             <TableCell className="font-medium text-black py-5">
-              {transaction.date}
+              {format(new Date(subscription.started_at), "PPpp")}
             </TableCell>
             <TableCell className="font-medium text-black py-5">
-              {transaction.from}
+              Stripe
+            </TableCell>
+            <TableCell className="font-medium text-black py-5 capitalize">
+              {subscription.package?.billing_cycle || "N/A"}
             </TableCell>
             <TableCell className="font-medium text-black py-5">
-              {transaction.plan}
-            </TableCell>
-            <TableCell className="font-medium text-black py-5">
-              {transaction.amount}
+              ${subscription.package?.price || "0.00"}
             </TableCell>
             <TableCell>
               <span
                 className={`px-2 py-1 rounded-md text-xs ${getStatusClass(
-                  transaction.status
+                  subscription.status
                 )}`}
               >
-                {transaction.status}
+                {subscription.status}
               </span>
             </TableCell>
-            <TableCell>
+            {/* <TableCell>
               <button className="text-blue-600 hover:text-blue-800">
                 View
               </button>
-            </TableCell>
+            </TableCell> */}
           </TableRow>
         ))}
       </TableBody>

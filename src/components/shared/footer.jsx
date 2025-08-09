@@ -1,14 +1,17 @@
 import React from "react";
 import footerLogo from "@/assets/images/footer-logo.svg";
 import { Link } from "react-router";
-import { useGetSystemSection } from "@/hooks/system.hook";
+import { useGetDynamicPages, useGetSystemSection } from "@/hooks/system.hook";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { useSubscribeNewsletter } from "@/hooks/useNewsletter";
+import GradientButton from "./GradientButton";
 
 export default function Footer() {
   const { data, isLoading } = useGetSystemSection("system-info");
   const { data: social_link } = useGetSystemSection("social-link");
+  const { data: pages } = useGetDynamicPages();
+  console.log("dynamic-page", pages);
   console.log({ data });
   const [email, setEmail] = useState("");
   const { mutate: subscribe, isPending } = useSubscribeNewsletter();
@@ -22,28 +25,52 @@ export default function Footer() {
   return (
     <footer className="bg-[#191919] text-white font-read">
       <div className="w-11/12 mx-auto py-6 md:py-8 lg:py-12 xl:py-16">
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 xl:gap-40 border-b border-[#45494F] py-16">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 xl:gap-40 border-b border-[#45494F] py-5">
           <div className="flex-2/5 text-sm md:text-[16.5px] lg:text-[18.5px] xl:text-[19px]">
-            <img src={data?.logo || footerLogo}></img>
+            <img
+              className="h-20 rounded-md"
+              src={data?.logo || footerLogo}
+            ></img>
             <p className="mt-6 md:mt-9 lg:mt-11  xl:mt-[52px]">
               {data?.description ||
                 " Join our newsletter to stay up to date on features and releases."}
             </p>
 
-            <div className="mt-5 flex gap-3 lg:gap-4 xl:gap-5 font-poppins">
-              <input
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter Your Mail"
-                className="border border-[#717171] rounded-[133px] py-3 px-4 md:py-4 md:px-5 w-full text-start"
-              />
-              <button
-                disabled={isPending}
-                onClick={handleSubscribe}
-                className="bg-gradient-to-r border-black from-primary to-secondary py-3 px-4 md:py-4 md:px-8 rounded-[133px] disabled:opacity-60"
-              >
-                {isPending ? "Submitting..." : "Subscribe"}
-              </button>
+            <div>
+              <div className="mt-5 flex gap-3 lg:gap-4 xl:gap-5 font-poppins">
+                <input
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter Your Mail"
+                  className="border border-[#717171] rounded-[133px] py-3 px-4 md:py-4 md:px-5 w-full text-start"
+                />
+                {/* <button
+                  disabled={isPending}
+                  onClick={handleSubscribe}
+                  className="bg-gradient-to-r border-black from-primary to-secondary py-3 px-4 md:py-4 md:px-8 rounded-[133px] disabled:opacity-60"
+                >
+                  {isPending ? "Submitting..." : "Subscribe"}
+                </button> */}
+
+                <GradientButton
+                  label={isPending ? "Submitting..." : "Subscribe"}
+                  variant="primary"
+                  size="md"
+                  disabled={isPending}
+                  onClick={handleSubscribe}
+                />
+              </div>
+
+              <div className="mt-2 rounded-lg bg-gradient-to-r from-primary to-secondary font-light flex flex-col gap-2.5 py-3">
+                <Link
+                  to="https://join.slack.com/t/kariallycommunity/shared_invite/zt-3aiv1dqmq-XgB6CcTEBj1x5FXmmtdM8w"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-2 text-lg px-5"
+                >
+                  Join Community
+                </Link>
+              </div>
             </div>
           </div>
 
@@ -51,23 +78,61 @@ export default function Footer() {
             {/* Company List */}
             <div className="">
               <h6 className="font-medium">Company</h6>
-              <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
-                <Link to="/">Home</Link>
-                <Link to="#">About Us</Link>
-                <Link to="#">Features</Link>
-                <Link to="#">Pricing</Link>
-                <Link to="#">Contact</Link>
+              <div className="mt-[21.5px] font-light flex flex-col gap-2.5 text-[16px] text-white hover:text-white/80">
+                <ul>
+                  {[
+                    { name: "Home", href: "/" },
+                    { name: "About Us", href: "/about-Us" },
+                    { name: "Features", href: "/all-features" },
+                    { name: "Pricing", href: "/pricing" },
+                  ].map((link, index) => (
+                    <li key={index} className="mt-0 py-2">
+                      <Link
+                        className="text-[16px] text-white hover:text-white/80"
+                        to={link.href}
+                      >
+                        {link.name}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
 
             {/* others list */}
-            <div className="">
+            {/* <div className="">
               <h6 className="font-medium">Others</h6>
               <div className="mt-[21.5px] font-light flex flex-col gap-2.5">
                 <Link>Privacy policy</Link>
                 <Link>Terms of policies</Link>
                 <Link>Cookies settings</Link>
               </div>
+            </div> */}
+            {/* Resources */}
+            <div className="w-full sm:w-1/2 md:w-1/3 lg:w-[200px]">
+              <p className="text-[18px] font-medium ">Resources</p>
+              <ul>
+                {[{ name: "Pricing", href: "/pricing" }].map((link, index) => (
+                  <li key={index} className="mt-4">
+                    <Link
+                      className="text-[16px] text-white hover:text-white/80"
+                      to={link.href}
+                    >
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
+                {pages?.map((page) => (
+                  <li key={page.id} className="mt-2">
+                    <Link
+                      to={`/page/${page.page_slug}`}
+                      className="text-[16px] text-white hover:text-white/80"
+                    >
+                      {page.page_title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
 
             {/* follow us list */}
@@ -79,19 +144,19 @@ export default function Footer() {
                   key={id}
                   className="mt-[21.5px] font-light flex flex-col gap-2.5"
                 >
-                  <a
-                    href={content.link_url}
+                  <Link
+                    to={content.link_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1 md:gap-2"
+                    className="flex items-center gap-2 text-lg"
                   >
                     <img
                       src={content.image}
                       alt={content.title}
-                      className="h-10 w-10"
+                      className="h-5 w-5"
                     />
                     {content.title}
-                  </a>
+                  </Link>
                 </div>
               ))}
             </div>

@@ -25,3 +25,29 @@ export const useGetFeaturePageSection = (section) => {
     },
   });
 };
+
+//feature page
+
+export const useGetFeatureSection = () => {
+  return useQuery({
+    queryKey: ["feature-home-section"],
+    queryFn: async () => {
+      const { data } = await axiosPublic.get(
+        `/cms/feature-page/feature-section`
+      );
+
+      console.log("data:", data);
+
+      if (!data?.status) {
+        throw new Error(data?.message || `Failed to fetch `);
+      }
+
+      return data.data;
+    },
+    onError: (error) => {
+      const message =
+        error?.response?.data?.message || error.message || `Error loading `;
+      toast.error(message);
+    },
+  });
+};

@@ -12,18 +12,22 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { useCareerGoalSet } from "@/hooks/career-goal.hook";
 import { Loader2 } from "lucide-react";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const CareerGoal = () => {
+  //const navigate = useNavigate();
   const { form, mutate, isPending } = useCareerGoalSet();
+  //const { data: goals, isLoading } = useGetCareerGoals();
 
   const onSubmit = (values) => {
     mutate(values); // ✅ trigger the mutation with form data
     console.log(values);
   };
 
-  const onRegenerate = () => {
-    console.log("regenerate clicked");
-  };
+  usePageMeta({
+    title: "Career Goal – Karially",
+    description: "Set and manage your career goals on Karially.",
+  });
 
   return (
     <div className="min-h-screen bg-[#F9FAFB] p-4 md:p-8">
@@ -120,19 +124,20 @@ const CareerGoal = () => {
 
             {/* Buttons */}
             <div className="flex gap-4 mt-6">
-              <Button
+              {/* <Button
+              {/* <Button
                 type="button"
                 variant="secondary"
                 onClick={onRegenerate}
                 className="px-6 py-3 rounded-full"
               >
                 Regenerate
-              </Button>
+              </Button> */}
 
               <Button
                 type="submit"
                 variant="primary"
-                className="px-6 py-3 rounded-full bg-gradient-to-r from-primary to-secondary"
+                className="px-6 py-3 rounded-full text-white bg-gradient-to-r from-primary to-secondary"
                 disabled={isPending}
               >
                 {isPending && <Loader2 className="h-4 w-4 animate-spin" />}

@@ -19,13 +19,15 @@ import SignUp from "@/pages/auth/sign-up";
 import Home from "@/pages/common/home";
 import Billing from "@/pages/dashboard/billing";
 import CoachingCallBooking from "@/pages/dashboard/coaching-call-booking";
-import CoverLetterGenerator from "@/pages/dashboard/coverletter";
+
 import CareerGoal from "@/pages/dashboard/creergoal";
 import CareerRoadmap from "@/pages/dashboard/creergoal/careerroadmap";
 import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
 import ResumeBuilder from "@/pages/dashboard/rusumebuilder";
-import CVPreview from "@/pages/dashboard/rusumebuilder/CVPreview";
+
+import CVPreview from "@/pages/dashboard/rusumebuilder/CvTemplatePreview";
+
 import CVTemplateGallery from "@/pages/dashboard/rusumebuilder/step/cvtemplategallery";
 import ResumeBuilderStepper from "@/pages/dashboard/rusumebuilder/stepper";
 import WeeklyTask from "@/pages/dashboard/weeklytask";
@@ -41,6 +43,12 @@ import SuccessPage from "@/pages/main/pricing/paymentsuccess";
 import { createBrowserRouter } from "react-router";
 import ProtectedRoute from "./ProtectedRoute";
 import Confirmation from "../pages/auth/Confirmation";
+import DynamicPage from "@/pages/dynamicpage";
+import ShowAllCoverLetter from "@/pages/dashboard/coverletter/ShowallCoverLetter";
+import CoverLetterGenerator from "@/pages/dashboard/coverletter";
+import CoverLetterDetails from "@/pages/dashboard/coverletter/coverletterdetails";
+import Template3 from "@/pages/dashboard/rusumebuilder/cv-template/template3";
+import CVTemplatePreview from "@/pages/dashboard/rusumebuilder/CvTemplatePreview";
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -73,6 +81,7 @@ export const PRODUCTION_READY_PATHS = [
   "/dashboard/task/:id",
   "/dashboard/resumeBuild-step",
   "/dashboard/cv-preview/:templateSlug",
+  "/dashboard/page/:slug",
 ];
 
 export const router = createBrowserRouter([
@@ -88,6 +97,7 @@ export const router = createBrowserRouter([
             index: true,
             element: <Home />,
           },
+          { path: "/page/:slug", element: <DynamicPage /> },
           {
             path: "/about-Us",
             element: <AboutUs />,
@@ -172,6 +182,10 @@ export const router = createBrowserRouter([
                 element: <MyDashboard />,
               },
               {
+                path: "test",
+                element: <Template3 />,
+              },
+              {
                 path: "coach-call",
                 element: <CoachingCallBooking />,
               },
@@ -184,6 +198,15 @@ export const router = createBrowserRouter([
                 element: <CoverLetterGenerator />,
               },
               {
+                path: "all-cover-letters",
+                element: <ShowAllCoverLetter />,
+              },
+              {
+                path: "single-cover-letter/:id",
+                element: <CoverLetterDetails />,
+              },
+
+              {
                 path: "career-goal",
                 element: <CareerGoal />,
               },
@@ -195,16 +218,16 @@ export const router = createBrowserRouter([
                 path: "resume-builder",
                 element: <ResumeBuilder />,
               },
-              {
-                path: "task-manager",
-                element: <TaskManagerRedirect />,
-              },
+              // {
+              //   path: "task-manager",
+              //   element: <TaskManagerRedirect />,
+              // },
               {
                 path: "weekly-task",
                 element: <WeeklyTask />,
               },
               {
-                path: "task-manager/:weekId",
+                path: "task-manager",
                 element: <TaskManager />,
               },
               {
@@ -217,7 +240,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "cv-preview/:templateSlug",
-                element: <CVPreview />,
+                element: <CVTemplatePreview />,
               },
             ],
           },

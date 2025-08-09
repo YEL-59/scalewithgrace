@@ -32,7 +32,10 @@ export default function SignIn() {
 
   return (
     <div className="font-poppins  mx-auto">
-      <img className="mx-auto" src={logo}></img>
+      <Link to="/">
+        {" "}
+        <img className="mx-auto" src={logo}></img>
+      </Link>
 
       {/* Sign-in form */}
       <div className="mx-auto my-4 md:my-5 lg:my-6 xl:my-[30px]">

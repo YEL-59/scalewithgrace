@@ -36,7 +36,16 @@ const ResumeBuilderStepper = () => {
       website: "",
       experiences: [],
       education: [],
+      certifications: [],
+      projects: [],
       skills: [],
+      social_links: {
+        linkedin: "",
+        github: "",
+        twitter: "",
+        website: "",
+      },
+      interests: [],
     },
   });
 
@@ -49,7 +58,12 @@ const ResumeBuilderStepper = () => {
     CVTemplateGallery,
   ][step];
 
-  const next = () => setStep((s) => Math.min(s + 1, steps.length - 1));
+  // const next = () => setStep((s) => Math.min(s + 1, steps.length - 1));
+  const next = methods.handleSubmit((data) => {
+    console.log(`📌 Step ${step + 1} Data:`, data); // log all current form values
+    setStep((s) => Math.min(s + 1, steps.length - 1));
+  });
+
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
   const onSubmit = (data) => {
@@ -61,37 +75,40 @@ const ResumeBuilderStepper = () => {
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className="p-6 space-y-6">
         {/* Stepper */}
-        <div className="flex w-full overflow-x-auto">
+        <div className="flex w-full overflow-x-auto gap-2">
           {steps.map((label, index) => {
             const isActive = index === step;
             return (
               <div
                 key={index}
-                className={`relative flex items-center px-6 py-2 text-sm font-medium 
-              ${
-                isActive
-                  ? "bg-white text-blue-600 border border-blue-400 z-10"
-                  : "bg-blue-50 text-gray-500"
-              }
-              ${index === 0 ? "rounded-l-full" : ""}
-              ${index === steps.length - 1 ? "rounded-r-full" : ""}
-              after:absolute after:top-0 after:right-0 after:h-full after:w-4
-              ${
-                index < steps.length - 1
-                  ? isActive
-                    ? "after:bg-white after:clip-path-triangle-right border-r"
-                    : "after:bg-blue-50 after:clip-path-triangle-right"
-                  : "after:hidden"
-              }
-            `}
+                className={`relative flex items-center px-6 py-3.5 text-sm font-medium select-none
+        ${
+          isActive
+            ? "bg-white text-[#1e3a8a]   z-10 scale-105"
+            : "bg-blue-50 text-gray-500 hover:text-blue-700 cursor-pointer"
+        }
+        transition-transform duration-300 ease-in-out
+        ${index === 0 ? "rounded-l-full" : ""}
+        ${index === steps.length - 1 ? "rounded-r-full" : ""}
+        after:absolute after:top-0 after:right-0 after:h-full after:w-4
+        ${
+          index < steps.length - 1
+            ? isActive
+              ? "after:bg-white after:clip-path-triangle-right"
+              : "after:bg-blue-50 after:clip-path-triangle-right"
+            : "after:hidden"
+        }
+      `}
                 style={{
                   clipPath:
                     index === 0
                       ? "polygon(0 0, 95% 0%, 100% 50%, 95% 100%, 0 100%)"
                       : index === steps.length - 1
                       ? "polygon(0 0, 100% 0%, 100% 100%, 0% 100%, 5% 50%)"
-                      : "polygon(0 0, 95% 0%, 100% 50%, 95% 100%, 0% 100%, 5% 50%)",
+                      : "polygon(0 0, 95% 0%, 100% 50%, 95% 100%, 0 100%, 5% 50%)",
+                  transition: "clip-path 0.3s ease-in-out",
                 }}
+                onClick={() => setStep(index)} // optional, lets user jump steps on click
               >
                 {label}
               </div>
@@ -120,7 +137,7 @@ const ResumeBuilderStepper = () => {
             <button
               type="button"
               onClick={next}
-              className="px-4 py-2 bg-blue-600 text-white rounded"
+              className="px-4 py-2 bg-primary text-white rounded"
             >
               Next
             </button>

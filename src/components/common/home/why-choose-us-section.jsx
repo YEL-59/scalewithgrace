@@ -1,9 +1,7 @@
 import { useGetHomepageSection } from "@/hooks/home.hook";
 
 export default function WhyChooseUsSection() {
-  const { data, isLoading } = useGetHomepageSection("why-choose-us-section");
-
-  if (isLoading) return <p>Loading...</p>;
+  const { data } = useGetHomepageSection("why-choose-us-section");
 
   return (
     <section className="w-full bg-[#F7F7F8] font-poppins">
@@ -28,11 +26,11 @@ export default function WhyChooseUsSection() {
               data-aos="zoom-out-right"
             >
               {/* Icon or Image */}
-              <div className="border border-[#DAE9FD] rounded-full p-5 inline-block mt-3 mb-5 lg:mb-7 xl:mb-11">
+              <div className="border border-[#DAE9FD] rounded-full p-2 inline-block mt-3 mb-5 lg:mb-7 xl:mb-11">
                 <img
                   src={content.image}
                   alt={content.title}
-                  className="h-8 w-8 object-contain"
+                  className="h-10 w-10 object-contain rounded-full"
                 />
               </div>
 

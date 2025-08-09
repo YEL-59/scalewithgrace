@@ -28,12 +28,12 @@ const menuItems = [
     icon: "ResumeBuilderIcon",
   },
   {
-    path: "/dashboard/cover-letter",
+    path: "/dashboard/all-cover-letters",
     label: "Cover Letter",
     icon: "CoverLetterIcon",
   },
   {
-    path: "/dashboard/career-goal",
+    path: "/dashboard/career-road-map",
     label: "Career Goal",
     icon: "CareerGoalIcon",
   },

@@ -61,7 +61,12 @@ const TaskManager = () => {
             ? week.weekly_tasks.every((t) => t.is_completed)
             : false,
         }))
-        // 🧠 Sort: incomplete weeks first, then by date descending
+        // 🧠 Sort: incomplete weeks first, then by date descending **Group incomplete weeks first, then completed weeks.**Within each group, sort by date descending (newest first).
+
+        // .filter((week) => week.tasks.length > 0) // Filter out weeks with no tasks
+        // .map((week) => ({
+        //   ...week,
+        // }))
         .sort((a, b) => {
           if (a.completed === b.completed) {
             return new Date(b.createdAt) - new Date(a.createdAt); // recent first
@@ -129,7 +134,7 @@ const TaskManager = () => {
           </Link>
         </div>
       </div>
-      <div className="flex gap-2 mb-4">
+      <div className="flex gap-2 mb-4 text-white">
         <Button
           variant={filter === "all" ? "default" : "outline"}
           onClick={() => setFilter("all")}

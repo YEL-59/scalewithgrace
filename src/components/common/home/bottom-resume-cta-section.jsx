@@ -3,9 +3,8 @@ import { useGetHomepageSection } from "@/hooks/home.hook";
 import { Link } from "react-router";
 
 export default function BottomResumeCTASection() {
-  const { data, isLoading } = useGetHomepageSection("spotlight-section");
+  const { data } = useGetHomepageSection("spotlight-section");
 
-  if (isLoading) return <p>Loading...</p>;
   return (
     <section className="w-full bg-gradient-to-r from-primary to-secondary md:pt-20 lg:pt-32 font-poppins">
       <div className="container w-11/12 mx-auto flex flex-col md:flex-row gap-7">
@@ -22,7 +21,7 @@ export default function BottomResumeCTASection() {
               {data?.description}
             </p>
 
-            <Link to="/coming">
+            <Link to="/dashboard">
               <button
                 className="rounded-[100px] text-sm md:text-base bg-white py-3 px-5 mt-8"
                 data-aos="zoom-in"

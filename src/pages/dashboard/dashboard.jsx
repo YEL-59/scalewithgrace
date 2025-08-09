@@ -5,6 +5,8 @@ import { Link } from "react-router";
 import ProgressTracker from "./DashprogressTracker";
 import Stepper from "./Stepper";
 import { useGetDashboard } from "@/hooks/subscription.hook";
+import { useGetUser } from "@/hooks/auth.hook";
+import { usePageMeta } from "@/hooks/usePageMeta.hook";
 
 const CircularProgress = ({
   value,
@@ -79,6 +81,7 @@ const CircularProgress = ({
 
 export default function MyDashboard() {
   const { data: dashboard } = useGetDashboard();
+  const { user } = useGetUser();
 
   const completedPercentage = dashboard?.completed_weekly_tasks_percentage ?? 0;
   const inProgressPercentage =
@@ -86,94 +89,120 @@ export default function MyDashboard() {
   const overallProgress = dashboard?.completed_percentage ?? 0;
   console.log({ completedPercentage, inProgressPercentage });
   const allgoals = dashboard?.user_career_goals ?? [];
+  // 1. Sort: in_progress first, then completed
+  const sortedGoals = [...allgoals].sort((a, b) => {
+    const aInProgress = a.status === "in_progress";
+    const bInProgress = b.status === "in_progress";
+    return aInProgress === bInProgress ? 0 : aInProgress ? -1 : 1;
+  });
+
+  // 2. First in_progress goal = active
+  const firstIncompleteGoal =
+    sortedGoals.find((g) => g.status === "in_progress") || null;
+  const currentStage = firstIncompleteGoal?.id ?? null;
+
+  // Find the first "in_progress" goal
+  // const firstIncompleteGoal =
+  //allgoals.find((goal) => goal.status === "in_progress") || null;
+
+  // Pass its id as currentStage (or null if all are complete)
+  // const currentStage = firstIncompleteGoal?.id ?? null;
+
+  usePageMeta({
+    title: "My Dashboard – Karially",
+    description: "Overview of your progress and goals on Karially.",
+  });
   return (
     <div className="bg-[#F9F9F9] font-poppins">
-      <div className="w-11/12 mx-auto py-8">
+      <div className="container mx-auto lg:overflow-y-auto py-8">
         <h1
           className="font-semibold text-2xl md:text-[38px] lg:text-[45px] xl:text-[60px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2 text-[#191919]"
           data-aos="fade-right"
         >
-          Welcome back, Scarlet
+          Welcome back, {user?.name || "User"}!
         </h1>
         <p className="text-[#717171] text-base md:text-lg lg:text-xl xl:text-2xl">
           Let’s take the next step in your career today
         </p>
 
         <ProgressTracker
-          currentStage={2}
+          currentStage={currentStage}
           overallProgress={overallProgress}
-          allgoals={allgoals}
+          allgoals={sortedGoals}
         />
 
         {/* upgrade cards part-1*/}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-8">
           {/* card 1 */}
-          <div className="bg-gradient-to-r from-primary to-secondary p-11 relative rounded-[36px] text-white col-span-1 xl:col-span-2">
-            <h4 className="text-3xl md:text-4xl lg:text-[40px] xl:text-5xl font-semibold">
-              Why upgrade Karially?
-            </h4>
-            <div className="absolute top-6 left-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="45"
-                height="42"
-                viewBox="0 0 45 42"
-                fill="none"
-              >
-                <path
-                  d="M24.822 35.4544C19.2522 34.7218 13.7166 33.8306 8.15924 32.8669"
-                  stroke="white"
-                  stroke-width="3.21791"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M30.0805 24.5313C24.3297 21.7248 19.0388 18.0427 13.556 14.7133"
-                  stroke="white"
-                  stroke-width="3.21791"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M38.6297 15.7749C35.453 11.6365 32.5873 7.0722 30.8186 2.21549"
-                  stroke="white"
-                  stroke-width="3.21791"
-                  stroke-miterlimit="1.5"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-            </div>
-            <p className="text-base md:text-lg lg:text-xl xl:text-2xl my-4">
-              Unlock features that help you build a stronger resume, <br /> prep
-              smarter for interviews.
-            </p>
 
-            <div className="bg-white rounded-[100px] py-[10px] px-4 mt-3 flex gap-4 items-center w-fit">
-              <p className="bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text-sm md:text-base lg:text-lg font-medium">
-                Try for free
-              </p>
-              <button>
+          <div className="bg-gradient-to-r from-primary to-secondary p-11 relative rounded-[36px] text-white col-span-1 xl:col-span-2">
+            <Link to={"/dashboard/billing"}>
+              <h4 className="text-3xl md:text-4xl lg:text-[40px] xl:text-5xl font-semibold">
+                Why upgrade Karially?
+              </h4>
+              <div className="absolute top-6 left-2">
                 <svg
-                  className="bg-gradient-to-r from-primary to-secondary rounded-full p-2 size-9"
                   xmlns="http://www.w3.org/2000/svg"
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
+                  width="45"
+                  height="42"
+                  viewBox="0 0 45 42"
                   fill="none"
                 >
                   <path
-                    d="M3.375 14.625L14.625 3.375M14.625 3.375V11.25M14.625 3.375H6.75"
+                    d="M24.822 35.4544C19.2522 34.7218 13.7166 33.8306 8.15924 32.8669"
                     stroke="white"
-                    stroke-width="1.6875"
+                    stroke-width="3.21791"
+                    stroke-miterlimit="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M30.0805 24.5313C24.3297 21.7248 19.0388 18.0427 13.556 14.7133"
+                    stroke="white"
+                    stroke-width="3.21791"
+                    stroke-miterlimit="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M38.6297 15.7749C35.453 11.6365 32.5873 7.0722 30.8186 2.21549"
+                    stroke="white"
+                    stroke-width="3.21791"
+                    stroke-miterlimit="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
                   />
                 </svg>
-              </button>
-            </div>
+              </div>
+              <p className="text-base md:text-lg lg:text-xl xl:text-2xl my-4">
+                Unlock features that help you build a stronger resume, <br />{" "}
+                prep smarter for interviews.
+              </p>
+
+              <div className="bg-white rounded-[100px] py-[10px] px-4 mt-3 flex gap-4 items-center w-fit">
+                <p className="bg-gradient-to-r from-primary to-secondary text-transparent bg-clip-text text-sm md:text-base lg:text-lg font-medium">
+                  Try for free
+                </p>
+                <button>
+                  <svg
+                    className="bg-gradient-to-r from-primary to-secondary rounded-full p-2 size-9"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 18 18"
+                    fill="none"
+                  >
+                    <path
+                      d="M3.375 14.625L14.625 3.375M14.625 3.375V11.25M14.625 3.375H6.75"
+                      stroke="white"
+                      stroke-width="1.6875"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </button>
+              </div>
+            </Link>
           </div>
 
           {/* card-2 */}
@@ -289,7 +318,7 @@ export default function MyDashboard() {
         </div>
 
         {/* upgrade cards part-2 */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8 my-8">
+        <div className="grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-8 my-8">
           {/* card-1 */}
           <Link to="/dashboard/career-goal">
             <div className="bg-white py-[34px] px-[28px] rounded-[36px] col-span-1">
@@ -405,7 +434,7 @@ export default function MyDashboard() {
 
           {/* card 2 */}
           <Link to="/dashboard/resume-builder">
-            <div className="bg-white py-[34px] px-[28px] rounded-[36px] col-span-1">
+            <div className="bg-white py-[34px] px-[28px] rounded-[36px] col-span-1 h-full">
               <svg
                 className="bg-[#DCDBEB] rounded-full p-5 size-20"
                 xmlns="http://www.w3.org/2000/svg"
@@ -627,7 +656,7 @@ export default function MyDashboard() {
           </Link>
         </div>
 
-        <div className="my-3 grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
+        <div className="my-3 grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-8">
           <div className="col-span-1 lg:col-span-2">
             <h3 className="text-2xl md:text-3xl lg:text-4xl xl:text-[40px] font-medium text-[#191919] mb-3">
               This Week’s Tasks
@@ -637,14 +666,14 @@ export default function MyDashboard() {
             </p>
           </div>
 
-          <div className="col-span-1 mt-10">
+          <div className="col-span-1 mt-10 xl:inline-block hidden">
             <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">
               Task Status
             </h3>
           </div>
         </div>
 
-        <div className="my-3 grid grid-cols-1 lg:grid-cols-3 gap-5 xl:gap-8">
+        <div className="my-3 grid grid-cols-1 xl:grid-cols-3 gap-5 xl:gap-8">
           {/* stepper but functionality stillhave to implement */}
           <div className="col-span-1 lg:col-span-2 max-h-[400px] overflow-y-scroll">
             <Stepper></Stepper>
@@ -652,19 +681,24 @@ export default function MyDashboard() {
 
           {/* progress circle  */}
           <div className="col-span-1 mb-4">
+            <div className="col-span-1 mt-10 inline-block xl:hidden">
+              <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">
+                Task Status
+              </h3>
+            </div>
             {/* <h3 className="text-[#191919] text-2xl md:text-3xl lg:text-4xl xl:text-[40px] mt-5">Task Status</h3> */}
-            <div className="w-full h-full flex items-center justify-center font-read shadow-lg my-4 rounded-[36px] p-[46px] bg-white">
+            <div className="w-full h-full flex flex-col md:flex-row items-center justify-center font-read shadow-lg my-4 rounded-[20px] p-[46px] bg-white">
               <div>
                 <CircularProgress
                   value={completedPercentage}
-                  size={144}
-                  strokeWidth={14}
+                  size={170}
+                  strokeWidth={20}
                   showLabel
                   labelClassName="text-xl font-bold"
                   renderLabel={(val) => `${val}%`}
                   style={{ color: "#3BB515" }}
                 />
-                <div className="flex gap-2 items-center text-base md:text-lg xl:text-2xl font-medium">
+                <div className="flex gap-2 items-center justify-center text-base md:text-lg xl:text-2xl font-medium">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="13"
@@ -679,17 +713,16 @@ export default function MyDashboard() {
                       fill="#3BB515"
                     />
                   </svg>
-                  <span className="text-sm md:text-base xl:text-xl">
+                  <span className="text-sm md:text-base  text-center 2xl:text-xl">
                     Complete
                   </span>
                 </div>
               </div>
-
               <div>
                 <CircularProgress
                   value={inProgressPercentage}
-                  size={144}
-                  strokeWidth={14}
+                  size={170}
+                  strokeWidth={20}
                   showLabel
                   labelClassName="text-xl font-bold"
                   progressClassName={cn("stroke-secondary")}
@@ -723,7 +756,7 @@ export default function MyDashboard() {
                       </linearGradient>
                     </defs>
                   </svg>
-                  <span className="text-sm md:text-base xl:text-xl">
+                  <span className="text-sm md:text-base text-center 2xl:text-xl">
                     In Progress
                   </span>
                 </div>

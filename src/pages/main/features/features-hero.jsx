@@ -2,9 +2,9 @@ import { Badge } from "@/components/ui/badge";
 import { useGetFeaturePageSection } from "@/hooks/feature.hoook";
 
 const FeaturesHero = () => {
-  const { data, isLoading } = useGetFeaturePageSection("hero-section");
+  const { data } = useGetFeaturePageSection("hero-section");
   console.log({ data });
-  if (isLoading) return <p>Loading...</p>;
+
   return (
     <>
       <section className="bg-[#F1F4FF] py-30 px-4 text-center">

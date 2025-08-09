@@ -2,9 +2,7 @@ import { Link } from "react-router";
 import { useGetHomepageSection } from "@/hooks/home.hook";
 
 export default function OurFeaturesSection() {
-  const { data, isLoading } = useGetHomepageSection("feature-section");
-
-  if (isLoading) return <p>Loading...</p>;
+  const { data } = useGetHomepageSection("feature-section");
 
   return (
     <section className="w-11/12 mt-16 mb-10 md:mb-16 lg:mt-32 lg:mb-[72px] md:mt-24 xl:mt-40 xl:mb-[85px] mx-auto font-poppins">
@@ -15,11 +13,10 @@ export default function OurFeaturesSection() {
             className="text-4xl md:text-[44px] lg:text-[52px] xl:text-[64px] leading-10 md:leading-12 lg:leading-14 xl:leading-16 mb-2"
             data-aos="zoom-out-down"
           >
-            Our features
+            {data?.title}
           </h2>
           <p className="text-[#61656B] text-base md:text-lg lg:text-xl xl:text-[22px] leading-5 md:leading-6 lg:leading-8">
-            Elevate your profile with smart resumes for faster results & more
-            interviews.
+            {data?.description}
           </p>
         </div>
 
@@ -32,7 +29,7 @@ export default function OurFeaturesSection() {
               key={item.id}
               className={`flex flex-col md:flex-row ${
                 !isEven ? "md:flex-row-reverse" : ""
-              } gap-5 md:gap-10 lg:gap-16 xl:gap-20 py-7 md:py-10 xl:py-24`}
+              } gap-5 md:gap-10 lg:gap-16 xl:gap-20 py-5`}
             >
               {/* Text Side */}
               <div
@@ -87,7 +84,7 @@ export default function OurFeaturesSection() {
                     </div>
                   ))}
 
-                  <Link to="/coming">
+                  <Link to="/dashboard">
                     <button className="text-[#1B1F25] py-4 px-[22px] border border-[#1B1F25] rounded-[100px] mt-10">
                       {item.button_text}
                     </button>

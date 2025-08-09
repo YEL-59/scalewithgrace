@@ -2,8 +2,10 @@ import { Outlet } from "react-router";
 import authdash from "@/assets/images/authdashboard.svg";
 import authdash2 from "@/assets/images/authdash2.svg";
 import authexpand from "@/assets/images/authexpanded.svg";
+import useScrollToTop from "@/hooks/scroll-top-hook";
 
 export default function AuthLayout() {
+  useScrollToTop();
   return (
     <div className="h-screen grid grid-cols-1 lg:grid-cols-2">
       {/* Left Side - Form */}

@@ -26,24 +26,22 @@ const PricingPlan = () => {
         <div className="container mx-auto text-center mb-14">
           <Tabs defaultValue="monthly" onValueChange={setActiveTab}>
             <div className="flex justify-center">
-              <TabsList className="bg-white p-1 rounded-full inline-flex mb-6">
+              <TabsList className="bg-transparent rounded-full inline-flex mb-6 border border-gray-300">
                 <TabsTrigger
                   value="monthly"
-                  className="px-5 py-2 rounded-full data-[state=active]:bg-gradient-to-r from-primary to-secondary data-[state=active]:text-white text-gray-700"
+                  className="relative px-5 py-2 rounded-full text-sm font-light text-white data-[state=active]:font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white"
                 >
                   Monthly
                 </TabsTrigger>
+
                 <TabsTrigger
                   value="yearly"
-                  className="px-5 py-2 rounded-full data-[state=active]:bg-gradient-to-r from-primary to-secondary data-[state=active]:text-white text-gray-700"
+                  className=" px-2 py-2 rounded-full text-sm font-light text-white data-[state=active]:font-medium data-[state=active]:bg-gradient-to-r data-[state=active]:from-primary data-[state=active]:to-secondary data-[state=active]:text-white flex items-center gap-2 "
                 >
-                  Yearly
-                </TabsTrigger>
-                <TabsTrigger
-                  value="lifetime"
-                  className="px-5 py-2 rounded-full data-[state=active]:bg-gradient-to-r from-primary to-secondary data-[state=active]:text-white text-gray-700"
-                >
-                  Lifetime
+                  <span>Yearly</span>
+                  <span className="  text-[10px] font-semibold bg-black/50 text-white px-2 py-[2px] rounded-full">
+                    20% OFF
+                  </span>
                 </TabsTrigger>
               </TabsList>
             </div>
@@ -73,9 +71,8 @@ const PricingPlan = () => {
 };
 
 const PricingCards = ({ plans }) => {
-  const { mutate: checkoutSubscription, isLoading: isCheckoutLoading } =
-    useCheckoutSubscription();
-
+  const { mutate: checkoutSubscription } = useCheckoutSubscription();
+  const [loadingPlanId, setLoadingPlanId] = useState(null);
   if (!plans?.length) return <p className="text-white">No plans available.</p>;
 
   const handleCheckout = (planId) => {
@@ -83,11 +80,15 @@ const PricingCards = ({ plans }) => {
       toast.error("Invalid plan.");
       return;
     }
-    checkoutSubscription(planId);
+    // checkoutSubscription(planId);
+    setLoadingPlanId(planId);
+    checkoutSubscription(planId, {
+      onSettled: () => setLoadingPlanId(null), // reset loading state after done
+    });
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 container mx-auto">
+    <div className="container mx-auto grid [grid-template-columns:repeat(auto-fit,minmax(280px,1fr))] gap-6 justify-items-center">
       {plans.map((plan) => (
         <div
           key={plan.id}
@@ -127,14 +128,19 @@ const PricingCards = ({ plans }) => {
 
             <Button
               onClick={() => handleCheckout(plan.id)}
-              disabled={isCheckoutLoading}
-              className="w-full rounded-full py-5 bg-gradient-to-r from-primary to-secondary text-white text-md font-medium"
+              disabled={loadingPlanId === plan.id}
+              className={`px-6 py-3 rounded-full text-white font-poppins cursor-pointer
+      transition-all duration-300 ease-in-out
+      hover:scale-105 hover:shadow-lg hover:shadow-green-300/50
+      active:scale-95
+      bg-gradient-to-r from-[#504999] to-[#44a199]
+      disabled:opacity-70 disabled:cursor-not-allowed`}
             >
               {plan.price === "0.00"
-                ? isCheckoutLoading
+                ? loadingPlanId === plan.id
                   ? "Starting..."
                   : "Start for Free"
-                : isCheckoutLoading
+                : loadingPlanId === plan.id
                 ? "Processing..."
                 : "Choose Plan"}
             </Button>

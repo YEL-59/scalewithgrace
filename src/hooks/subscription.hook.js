@@ -40,10 +40,27 @@ export const useCheckoutSubscription = () => {
     onError: (err) => {
       const message = err.response?.data?.message;
       toast.error(message || "Something went wrong.");
+      if (status === 401 || message === "Unauthenticated.") {
+        // toast.error("Your session has expired. Please sign in again.");
+        navigate("/sign-in", { replace: true }); // ✅ redirect to sign-in
+      } else {
+        toast.error(message || "Something went wrong.");
+      }
     },
   });
 };
+//get my-subscription
 
+export const useGetMySubscription = () => {
+  return useQuery({
+    queryKey: ["mysubscription"],
+    queryFn: async () => {
+      const res = await axiosPrivate.get("/my-subscription");
+      return res.data.data;
+    },
+    staleTime: 1000 * 60 * 5,
+  });
+};
 //Dashboard Data
 
 export const useGetDashboard = () => {

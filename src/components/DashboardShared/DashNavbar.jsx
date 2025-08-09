@@ -14,6 +14,7 @@ import logo from "../../assets/images/logosvg.svg";
 import { Input } from "../ui/input";
 import { useGetUser } from "@/hooks/auth.hook";
 import { User } from "lucide-react";
+import { useLocation } from "react-router";
 const workspaces = [
   {
     id: 1,
@@ -25,7 +26,15 @@ const workspaces = [
     name: "Logout",
   },
 ];
-
+const routeTitles = [
+  { path: "/dashboard/weeklytask/taskdetails", title: "Task Details" },
+  { path: "/dashboard/weeklytask", title: "Weekly Task" },
+  { path: "/dashboard/resume-builder", title: "Resume Builder" },
+  { path: "/dashboard/all-cover-letters", title: "Cover Letter" },
+  { path: "/dashboard/career-road-map", title: "Career Goal" },
+  { path: "/dashboard/billing", title: "Billing" },
+  { path: "/dashboard", title: "Dashboard" },
+];
 function DashNavbar({ collapsed, onMobileMenuClick }) {
   const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
   const { user, isLoading } = useGetUser();
@@ -40,13 +49,20 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
     }
   };
 
+  const location = useLocation().pathname;
+
+  // Find the first matching route
+  const matchedRoute = routeTitles.find((route) =>
+    location.startsWith(route.path)
+  );
+
   return (
     <div className="bg-[#FFF] w-full text-sm md:text-base sticky top-0 z-50 py-7">
-      <div className="w-11/12 mx-auto flex items-center justify-between">
+      <div className="container mx-auto  flex items-center justify-between">
         {/* Mobile hamburger menu button (visible on small screens) */}
         <button
           onClick={onMobileMenuClick}
-          className="md:hidden p-2 rounded-md hover:bg-gray-100"
+          className="lg:hidden p-2 rounded-md hover:bg-gray-100"
           aria-label="Open sidebar menu"
         >
           {/* Simple Hamburger Icon */}
@@ -70,13 +86,13 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
           <img src={logo}></img>
         ) : (
           <h2 className="text-[#0A0E1A] text-xl md:text-2xl lg:text-[26px] xl:text-3xl leading-6 md:leading-7 lg:leading-8 xl:leading-9 font-read">
-            Dashboard
+            {matchedRoute?.title || ""}
           </h2>
         )}
 
         {/* search div for dashboard collapsed */}
-        {collapsed && (
-          <div className="relative flex items-center rounded-[40px] border focus-within:ring-1 focus-within:ring-ring pl-2">
+        {/* {collapsed && (
+          <div className="hidden sm:flex relative items-center rounded-[40px] border focus-within:ring-1 focus-within:ring-ring pl-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -96,12 +112,12 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
             <Input
               type="search"
               placeholder="Search"
-              className="border-0 focus-visible:ring-0 shadow-none"
+              className="border-0 focus-visible:ring-0 shadow-none px-2"
             />
           </div>
-        )}
+        )} */}
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-5 overflow-x-auto">
           <div>
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-2 border border-[#ECEEF0] py-2.5 px-3 rounded-[69px]">
@@ -121,7 +137,7 @@ function DashNavbar({ collapsed, onMobileMenuClick }) {
                 <User className="h-6 w-6 text-gray-700" />
 
                 <div className="text-start flex flex-col gap-3 leading-none ml-2">
-                  <span className="text-lg font-nunito leading-7">
+                  <span className="text-lg font-nunito leading-7 hidden sm:inline">
                     {isLoading ? "Loading..." : user?.name ?? "User"}
                   </span>
                 </div>

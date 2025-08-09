@@ -1,234 +1,271 @@
-import { useFormContext, useWatch } from "react-hook-form";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import { X } from "lucide-react";
+import { PlusCircle, Pencil, Trash2 } from "lucide-react";
+import { useFormContext, useWatch } from "react-hook-form";
+import ResumePreview from "../resumePreview";
+import SkillCategoryModal from "../SkillCategoryModal";
+import SocialLinksModal from "../SocialLinksModal";
+import InterestsModal from "../InterestsModal";
 
 const SkillsSection = () => {
-  const { control, setValue, getValues } = useFormContext();
+  const { setValue, control } = useFormContext();
+
+  // Watch all data
   const skills = useWatch({ control, name: "skills" }) || [];
+  const socialLinks = useWatch({ control, name: "social_links" }) || {};
+  const interests = useWatch({ control, name: "interests" }) || [];
 
-  const addCategory = () => {
-    const updated = [...skills, { title: "", badges: [], input: "" }];
-    setValue("skills", updated);
+  // Modals state and edit indices
+  const [openSkillsModal, setOpenSkillsModal] = useState(false);
+  const [skillsEditIndex, setSkillsEditIndex] = useState(null);
+
+  const [openSocialModal, setOpenSocialModal] = useState(false);
+
+  const [openInterestsModal, setOpenInterestsModal] = useState(false);
+
+  // Handlers for lists
+  const handleSaveList = (key, data, editIdx, setEditIdx, setOpen) => {
+    const current =
+      key === "skills"
+        ? [...skills]
+        : key === "interests"
+        ? [...interests]
+        : [];
+    if (key === "skills") {
+      if (editIdx !== null) current[editIdx] = data;
+      else current.push(data);
+      setValue(key, current);
+      setEditIdx(null);
+    } else if (key === "interests") {
+      setValue(key, data); // data is whole interests array from modal
+    }
+    setOpen(false);
   };
 
-  const handleTitleChange = (index, value) => {
-    const updated = [...skills];
-    updated[index].title = value;
-    setValue("skills", updated);
+  // For social links, just set whole object
+  const handleSaveSocial = (data) => {
+    setValue("social_links", data);
+    setOpenSocialModal(false);
   };
 
-  const handleInputChange = (index, value) => {
-    const updated = [...skills];
-    updated[index].input = value;
-    setValue("skills", updated);
+  const handleDelete = (key, index) => {
+    if (key === "skills") {
+      const filtered = skills.filter((_, i) => i !== index);
+      setValue(key, filtered);
+    } else if (key === "interests") {
+      const filtered = interests.filter((_, i) => i !== index);
+      setValue(key, filtered);
+    }
   };
 
-  const handleAddBadge = (index) => {
-    const badge = skills[index].input?.trim();
-    if (!badge) return;
-    const updated = [...skills];
-    updated[index].badges.push(badge);
-    updated[index].input = "";
-    setValue("skills", updated);
-  };
+  const renderList = (title, items, onEdit, onDelete, fields) => (
+    <div className="bg-white rounded-lg p-6 space-y-4 shadow">
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold">{title}</h2>
+        <button
+          onClick={fields.onAdd}
+          className="text-sm text-blue-600 flex items-center gap-1"
+        >
+          <PlusCircle size={18} /> Add {title}
+        </button>
+      </div>
 
-  const removeBadge = (catIdx, badgeIdx) => {
-    const updated = [...skills];
-    updated[catIdx].badges.splice(badgeIdx, 1);
-    setValue("skills", updated);
-  };
+      {!items || items.length === 0 ? (
+        <p className="text-gray-500 italic">
+          No {title.toLowerCase()} added yet.
+        </p>
+      ) : (
+        items.map((item, idx) => (
+          <div key={idx} className="border p-4 rounded-md relative">
+            <div className="absolute top-2 right-2 flex gap-2">
+              {onEdit && (
+                <Button variant="ghost" size="icon" onClick={() => onEdit(idx)}>
+                  <Pencil size={16} />
+                </Button>
+              )}
+              {onDelete && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onDelete(idx)}
+                >
+                  <Trash2 size={16} />
+                </Button>
+              )}
+            </div>
+            {fields.render(item)}
+          </div>
+        ))
+      )}
+    </div>
+  );
 
-  const removeCategory = (index) => {
-    const updated = skills.filter((_, i) => i !== index);
-    setValue("skills", updated);
-  };
-
-  const userDetails = useWatch({ control });
-  const experiences = useWatch({ control, name: "experiences" }) || [];
-  const education = useWatch({ control, name: "education" }) || [];
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Left Side: Input */}
-      <div className="bg-white rounded-lg p-6 space-y-6 shadow">
-        <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold">Skills</h2>
-          <Button variant="outline" onClick={addCategory}>
-            + Add Category
-          </Button>
-        </div>
+      {/* Left: Skills List */}
+      <div className="space-y-6">
+        {renderList(
+          "Skills",
+          skills,
+          (idx) => {
+            setSkillsEditIndex(idx);
+            setOpenSkillsModal(true);
+          },
+          (idx) => handleDelete("skills", idx),
+          {
+            onAdd: () => {
+              setSkillsEditIndex(null);
+              setOpenSkillsModal(true);
+            },
+            render: (skillCategory) => (
+              <>
+                <h3 className="font-semibold text-lg">{skillCategory.title}</h3>
+                {skillCategory.description && (
+                  <p className="text-sm text-gray-600 mb-2">
+                    {skillCategory.description}
+                  </p>
+                )}
+                {skillCategory.badges?.length > 0 && (
+                  <ul className="flex flex-wrap gap-2">
+                    {skillCategory.badges.map((badge, i) => (
+                      <li
+                        key={i}
+                        className="bg-gray-200 px-3 py-1 rounded-full text-sm"
+                      >
+                        {badge.name}{" "}
+                        <span className="italic text-xs">({badge.level})</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </>
+            ),
+          }
+        )}
 
-        {skills.length === 0 ? (
-          <p className="text-gray-500 italic">No skills added yet.</p>
-        ) : (
-          skills.map((cat, idx) => (
-            <div
-              key={idx}
-              className="border rounded-md p-4 space-y-3 relative bg-gray-50"
-            >
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Skill Category (e.g. Frontend)"
-                  value={cat.title}
-                  onChange={(e) => handleTitleChange(idx, e.target.value)}
-                />
-                <Button
-                  onClick={() => removeCategory(idx)}
-                  className=" text-white bg-red-500 px-2 text-xs border "
-                >
-                  Remove
-                </Button>
-              </div>
+        {renderList(
+          "Interests",
+          interests,
+          (idx) => {
+            // Edit interest by opening modal with all interests
+            setOpenInterestsModal(true);
+          },
+          (idx) => handleDelete("interests", idx),
+          {
+            onAdd: () => setOpenInterestsModal(true),
+            render: (interest) => <p className="text-sm">{interest.name}</p>,
+          }
+        )}
 
-              <div className="flex gap-2">
-                <Input
-                  placeholder="Add a skill (e.g. React)"
-                  value={cat.input || ""}
-                  onChange={(e) => handleInputChange(idx, e.target.value)}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter") {
-                      e.preventDefault();
-                      handleAddBadge(idx);
-                    }
-                  }}
-                />
-                <Button type="button" onClick={() => handleAddBadge(idx)}>
-                  Add
-                </Button>
-              </div>
-
-              <div className="flex flex-wrap gap-2">
-                {cat.badges.map((badge, badgeIdx) => (
-                  <div
-                    key={badgeIdx}
-                    className="flex items-center bg-gray-100 rounded-full px-3 py-1 text-sm gap-2 shadow-sm"
-                  >
-                    <span>{badge}</span>
-                    <button
-                      type="button"
-                      onClick={() => removeBadge(idx, badgeIdx)}
-                      className="hover:text-red-600 text-gray-500 focus:outline-none"
+        {renderList(
+          "Social Links",
+          [socialLinks],
+          () => setOpenSocialModal(true),
+          null,
+          {
+            onAdd: () => setOpenSocialModal(true),
+            render: (links) => (
+              <ul className="space-y-1 text-sm">
+                {links.linkedin && (
+                  <li>
+                    LinkedIn:{" "}
+                    <a
+                      href={links.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
                     >
-                      <X className="w-3.5 h-3.5" />
-                    </button>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))
+                      {links.linkedin}
+                    </a>
+                  </li>
+                )}
+                {links.github && (
+                  <li>
+                    GitHub:{" "}
+                    <a
+                      href={links.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      {links.github}
+                    </a>
+                  </li>
+                )}
+                {links.twitter && (
+                  <li>
+                    Twitter:{" "}
+                    <a
+                      href={links.twitter}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      {links.twitter}
+                    </a>
+                  </li>
+                )}
+                {links.website && (
+                  <li>
+                    Website:{" "}
+                    <a
+                      href={links.website}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-600 underline"
+                    >
+                      {links.website}
+                    </a>
+                  </li>
+                )}
+              </ul>
+            ),
+          }
         )}
       </div>
 
-      {/* Right Side: Preview */}
+      {/* Right: Resume Preview */}
       <div className="bg-white rounded-lg p-6 shadow">
         <h2 className="text-2xl font-bold mb-6 border-b pb-2">
           Resume Preview
         </h2>
-
-        <div>
-          {/* Your Details */}
-          <div className="mb-6">
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              Your Details
-            </h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-gray-700 text-sm">
-              <p>
-                <span className="font-medium">First Name:</span>{" "}
-                {userDetails?.firstName || "N/A"}
-              </p>
-              <p>
-                <span className="font-medium">Last Name:</span>{" "}
-                {userDetails?.lastName || "N/A"}
-              </p>
-              <p>
-                <span className="font-medium">Email:</span>{" "}
-                {userDetails?.email || "N/A"}
-              </p>
-              <p>
-                <span className="font-medium">Phone:</span>{" "}
-                {userDetails?.phone || "N/A"}
-              </p>
-            </div>
-          </div>
-
-          {/* Education */}
-          <div>
-            <h3 className="text-xl font-semibold mb-2 text-gray-800">
-              Education
-            </h3>
-            <div className="space-y-5">
-              {education.map((edu, idx) => (
-                <div key={idx} className="border-b pb-4 last:border-none">
-                  <p className="text-base font-medium text-gray-900">
-                    {edu.degree}{" "}
-                    <span className="text-gray-600">— {edu.institution}</span>
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {edu.startDate} - {edu.endDate} | {edu.location}
-                  </p>
-                  {edu.description && (
-                    <p className="text-sm text-gray-700 mt-1">
-                      {edu.description}
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Experience Preview */}
-          <div className="mt-10 p-4 bg-gray-50 rounded-lg shadow">
-            <h3 className="text-xl font-semibold mb-4">Experience Preview</h3>
-            {experiences.length === 0 ? (
-              <p className="italic text-gray-500">No experience added yet.</p>
-            ) : (
-              experiences.map((exp, idx) => (
-                <div key={idx} className="mb-4 border-b pb-2 last:border-none">
-                  <p className="font-medium text-gray-900">
-                    {exp.title}{" "}
-                    <span className="text-gray-600">— {exp.company}</span>
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {exp.startDate} - {exp.endDate} | {exp.location}
-                  </p>
-                  <p className="text-sm italic text-gray-500">{exp.jobType}</p>
-                  <ul className="list-disc ml-6 mt-2 text-gray-700 space-y-1 text-sm">
-                    {exp.points.map((point, i) => (
-                      <li key={i}>{point}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
-        <div className="space-y-5">
-          {skills.length === 0 ? (
-            <p className="italic text-gray-500">No skills added yet.</p>
-          ) : (
-            skills.map((cat, idx) => (
-              <div key={idx}>
-                <h3 className="text-lg font-semibold text-gray-800 mb-2">
-                  {cat.title || "Untitled Category"}
-                </h3>
-                <div className="flex flex-wrap gap-2">
-                  {cat.badges.map((badge, badgeIdx) => (
-                    <Badge
-                      key={badgeIdx}
-                      className="px-2 py-1 text-sm"
-                      variant="secondary"
-                    >
-                      {badge}
-                    </Badge>
-                  ))}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+        <ResumePreview />
       </div>
+
+      {/* Modals */}
+      <SkillCategoryModal
+        open={openSkillsModal}
+        onClose={() => {
+          setOpenSkillsModal(false);
+          setSkillsEditIndex(null);
+        }}
+        onSave={(data) =>
+          handleSaveList(
+            "skills",
+            data,
+            skillsEditIndex,
+            setSkillsEditIndex,
+            setOpenSkillsModal
+          )
+        }
+        initialData={skillsEditIndex !== null ? skills[skillsEditIndex] : null}
+      />
+
+      <SocialLinksModal
+        open={openSocialModal}
+        onClose={() => setOpenSocialModal(false)}
+        onSave={handleSaveSocial}
+        initialData={Object.keys(socialLinks).length ? socialLinks : null}
+      />
+
+      <InterestsModal
+        open={openInterestsModal}
+        onClose={() => setOpenInterestsModal(false)}
+        onSave={(data) =>
+          handleSaveList("interests", data, null, null, setOpenInterestsModal)
+        }
+        initialData={interests}
+      />
     </div>
   );
 };

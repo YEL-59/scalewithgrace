@@ -25,7 +25,7 @@ import CareerRoadmap from "@/pages/dashboard/creergoal/careerroadmap";
 import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
 import ResumeBuilder from "@/pages/dashboard/rusumebuilder";
-import CVPreview from "@/pages/dashboard/rusumebuilder/cvpreview";
+import CVPreview from "@/pages/dashboard/rusumebuilder/CvTemplatePreview";
 import CVTemplateGallery from "@/pages/dashboard/rusumebuilder/step/cvtemplategallery";
 import ResumeBuilderStepper from "@/pages/dashboard/rusumebuilder/stepper";
 import WeeklyTask from "@/pages/dashboard/weeklytask";
@@ -45,6 +45,8 @@ import DynamicPage from "@/pages/dynamicpage";
 import ShowAllCoverLetter from "@/pages/dashboard/coverletter/ShowallCoverLetter";
 import CoverLetterGenerator from "@/pages/dashboard/coverletter";
 import CoverLetterDetails from "@/pages/dashboard/coverletter/coverletterdetails";
+import Template3 from "@/pages/dashboard/rusumebuilder/cv-template/template3";
+import CVTemplatePreview from "@/pages/dashboard/rusumebuilder/CvTemplatePreview";
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -178,6 +180,10 @@ export const router = createBrowserRouter([
                 element: <MyDashboard />,
               },
               {
+                path: "test",
+                element: <Template3 />,
+              },
+              {
                 path: "coach-call",
                 element: <CoachingCallBooking />,
               },
@@ -232,7 +238,7 @@ export const router = createBrowserRouter([
               },
               {
                 path: "cv-preview/:templateSlug",
-                element: <CVPreview />,
+                element: <CVTemplatePreview />,
               },
             ],
           },

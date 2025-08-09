@@ -25,7 +25,9 @@ import CareerRoadmap from "@/pages/dashboard/creergoal/careerroadmap";
 import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
 import ResumeBuilder from "@/pages/dashboard/rusumebuilder";
+
 import CVPreview from "@/pages/dashboard/rusumebuilder/CvTemplatePreview";
+
 import CVTemplateGallery from "@/pages/dashboard/rusumebuilder/step/cvtemplategallery";
 import ResumeBuilderStepper from "@/pages/dashboard/rusumebuilder/stepper";
 import WeeklyTask from "@/pages/dashboard/weeklytask";

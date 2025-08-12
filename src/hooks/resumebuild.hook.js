@@ -80,15 +80,27 @@ export const useCreateResume = () => {
   };
 };
 
-export const fetchResume = async (id) => {
-  const res = await axiosPrivate.get(`/resumes/${id}`);
-  return res.data?.data; // only return the "data" part
-};
-
-export const useResume = (id) => {
+export function useResumeById(resumeId) {
   return useQuery({
-    queryKey: ["resume", id],
-    queryFn: () => fetchResume(id),
-    enabled: !!id, // only run if id is provided
+    queryKey: ["resume", resumeId],
+    queryFn: async () => {
+      const { data } = await axiosPrivate.get(`/resumes/${resumeId}`);
+      return data.data;
+    },
+    enabled: !!resumeId,
+    staleTime: 5 * 60 * 1000,
   });
-};
+}
+
+// export const fetchResume = async (id) => {
+//   const res = await axiosPrivate.get(`/resumes/${id}`);
+//   return res.data?.data; // only return the "data" part
+// };
+
+// export const useResume = (id) => {
+//   return useQuery({
+//     queryKey: ["resume", id],
+//     queryFn: () => fetchResume(id),
+//     enabled: !!id, // only run if id is provided
+//   });
+// };

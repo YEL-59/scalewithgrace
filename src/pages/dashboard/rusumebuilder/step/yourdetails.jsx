@@ -49,6 +49,12 @@ const YourDetails = () => {
       }
     );
   };
+  // const handleImageUpload = (e) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     setValue("image", file); // File object, not base64
+  //   }
+  // };
 
   const onSubmit = (data) => {
     console.log("YourDetails submitted:", data);
@@ -62,6 +68,24 @@ const YourDetails = () => {
       {/* Left Form */}
       <div className="space-y-4 bg-white rounded p-6 h-full">
         <h1 className="text-2xl font-bold mb-6">Contact Information</h1>
+        {/* Image Upload */}
+        {/* <div>
+          <FormLabel>Profile Image</FormLabel>
+          <input
+            name="image"
+            type="file"
+            accept="image/*"
+            onChange={handleImageUpload}
+            className="mt-1"
+          />
+          {values?.image && (
+            <img
+              src={values.image}
+              alt="Profile Preview"
+              className="mt-2 w-24 h-24 object-cover rounded-full border"
+            />
+          )}
+        </div> */}
 
         {/* Basic Info */}
         <div className="grid grid-cols-2 gap-4">

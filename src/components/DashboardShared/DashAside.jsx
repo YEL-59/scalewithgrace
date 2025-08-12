@@ -15,6 +15,7 @@ import {
 import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
 import logo from "../../assets/images/logopng.png";
+import { useGetUser } from "@/hooks/auth.hook";
 
 const menuItems = [
   {
@@ -48,6 +49,9 @@ const menuItems = [
 const AppLayout = ({ collapsed, setCollapsed, sheetOpen, setSheetOpen }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user } = useGetUser();
+
+  const hasActiveSubscription = user?.subcriptions?.length > 0;
 
   return (
     <div className="flex flex-col justify-between h-full px-4 py-6">
@@ -148,8 +152,8 @@ const AppLayout = ({ collapsed, setCollapsed, sheetOpen, setSheetOpen }) => {
         </nav>
       </div>
 
-      {/* Free Trial Upgrade */}
-      {!collapsed && <DashboardBottomBtn />}
+      {/* Free Trial Upgrade — shown only if user has NO subscription */}
+      {!collapsed && !hasActiveSubscription && <DashboardBottomBtn />}
     </div>
   );
 };

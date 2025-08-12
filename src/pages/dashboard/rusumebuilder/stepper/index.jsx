@@ -8,6 +8,8 @@ import SkillsSection from "../step/skillssection";
 import CVTemplateGallery from "../step/cvtemplategallery";
 import { useResume } from "../resumeContext";
 import { useLocation } from "react-router";
+import { useResumeById } from "@/hooks/resumebuild.hook";
+import { useEffect } from "react";
 
 // import FinalStep from "./steps/FinalStep";
 
@@ -20,6 +22,10 @@ const ResumeBuilderStepper = () => {
 
   const generatedSummary =
     location?.state?.summary || localStorage.getItem("resumeSummary") || "";
+
+  const resumeId = location.state?.resumeId;
+
+  const { data: resumeData, isLoading } = useResumeById(resumeId);
 
   const methods = useForm({
     mode: "onChange",
@@ -49,7 +55,38 @@ const ResumeBuilderStepper = () => {
     },
   });
 
-  const [step, setStep] = useState(0);
+  useEffect(() => {
+    if (resumeData) {
+      methods.reset({
+        firstName: resumeData.user_profile?.full_name?.split(" ")[0] || "",
+        lastName: resumeData.user_profile?.full_name?.split(" ")[1] || "",
+        email: resumeData.user_profile?.email || "",
+        phone: resumeData.user_profile?.phone || "",
+        linkedin: resumeData.user_profile?.social_links?.linkedin || "",
+        summary: resumeData.user_profile?.summary?.profile || "",
+        address: resumeData.user_profile?.address || "",
+        state: resumeData.user_profile?.state || "",
+        city: resumeData.user_profile?.city || "",
+        website: resumeData.user_profile?.website || "",
+        experiences: resumeData.user_profile?.experience || [],
+        education: resumeData.user_profile?.education || [],
+        certifications: resumeData.user_profile?.certifications || [],
+        projects: resumeData.user_profile?.projects || [],
+        skills: resumeData.user_profile?.skills || [],
+        social_links: resumeData.user_profile?.social_links || {
+          linkedin: "",
+          github: "",
+          twitter: "",
+          website: "",
+        },
+        interests: resumeData.user_profile?.interests || [],
+      });
+    }
+  }, [resumeData, methods]);
+
+  //  const [step, setStep] = useState(0);
+  const initialStep = location.state?.startStep ?? 0;
+  const [step, setStep] = useState(initialStep);
   const StepComponent = [
     YourDetails,
     ExperienceSection,
@@ -70,7 +107,8 @@ const ResumeBuilderStepper = () => {
     console.log("🎉 Final Resume Data:", data);
     setFormData(data); // <-- THIS UPDATES THE CONTEXT AND localStorage
   };
-
+  if (isLoading)
+    return <p className="text-center mt-10">Loading saved resume...</p>;
   return (
     <FormProvider {...methods}>
       <form onSubmit={methods.handleSubmit(onSubmit)} className="p-6 space-y-6">

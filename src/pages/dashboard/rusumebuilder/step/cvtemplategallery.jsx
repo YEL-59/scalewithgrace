@@ -1,9 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router";
+import { useCallback } from "react";
 
 import templateImg from "@/assets/cvtemplate/Template1.jpg";
 import { useCreateResume } from "@/hooks/resumebuild.hook";
-import { Button } from "@/components/ui/button"; // make sure this is imported
 
 const templates = [
   {
@@ -42,6 +42,12 @@ const templates = [
     image: templateImg,
     slug: "template-six",
   },
+  {
+    id: 7,
+    name: "Modern Design 7",
+    image: templateImg,
+    slug: "template-seven",
+  },
 ];
 
 const CVTemplateGallery = () => {
@@ -49,47 +55,49 @@ const CVTemplateGallery = () => {
   const { getValues } = useFormContext();
   const { createResume } = useCreateResume();
 
-  const handleSelect = (slug) => {
-    const formData = getValues();
+  const handleSelect = useCallback(
+    (slug) => {
+      const formData = getValues();
 
-    const payload = {
-      ...formData,
-      template_name: slug,
-      summary: {
-        profile: formData.summary,
-      },
-      title: formData?.title || "Untitled Resume", // fallback if no data given.
-      experience: formData.experiences,
-      certifications: formData.certifications || [],
-      languages: formData.languages || [],
-      projects: formData.projects || [],
-      skills: formData.skills || [],
-      awards: formData.awards || [],
-      social_links: formData.social_links || [],
-      interests: formData.interests || [],
-      full_name: `${formData.firstName || ""} ${
-        formData.lastName || ""
-      }`.trim(),
-    };
+      const payload = {
+        ...formData,
+        template_name: slug,
+        summary: {
+          profile: formData.summary,
+        },
+        title: formData?.title || "Untitled Resume",
+        experience: formData.experiences || [],
+        certifications: formData.certifications || [],
+        languages: formData.languages || [],
+        projects: formData.projects || [],
+        skills: formData.skills || [],
+        awards: formData.awards || [],
+        social_links: formData.social_links || [],
+        interests: formData.interests || [],
+        full_name: `${formData.firstName || ""} ${
+          formData.lastName || ""
+        }`.trim(),
+      };
 
-    createResume(payload, {
-      onSuccess: (res) => {
-        const resumeId = res?.data?.id;
-
-        if (resumeId) {
-          navigate(`/dashboard/cv-preview/${slug}`, {
-            state: {
-              template: slug,
-              resumeId,
-            },
-          });
-        }
-      },
-      onError: (err) => {
-        console.error("Resume creation failed:", err);
-      },
-    });
-  };
+      createResume(payload, {
+        onSuccess: (res) => {
+          const resumeId = res?.data?.id;
+          if (resumeId) {
+            navigate(`/dashboard/cv-preview/${slug}`, {
+              state: {
+                template: slug,
+                resumeId,
+              },
+            });
+          }
+        },
+        onError: (err) => {
+          console.error("Resume creation failed:", err);
+        },
+      });
+    },
+    [getValues, createResume, navigate]
+  );
 
   return (
     <div className="p-6">
@@ -98,20 +106,27 @@ const CVTemplateGallery = () => {
         {templates.map((template) => (
           <div
             key={template.id}
+            role="button"
+            tabIndex={0}
             onClick={() => handleSelect(template.slug)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ")
+                handleSelect(template.slug);
+            }}
             className="relative cursor-pointer border rounded-xl overflow-hidden shadow-md hover:shadow-xl transition duration-300 bg-white"
+            aria-label={`Select ${template.name} template`}
           >
             {/* Tooltip */}
             <div className="absolute top-2 right-2 bg-black text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition pointer-events-none z-10">
               Click to use
             </div>
 
-            {/* Image wrapper with horizontal scroll */}
-            <div className="overflow-x-auto whitespace-nowrap max-h-56  flex justify-center py-5">
+            {/* Image wrapper */}
+            <div className="overflow-x-auto whitespace-nowrap max-h-56 flex justify-center py-5">
               <img
                 src={template.image}
                 alt={template.name}
-                className="inline-block h-56 object-cover select-none "
+                className="inline-block h-56 object-cover select-none"
                 draggable={false}
               />
             </div>

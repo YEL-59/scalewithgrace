@@ -105,9 +105,6 @@ export default function MyDashboard() {
   // const firstIncompleteGoal =
   //allgoals.find((goal) => goal.status === "in_progress") || null;
 
-  // Pass its id as currentStage (or null if all are complete)
-  // const currentStage = firstIncompleteGoal?.id ?? null;
-
   usePageMeta({
     title: "My Dashboard – Karially",
     description: "Overview of your progress and goals on Karially.",

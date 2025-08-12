@@ -12,14 +12,16 @@ import {
 } from "@/hooks/career-goal.hook";
 import { useNavigate } from "react-router";
 import { useQueryClient } from "@tanstack/react-query";
+import { useLocation } from "react-router";
 
 export default function CareerRoadmap() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const location = useLocation();
+  const initialGoalId = location.state?.goalId || null;
+  const [selectedRoadmapId, setSelectedRoadmapId] = useState(initialGoalId);
   // Track which roadmap is selected
-  const [selectedRoadmapId, setSelectedRoadmapId] = useState(null);
-
-  // Track locally completed weeks for the current roadmap
+  //  const [selectedRoadmapId, setSelectedRoadmapId] = useState(null);
 
   // Track locally completed weeks for the current roadmap
   const [completedWeeks, setCompletedWeeks] = useState([]);
@@ -33,8 +35,11 @@ export default function CareerRoadmap() {
   useEffect(() => {
     setCompletedWeeks([]);
   }, [selectedRoadmapId]);
-
-  // Auto-select the first roadmap if none is selected
+  useEffect(() => {
+    if (goals && goals.length > 0 && !selectedRoadmapId) {
+      setSelectedRoadmapId(goals[0].id);
+    }
+  }, [goals, selectedRoadmapId]);
 
   // Auto-select the first roadmap if none is selected
   useEffect(() => {
@@ -43,7 +48,6 @@ export default function CareerRoadmap() {
     }
   }, [goals, selectedRoadmapId]);
 
-  // Sync local completed weeks with backend data
   // Sync local completed weeks with backend data
   useEffect(() => {
     if (goalData?.weeks) {
@@ -100,9 +104,8 @@ export default function CareerRoadmap() {
   };
 
   // Get weeks of selected roadmap
-  // Get weeks of selected roadmap
   const selectedWeeks = goalData?.weeks || [];
-  // Calculate overall progress %
+
   // Calculate overall progress %
   const progressPercent =
     selectedWeeks.length > 0
@@ -122,7 +125,6 @@ export default function CareerRoadmap() {
     <div className="p-6 ">
       <div className="w-full flex justify-between">
         <div>
-          {/* ---------- Left: Roadmap List ---------- */}
           {/* ---------- Left: Roadmap List ---------- */}
           <h1 className="text-[#020817] font-poppins text-2xl font-bold leading-none">
             Career Roadmap
@@ -176,7 +178,7 @@ export default function CareerRoadmap() {
               );
             })}
           </div>
-          {/* Progress Card for selected roadmap */}
+
           {/* Progress Card for selected roadmap */}
           {selectedWeeks.length > 0 && (
             <div className="bg-white rounded-md p-5 shadow">
@@ -193,7 +195,6 @@ export default function CareerRoadmap() {
           )}
         </div>
 
-        {/* ---------- Right: Weekly Goals (Stepper) ---------- */}
         {/* ---------- Right: Weekly Goals (Stepper) ---------- */}
         <div className="md:w-2/3 space-y-6 mt-6 md:mt-0">
           <h2 className="text-xl font-bold">Weekly Goals</h2>

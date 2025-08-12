@@ -16,9 +16,11 @@ import {
   useFetchSingleWeekDetails,
   useTaskCompletion,
 } from "@/hooks/weekly-task.hook";
+import { useNavigate } from "react-router";
 
 const TaskDetail = () => {
   const { id: weekId } = useParams();
+  const navigate = useNavigate();
   const [newTask, setNewTask] = useState("");
   const [openModal, setOpenModal] = useState(false);
 
@@ -70,8 +72,21 @@ const TaskDetail = () => {
       {/* Header */}
       <div className="bg-white mt-4 rounded-xl shadow">
         <div className="bg-gradient-to-r from-primary to-secondary p-6 rounded-xl text-white">
-          <h2 className="text-xl font-bold">{week.title} - Task Details</h2>
-          <p className="text-sm">Click to mark tasks as complete</p>
+          <div className="flex justify-between">
+            <div>
+              <h2 className="text-xl font-bold">{week.title} - Task Details</h2>
+              <p className="text-sm">Click to mark tasks as complete</p>
+            </div>
+            <div>
+              <Button
+                variant="outline"
+                className="mb-4 text-black"
+                onClick={() => navigate(-1)} // Go back on click
+              >
+                ← Back
+              </Button>
+            </div>
+          </div>
         </div>
         <div className="mb-4 p-5">
           <p className="font-semibold text-sm">Progress</p>

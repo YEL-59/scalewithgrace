@@ -167,10 +167,10 @@ function SignUp() {
             </Button>
           </form>
         </Form>
-        <button className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-[60px] py-3 text-center justify-center text-base lg:text-lg  ">
+        {/* <button className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-[60px] py-3 text-center justify-center text-base lg:text-lg  ">
           <GoogleIcon />
-          Sign In with Google
-        </button>
+          Sign Up with Google
+        </button> */}
 
         <p className="text-[#959595] text-base lg:text-lg text-center">
           Already have an account?{" "}

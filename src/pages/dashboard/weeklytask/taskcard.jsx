@@ -58,7 +58,8 @@ const TaskCard = ({ task, onOpen, onToggle }) => {
       {task.tasks.length > 3 && (
         <button
           onClick={(e) => {
-            e.stopPropagation();
+            e.preventDefault(); // prevent link navigation default action
+            e.stopPropagation(); // stop event bubbling to Link
             setShowAll((prev) => !prev);
           }}
           className="text-sm text-blue-600 hover:underline mt-2 ml-6"

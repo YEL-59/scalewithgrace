@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { cn } from "@/lib/utils";
 import {
   useCareerGoalDetails,
-  useGetCareerGoals,
+  useInfiniteCareerGoals,
   useWeekTaskComplete,
 } from "@/hooks/career-goal.hook";
 import { useNavigate } from "react-router";
@@ -27,10 +27,19 @@ export default function CareerRoadmap() {
   const [completedWeeks, setCompletedWeeks] = useState([]);
 
   // Reset completed weeks when switching roadmap
-  const { data: goals, isLoading, isError } = useGetCareerGoals(); // Fetch all roadmaps
+  // const { data: goals, isLoading, isError } = useGetCareerGoals(); // Fetch all roadmaps
+  const {
+    data: goals,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+  } = useInfiniteCareerGoals();
   const { data: goalData } = useCareerGoalDetails(selectedRoadmapId); // Fetch selected roadmap details
   const { mutate: completeWeek } = useWeekTaskComplete(completedWeeks); // API to mark week as complete
-
+  // Flatten all pages data into one array for rendering list
+  const allGoals = goals?.pages.flatMap((page) => page.data) || [];
   // Reset completed weeks when switching roadmap
   useEffect(() => {
     setCompletedWeeks([]);
@@ -43,10 +52,10 @@ export default function CareerRoadmap() {
 
   // Auto-select the first roadmap if none is selected
   useEffect(() => {
-    if (goals && goals.length > 0 && !selectedRoadmapId) {
-      setSelectedRoadmapId(goals[0].id);
+    if (allGoals && allGoals.length > 0 && !selectedRoadmapId) {
+      setSelectedRoadmapId(allGoals[0].id);
     }
-  }, [goals, selectedRoadmapId]);
+  }, [allGoals, selectedRoadmapId]);
 
   // Sync local completed weeks with backend data
   useEffect(() => {
@@ -78,25 +87,31 @@ export default function CareerRoadmap() {
     });
 
     // 3️⃣ Update the global goals list (for left-side badges)
-    queryClient.setQueryData(["career-goals"], (oldGoals) => {
-      if (!oldGoals) return oldGoals;
+    queryClient.setQueryData(["career-goals"], (oldData) => {
+      if (!oldData) return oldData;
 
-      return oldGoals.map((goal) => {
-        if (goal.id === selectedRoadmapId) {
-          const totalWeeks = goal.total_weeks || 0;
-          const completed = newCompletedWeeks.length;
-          const percentage = totalWeeks
-            ? Math.round((completed / totalWeeks) * 100)
-            : 0;
+      return {
+        ...oldData,
+        pages: oldData.pages.map((page) => ({
+          ...page,
+          data: page.data.map((goal) => {
+            if (goal.id === selectedRoadmapId) {
+              const totalWeeks = goal.total_weeks || 0;
+              const completed = newCompletedWeeks.length;
+              const percentage = totalWeeks
+                ? Math.round((completed / totalWeeks) * 100)
+                : 0;
 
-          return {
-            ...goal,
-            completed_weeks: completed,
-            completion_percentage: percentage,
-          };
-        }
-        return goal;
-      });
+              return {
+                ...goal,
+                completed_weeks: completed,
+                completion_percentage: percentage,
+              };
+            }
+            return goal;
+          }),
+        })),
+      };
     });
 
     // 4️⃣ Call API to mark as completed
@@ -127,11 +142,11 @@ export default function CareerRoadmap() {
         <div>
           {/* ---------- Left: Roadmap List ---------- */}
           <h1 className="text-[#020817] font-poppins text-2xl font-bold leading-none">
-            Career Roadmap
+            Career Road map
           </h1>
-          <p className="text-xs font-poppins font-normal text-[#504999]">
+          {/* <p className="text-xs font-poppins font-normal text-[#504999]">
             Become a product manager
-          </p>
+          </p> */}
         </div>
         <div>
           <Button
@@ -145,11 +160,22 @@ export default function CareerRoadmap() {
       <div className="flex flex-col md:flex-row gap-8 pt-5">
         {/* Left: Roadmap List */}
         <div className="md:w-1/3 space-y-4">
-          <div className="space-y-2 bg-white rounded-md p-5 shadow">
+          <div
+            className="space-y-2 bg-white rounded-md p-5 shadow"
+            style={{ maxHeight: "500px", overflowY: "auto" }}
+            onScroll={(e) => {
+              const bottom =
+                e.target.scrollHeight - e.target.scrollTop ===
+                e.target.clientHeight;
+              if (bottom && hasNextPage && !isFetchingNextPage) {
+                fetchNextPage();
+              }
+            }}
+          >
             <h2 className="text-xl font-bold text-gray-800 text-center border-b-2 pb-2">
-              Career Roadmaps
+              Career Road maps
             </h2>
-            {goals.map((goal) => {
+            {allGoals.map((goal) => {
               const isSelected = selectedRoadmapId === goal.id;
 
               return (
@@ -177,6 +203,7 @@ export default function CareerRoadmap() {
                 </Button>
               );
             })}
+            {isFetchingNextPage && <p>Loading more...</p>}
           </div>
 
           {/* Progress Card for selected roadmap */}

@@ -6,6 +6,9 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import { useSubscribeNewsletter } from "@/hooks/useNewsletter";
 import GradientButton from "./GradientButton";
+import { useGetUser } from "@/hooks/auth.hook";
+import { useGEtCommunityLink } from "@/hooks/community-link.hook";
+import { Button } from "../ui/button";
 
 export default function Footer() {
   const { data, isLoading } = useGetSystemSection("system-info");
@@ -15,6 +18,13 @@ export default function Footer() {
   console.log({ data });
   const [email, setEmail] = useState("");
   const { mutate: subscribe, isPending } = useSubscribeNewsletter();
+  const { user } = useGetUser();
+
+  const hasActiveSubscription = user?.subcriptions?.length > 0;
+
+  const { data: communityData } = useGEtCommunityLink();
+  // Extract the link safely
+  const linkUrl = communityData?.data?.link_url;
 
   const handleSubscribe = () => {
     if (!email) return toast.error("Please enter your email");
@@ -61,16 +71,21 @@ export default function Footer() {
                 />
               </div>
 
-              <div className="mt-2 rounded-lg bg-gradient-to-r from-primary to-secondary font-light flex flex-col gap-2.5 py-3">
-                <Link
-                  to="https://join.slack.com/t/kariallycommunity/shared_invite/zt-3aiv1dqmq-XgB6CcTEBj1x5FXmmtdM8w"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-lg px-5"
-                >
-                  Join Community
-                </Link>
-              </div>
+              {hasActiveSubscription && (
+                <>
+                  <div>
+                    <Button
+                      onClick={() =>
+                        window.open(linkUrl, "_blank", "noopener,noreferrer")
+                      }
+                      rel="noopener noreferrer"
+                      className="mt-2 rounded-lg bg-gradient-to-r from-primary to-secondary font-bold flex flex-col gap-2.5 py-5 w-full"
+                    >
+                      Join Community
+                    </Button>
+                  </div>
+                </>
+              )}
             </div>
           </div>
 

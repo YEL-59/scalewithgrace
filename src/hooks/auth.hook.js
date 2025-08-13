@@ -655,3 +655,15 @@ export const useGoogleSignIn = () => {
 
 //   return handleGoogleLogin;
 // };
+
+export const useGetLoginStaticInfo = () => {
+  const { data, isLoading } = useQuery({
+    queryKey: ["signininfostatic"],
+    queryFn: async () => {
+      const res = await axiosPrivate.get("/cms/home-page/login-section");
+      return res.data;
+    },
+  });
+
+  return { signininfostatic: data?.data, isLoading };
+};

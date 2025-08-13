@@ -16,12 +16,25 @@ import { useLocation } from "react-router";
 import { useNavigate } from "react-router";
 import logo from "../../assets/images/logopng.png";
 import { useGetUser } from "@/hooks/auth.hook";
+import { Link } from "react-router";
+import { FaSlack } from "react-icons/fa";
+import { useGEtCommunityLink } from "@/hooks/community-link.hook";
 
 const menuItems = [
   {
     path: "/dashboard",
     label: "Dashboard",
     icon: "DashboardIcon",
+  },
+  {
+    path: "/dashboard/career-road-map",
+    label: "Career Road Map",
+    icon: "CareerGoalIcon",
+  },
+  {
+    path: "/dashboard/task-manager",
+    label: "Weekly Task",
+    icon: "WeeklyTaskIcon",
   },
   {
     path: "/dashboard/resume-builder",
@@ -33,26 +46,21 @@ const menuItems = [
     label: "Cover Letter",
     icon: "CoverLetterIcon",
   },
-  {
-    path: "/dashboard/career-road-map",
-    label: "Career Goal",
-    icon: "CareerGoalIcon",
-  },
-  {
-    path: "/dashboard/task-manager",
-    label: "Weekly Task",
-    icon: "WeeklyTaskIcon",
-  },
+
   { path: "/dashboard/billing", label: "Billing", icon: "BillingIcon" },
 ];
 
 const AppLayout = ({ collapsed, setCollapsed, sheetOpen, setSheetOpen }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { data: communityData } = useGEtCommunityLink();
+
   const { user } = useGetUser();
 
   const hasActiveSubscription = user?.subcriptions?.length > 0;
 
+  // Extract the link safely
+  const linkUrl = communityData?.data?.link_url;
   return (
     <div className="flex flex-col justify-between h-full px-4 py-6">
       <div>
@@ -150,6 +158,19 @@ const AppLayout = ({ collapsed, setCollapsed, sheetOpen, setSheetOpen }) => {
             );
           })}
         </nav>
+
+        {/* Join Community button — show only if user has subscription */}
+        {!collapsed && hasActiveSubscription && linkUrl && (
+          <button
+            onClick={() =>
+              window.open(linkUrl, "_blank", "noopener,noreferrer")
+            }
+            className="flex items-center text-sm font-medium text-[#717171] px-3 py-2 rounded-full gap-3 hover:bg-gradient-to-r hover:from-primary hover:to-secondary hover:text-white w-full mt-6 transition"
+          >
+            <FaSlack className="w-5 h-5" />
+            Join Community
+          </button>
+        )}
       </div>
 
       {/* Free Trial Upgrade — shown only if user has NO subscription */}

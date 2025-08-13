@@ -23,6 +23,9 @@ const ResumePreview = () => {
           </h3>
         </div>
         <div>
+          {/* <div className="h-2- w-20">
+            {values?.image && <img src={values.image} />}
+          </div> */}
           <h1
             className="text-3xl font-bold text-gray-900 mb-2 font-trirong outline-none"
             contentEditable

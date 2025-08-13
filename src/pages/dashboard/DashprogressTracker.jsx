@@ -65,9 +65,10 @@ const ProgressTracker = ({ currentStage, overallProgress, allgoals }) => {
 
   const navigate = useNavigate();
 
-  const handleGoalClick = () => {
-    navigate(`/dashboard/career-road-map`);
+  const handleGoalClick = (goalId) => {
+    navigate("/dashboard/career-road-map", { state: { goalId } });
   };
+
   return (
     <div className="bg-white my-9 mb-9 rounded-4xl p-6 shadow-sm container mx-auto relative overflow-hidden">
       {/* Header */}

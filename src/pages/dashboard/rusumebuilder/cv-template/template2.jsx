@@ -1,341 +1,452 @@
-import React, { useRef } from "react";
-import html2pdf from "html2pdf.js";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
+import React from "react";
+import {
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaLinkedin,
+  FaGlobe,
+} from "react-icons/fa";
+import Template2PDF from "../download-resume/template2pdf";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
-/**
- * ResumeTemplate
- * Props:
- *  - data: {
- *      firstName, lastName, title, photo, email, phone, website, linkedin,
- *      address, city, state, summary,
- *      experiences: [{ title, company, location, startDate, endDate, points: [] }],
- *      education: [{ degree, institution, location, startDate, endDate, description }],
- *      skills: [{ title, description, badges: [ "React" | {name,level} ] }],
- *      certifications: [{ name, issuer, date }],
- *      languages: [{ name, level }]
- *    }
- */
-const Template2 = ({ data = {} }) => {
-  const resumeRef = useRef();
+const ACCENT_COLOR = "#1E40AF"; // deep blue
 
-  const {
-    firstName = "First",
-    lastName = "Last",
-    title = "Professional Title",
-    photo,
-    email = "",
-    phone = "",
-    website = "",
-    linkedin = "",
-    address = "",
-    city = "",
-    state: stateName = "",
-    summary = "",
-    experiences = [],
-    education = [],
-    skills = [],
-    certifications = [],
-    languages = [],
-  } = data;
+const Template2 = ({ data }) => {
+  if (!data?.user_profile) return <p>No profile data available</p>;
 
-  const handleDownloadPDF = () => {
-    const element = resumeRef.current;
-    if (!element) return;
-    const opt = {
-      margin: 0.3,
-      filename: `${firstName}-${lastName}-resume.pdf`,
-      image: { type: "jpeg", quality: 0.98 },
-      html2canvas: { scale: 2, useCORS: true },
-      jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
-    };
-    html2pdf().set(opt).from(element).save();
-  };
+  const profile = data.user_profile;
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      {/* Actions */}
-      <div className="max-w-4xl mx-auto mb-6 print:hidden flex justify-end gap-3">
-        <Button onClick={handleDownloadPDF} className="bg-slate-900 text-white">
-          Download PDF
-        </Button>
-      </div>
+    <>
+      {/* Download + Print Buttons */}
+      <div className="flex gap-4 justify-center mb-6">
+        <PDFDownloadLink
+          document={<Template2PDF data={data} />}
+          fileName="resume.pdf"
+          style={{
+            textDecoration: "none",
+            padding: "10px 20px",
+            color: "#fff",
+            backgroundColor: "#4a90e2",
+            borderRadius: 5,
+          }}
+        >
+          {({ loading }) =>
+            loading ? "Preparing document..." : "Download Resume PDF"
+          }
+        </PDFDownloadLink>
 
-      {/* Resume container */}
+        <button
+          onClick={() => window.print()}
+          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+        >
+          Print
+        </button>
+      </div>{" "}
       <div
-        ref={resumeRef}
-        className="max-w-4xl mx-auto bg-white shadow-md print:shadow-none rounded-lg overflow-hidden ring-1 ring-gray-200"
+        className="max-w-[794px] mx-auto bg-white p-8 font-sans text-[#2c2c2c] shadow-2xl"
+        style={{ minHeight: "1123px" }}
       >
-        {/* Header */}
-        <div className="flex flex-col md:flex-row items-center gap-6 px-6 py-6 md:py-8 bg-white">
-          {/* Left: avatar */}
-          <div className="flex-shrink-0">
-            <div className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border-2 border-gray-200 bg-gray-100">
-              <img
-                src={
-                  photo ||
-                  "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=600&q=80&auto=format&fit=crop&ixlib=rb-4.0.3&s=placeholder"
-                }
-                alt={`${firstName} ${lastName}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
+        {/* HEADER */}
+        <header className="mb-8 border-b" style={{ borderColor: "#CBD5E1" }}>
+          <h1
+            className="text-5xl font-extrabold tracking-wide leading-tight"
+            style={{ color: ACCENT_COLOR }}
+          >
+            {profile.full_name}
+          </h1>
+          <p
+            className="text-xl mt-1 mb-4 font-semibold"
+            style={{ color: "#334155" }}
+          >
+            {profile.job_title || "Professional Title"}
+          </p>
 
-          {/* Right: name & contact */}
-          <div className="flex-1 text-center md:text-left">
-            <h1 className="text-2xl md:text-3xl font-bold tracking-tight text-slate-900">
-              {firstName} <span className="font-semibold">{lastName}</span>
-            </h1>
-            <p className="text-sm md:text-base text-slate-600 mt-1">{title}</p>
-
-            <div className="mt-3 flex flex-col md:flex-row md:items-center md:gap-4 text-xs md:text-sm text-slate-600">
-              <div>{email}</div>
-              <div className="hidden md:block">|</div>
-              <div>{phone}</div>
-              {(website || linkedin) && (
-                <div className="hidden md:block">|</div>
-              )}
-              {website && (
+          {/* Contact Row */}
+          <div
+            className="flex flex-wrap gap-6 text-sm items-center"
+            style={{ color: "#475569" }}
+          >
+            {profile.phone && (
+              <div className="flex items-center gap-2">
+                <FaPhoneAlt style={{ color: ACCENT_COLOR }} />
+                <span>{profile.phone}</span>
+              </div>
+            )}
+            {profile.email && (
+              <div className="flex items-center gap-2">
+                <FaEnvelope style={{ color: ACCENT_COLOR }} />
+                <span>{profile.email}</span>
+              </div>
+            )}
+            {profile.address && (
+              <div className="flex items-center gap-2">
+                <FaMapMarkerAlt style={{ color: ACCENT_COLOR }} />
+                <span>{profile.address}</span>
+              </div>
+            )}
+            {profile.website && (
+              <div className="flex items-center gap-2">
+                <FaGlobe style={{ color: ACCENT_COLOR }} />
                 <a
-                  className="underline"
-                  href={website}
+                  href={
+                    profile.website.startsWith("http")
+                      ? profile.website
+                      : "https://" + profile.website
+                  }
                   target="_blank"
                   rel="noreferrer"
+                  className="underline hover:text-blue-700"
+                  style={{ color: ACCENT_COLOR }}
                 >
-                  Website
+                  {profile.website.replace(/^https?:\/\//, "")}
                 </a>
-              )}
-              {linkedin && (
+              </div>
+            )}
+            {profile.social_links?.linkedin && (
+              <div className="flex items-center gap-2">
+                <FaLinkedin style={{ color: ACCENT_COLOR }} />
                 <a
-                  className="underline"
-                  href={linkedin}
+                  href={profile.social_links.linkedin}
                   target="_blank"
                   rel="noreferrer"
+                  className="underline hover:text-blue-700"
+                  style={{ color: ACCENT_COLOR }}
                 >
                   LinkedIn
                 </a>
-              )}
+              </div>
+            )}
+          </div>
+        </header>
+
+        <div className="flex justify-between gap-5 mt-6">
+          {/* Left Column */}
+          <div className="w-[40%] space-y-6">
+            {/* ABOUT */}
+            <div>
+              <h2
+                className="text-sm tracking-[2px] pb-3 leading-[24px] font-semibold"
+                style={{
+                  color: ACCENT_COLOR,
+                  backgroundColor: "#E0E7FF",
+                  paddingLeft: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                ABOUT
+              </h2>
+              <p
+                className="text-xs leading-[18px]"
+                style={{ color: "#374151" }}
+              >
+                {profile.summary?.profile}
+              </p>
             </div>
 
-            {/* small address line */}
-            <p className="mt-2 text-xs text-slate-500">
-              {[address, city, stateName].filter(Boolean).join(", ")}
-            </p>
-          </div>
-        </div>
-
-        {/* Body: 2-column layout */}
-        <div className="grid grid-cols-1 md:grid-cols-[2fr,1fr] gap-6 px-6 py-6">
-          {/* LEFT: main content */}
-          <main className="space-y-5">
-            {/* Summary */}
-            {summary && (
-              <section>
-                <h2 className="text-sm font-semibold uppercase text-slate-700 tracking-wide border-b pb-1">
-                  Professional Summary
-                </h2>
-                <p className="mt-2 text-sm text-slate-700 leading-relaxed">
-                  {summary}
-                </p>
-              </section>
-            )}
-
-            {/* Experience */}
-            {experiences.length > 0 && (
-              <section>
-                <h2 className="text-sm font-semibold uppercase text-slate-700 tracking-wide border-b pb-1">
-                  Experience
-                </h2>
-
-                <div className="mt-3 space-y-4">
-                  {experiences.map((exp, i) => (
-                    <article key={i} className="text-sm text-slate-800">
-                      <div className="flex justify-between items-start">
-                        <h3 className="font-semibold text-slate-900">
-                          {exp.title}
-                        </h3>
-                        <span className="text-xs text-slate-600">
-                          {[exp.startDate, exp.endDate]
-                            .filter(Boolean)
-                            .join(" – ")}
-                        </span>
-                      </div>
-
-                      <div className="text-xs text-slate-600 mb-1">
-                        {exp.company} • {exp.location}
-                      </div>
-
-                      {Array.isArray(exp.points) && exp.points.length > 0 && (
-                        <ul className="list-disc ml-5 space-y-1 text-slate-700">
-                          {exp.points.map((p, idx) => (
-                            <li key={idx}>{p}</li>
-                          ))}
-                        </ul>
-                      )}
-                    </article>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Education */}
-            {education.length > 0 && (
-              <section>
-                <h2 className="text-sm font-semibold uppercase text-slate-700 tracking-wide border-b pb-1">
-                  Education
-                </h2>
-
-                <div className="mt-3 space-y-3 text-sm text-slate-800">
-                  {education.map((edu, i) => (
-                    <div key={i}>
-                      <div className="flex justify-between items-baseline">
-                        <div className="font-semibold">{edu.degree}</div>
-                        <div className="text-xs text-slate-600">
-                          {[edu.startDate, edu.endDate]
-                            .filter(Boolean)
-                            .join(" – ")}
-                        </div>
-                      </div>
-                      <div className="text-xs text-slate-600">
-                        {edu.institution} • {edu.location}
-                      </div>
-                      {edu.description && (
-                        <div className="text-sm mt-1 text-slate-700">
-                          {edu.description}
-                        </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Certifications */}
-            {certifications.length > 0 && (
-              <section>
-                <h2 className="text-sm font-semibold uppercase text-slate-700 tracking-wide border-b pb-1">
-                  Certifications
-                </h2>
-                <ul className="mt-2 text-sm text-slate-800 space-y-1">
-                  {certifications.map((c, i) => (
-                    <li key={i}>
-                      <div className="font-medium">{c.name}</div>
-                      <div className="text-xs text-slate-600">
-                        {c.issuer} • {c.date}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </main>
-
-          {/* RIGHT: sidebar */}
-          <aside className="space-y-5">
-            {/* Skills */}
-            {skills.length > 0 && (
-              <section className="bg-slate-50 p-4 rounded">
-                <h3 className="text-sm font-semibold text-slate-700 uppercase">
-                  Skills
-                </h3>
-                <div className="mt-3 space-y-3">
-                  {skills.map((group, gi) => (
-                    <div key={gi}>
-                      <div className="text-sm font-medium text-slate-800">
-                        {group.title}
-                      </div>
-                      {group.description && (
-                        <p className="text-xs text-slate-600 mb-2">
-                          {group.description}
-                        </p>
-                      )}
-                      <div className="flex flex-wrap gap-2">
-                        {Array.isArray(group.badges) &&
-                          group.badges.map((b, bi) => {
-                            const name =
-                              typeof b === "string" ? b : b?.name || "";
-                            const level =
-                              typeof b === "object" ? b?.level : null;
-                            return (
-                              <Badge
-                                key={bi}
-                                className="px-2 py-0.5 text-xs bg-gray-200 text-slate-900"
-                              >
-                                {name}
-                                {level && (
-                                  <span className="ml-1 text-xs text-slate-600">
-                                    ({level})
-                                  </span>
-                                )}
-                              </Badge>
-                            );
-                          })}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Languages */}
-            {languages.length > 0 && (
-              <section className="bg-slate-50 p-4 rounded">
-                <h3 className="text-sm font-semibold text-slate-700 uppercase">
-                  Languages
-                </h3>
-                <ul className="mt-2 text-sm text-slate-800 space-y-1">
-                  {languages.map((l, i) => (
-                    <li key={i} className="flex justify-between">
-                      <span>{l.name}</span>
-                      <span className="text-xs text-slate-600">{l.level}</span>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-
-            {/* Quick contact box */}
-            <section className="bg-slate-50 p-4 rounded">
-              <h3 className="text-sm font-semibold text-slate-700 uppercase">
-                Contact
-              </h3>
-              <div className="mt-2 text-sm text-slate-800 space-y-1">
-                {email && <div>{email}</div>}
-                {phone && <div>{phone}</div>}
-                {website && (
-                  <div>
+            {/* CONTACT */}
+            <div>
+              <h2
+                className="text-sm tracking-[2px] pb-3 leading-[24px] font-semibold"
+                style={{
+                  color: ACCENT_COLOR,
+                  backgroundColor: "#E0E7FF",
+                  paddingLeft: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                CONTACT
+              </h2>
+              <div className="space-y-3 text-xs" style={{ color: "#475569" }}>
+                {profile.phone && (
+                  <p className="flex items-center gap-2 leading-[18px]">
+                    <FaPhoneAlt
+                      className="text-[12px]"
+                      style={{ color: ACCENT_COLOR }}
+                    />
+                    {profile.phone}
+                  </p>
+                )}
+                {profile.address && (
+                  <p className="flex items-center gap-2">
+                    <FaMapMarkerAlt
+                      className="text-[12px]"
+                      style={{ color: ACCENT_COLOR }}
+                    />
+                    {profile.address}
+                  </p>
+                )}
+                {profile.email && (
+                  <p className="flex items-center gap-2">
+                    <FaEnvelope
+                      className="text-[12px]"
+                      style={{ color: ACCENT_COLOR }}
+                    />
+                    {profile.email}
+                  </p>
+                )}
+                {profile.social_links?.linkedin && (
+                  <p className="flex items-center gap-2">
+                    <FaLinkedin
+                      className="text-[12px]"
+                      style={{ color: ACCENT_COLOR }}
+                    />
                     <a
-                      className="underline"
-                      href={website}
+                      href={profile.social_links.linkedin}
                       target="_blank"
                       rel="noreferrer"
-                    >
-                      {website}
-                    </a>
-                  </div>
-                )}
-                {linkedin && (
-                  <div>
-                    <a
                       className="underline"
-                      href={linkedin}
-                      target="_blank"
-                      rel="noreferrer"
+                      style={{ color: ACCENT_COLOR }}
                     >
-                      LinkedIn
+                      linkedin.com/in/{profile.full_name.replace(/\s+/g, "-")}
                     </a>
-                  </div>
-                )}
-                {address && (
-                  <div className="text-xs text-slate-600">{address}</div>
+                  </p>
                 )}
               </div>
-            </section>
-          </aside>
+            </div>
+
+            {/* EDUCATION */}
+            <div>
+              <h2
+                className="text-sm tracking-[2px] pb-3 leading-[24px] font-semibold"
+                style={{
+                  color: ACCENT_COLOR,
+                  backgroundColor: "#E0E7FF",
+                  paddingLeft: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                EDUCATION
+              </h2>
+              {profile.education?.map((edu, idx) => (
+                <div key={idx} className={idx !== 0 ? "mt-4" : ""}>
+                  <p
+                    className="font-medium leading-[18px] text-xs"
+                    style={{ color: "#1e293b" }}
+                  >
+                    {edu.institution}
+                  </p>
+                  <p
+                    className="text-xs leading-[18px] font-medium flex justify-between items-center"
+                    style={{ color: "#334155" }}
+                  >
+                    {edu.degree}
+                  </p>
+                  <p
+                    className="text-xs leading-[18px]"
+                    style={{ color: "#475569" }}
+                  >
+                    {edu.startDate} – {edu.endDate}
+                  </p>
+                  {edu.description && (
+                    <p className="text-xs mt-1" style={{ color: "#334155" }}>
+                      {edu.description}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Divider */}
+          <div className="w-[1px]" style={{ backgroundColor: "#CBD5E1" }}></div>
+
+          {/* Right Column */}
+          <div className="w-[60%] space-y-6">
+            {/* EXPERIENCE */}
+            <div>
+              <h2
+                className="text-sm tracking-[2px] pb-3 leading-[24px] font-semibold"
+                style={{
+                  color: ACCENT_COLOR,
+                  backgroundColor: "#E0E7FF",
+                  paddingLeft: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                EXPERIENCE
+              </h2>
+              {profile.experience?.map((exp, idx) => (
+                <div key={idx} className={idx !== 0 ? "mt-4" : ""}>
+                  <p
+                    className="font-medium leading-[18px] text-xs"
+                    style={{ color: "#1e293b" }}
+                  >
+                    {exp.title}
+                  </p>
+                  <p
+                    className="text-xs leading-[18px] font-medium flex justify-between items-center"
+                    style={{ color: "#334155" }}
+                  >
+                    {exp.company}, {exp.location}
+                    <span>
+                      {exp.startDate} – {exp.endDate}
+                    </span>
+                  </p>
+                  <p
+                    className="text-xs leading-[20px] mt-2"
+                    style={{ color: "#475569" }}
+                  >
+                    {exp.points?.join(". ") + "."}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="border-b" style={{ borderColor: "#CBD5E1" }}></div>
+
+            {/* PROJECTS */}
+            {profile.projects?.length > 0 && (
+              <div>
+                <h2
+                  className="text-sm tracking-[2px] pb-3 leading-[24px] font-semibold"
+                  style={{
+                    color: ACCENT_COLOR,
+                    backgroundColor: "#E0E7FF",
+                    paddingLeft: "8px",
+                    borderRadius: "4px",
+                  }}
+                >
+                  PROJECTS
+                </h2>
+                {profile.projects.map((project, idx) => (
+                  <div key={idx} className={idx !== 0 ? "mt-4" : ""}>
+                    <p
+                      className="font-medium leading-[18px] text-xs"
+                      style={{ color: "#1e293b" }}
+                    >
+                      <a
+                        href={
+                          project.url.startsWith("http")
+                            ? project.url
+                            : "https://" + project.url
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                        className="underline hover:text-blue-800"
+                        style={{ color: ACCENT_COLOR }}
+                      >
+                        {project.name}
+                      </a>
+                    </p>
+                    <p className="text-xs mt-1" style={{ color: "#334155" }}>
+                      {project.description}
+                    </p>
+                    {project.points?.length > 0 && (
+                      <ul
+                        className="list-disc list-inside text-xs mt-1"
+                        style={{ color: "#475569" }}
+                      >
+                        {project.points.map((point, i) => (
+                          <li key={i}>{point.replace(/^-/, "").trim()}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className="border-b" style={{ borderColor: "#CBD5E1" }}></div>
+
+            {/* TRAINING (Certifications) */}
+            <div>
+              <h2
+                className="text-sm tracking-[2px] pb-3 leading-[24px] font-semibold"
+                style={{
+                  color: ACCENT_COLOR,
+                  backgroundColor: "#E0E7FF",
+                  paddingLeft: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                TRAINING
+              </h2>
+              {profile.certifications?.map((cert, idx) => (
+                <div key={idx} className={idx !== 0 ? "mt-4" : ""}>
+                  <p
+                    className="font-medium leading-[18px] text-xs"
+                    style={{ color: "#1e293b" }}
+                  >
+                    {cert.certificationName}
+                  </p>
+                  <p
+                    className="text-xs leading-[18px] font-medium flex justify-between items-center"
+                    style={{ color: "#334155" }}
+                  >
+                    {cert.issuingOrganization}
+                    <span>{cert.dateEarned}</span>
+                  </p>
+                  {cert.notes && (
+                    <p
+                      className="text-xs leading-[20px]"
+                      style={{ color: "#475569" }}
+                    >
+                      {cert.notes}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            <div className="border-b" style={{ borderColor: "#CBD5E1" }}></div>
+
+            {/* SKILL */}
+            <div>
+              <h2
+                className="text-sm tracking-[2px] pb-3 leading-[24px] font-semibold"
+                style={{
+                  color: ACCENT_COLOR,
+                  backgroundColor: "#E0E7FF",
+                  paddingLeft: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                SKILL
+              </h2>
+              <ul
+                className="text-xs space-y-3 list-disc list-inside"
+                style={{ color: "#475569" }}
+              >
+                {profile.skills?.map((skillGroup, idx) => (
+                  <li key={idx}>
+                    <strong>{skillGroup.title}:</strong>{" "}
+                    {skillGroup.badges
+                      ?.map((b) => `${b.name}${b.level ? ` (${b.level})` : ""}`)
+                      .join(", ")}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="border-b" style={{ borderColor: "#CBD5E1" }}></div>
+
+            {/* INTEREST */}
+            <div>
+              <h2
+                className="text-sm tracking-[2px] pb-3 leading-[24px] font-semibold"
+                style={{
+                  color: ACCENT_COLOR,
+                  backgroundColor: "#E0E7FF",
+                  paddingLeft: "8px",
+                  borderRadius: "4px",
+                }}
+              >
+                INTERESTS
+              </h2>
+              <ul
+                className="text-xs space-y-1 list-disc list-inside"
+                style={{ color: "#475569" }}
+              >
+                {profile.interests?.map((interest, idx) => (
+                  <li key={idx}>{interest.name}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

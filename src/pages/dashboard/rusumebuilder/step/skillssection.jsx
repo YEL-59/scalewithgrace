@@ -3,9 +3,9 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
 import { useFormContext, useWatch } from "react-hook-form";
 import ResumePreview from "../resumePreview";
-import SkillCategoryModal from "../SkillCategoryModal";
-import SocialLinksModal from "../SocialLinksModal";
-import InterestsModal from "../InterestsModal";
+import SkillCategoryModal from "../resumebuilder-modal/SkillCategoryModal";
+import SocialLinksModal from "../resumebuilder-modal/SocialLinksModal";
+import InterestsModal from "../resumebuilder-modal/InterestsModal";
 
 const SkillsSection = () => {
   const { setValue, control } = useFormContext();
@@ -146,7 +146,7 @@ const SkillsSection = () => {
         {renderList(
           "Interests",
           interests,
-          (idx) => {
+          () => {
             // Edit interest by opening modal with all interests
             setOpenInterestsModal(true);
           },

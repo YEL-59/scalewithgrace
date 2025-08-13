@@ -2,9 +2,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
 import { useFormContext, useWatch } from "react-hook-form";
-import EducationModal from "../EducationModal";
+import EducationModal from "../resumebuilder-modal/EducationModal";
 import ResumePreview from "../resumePreview";
-import CertificationModal from "../CertificationModal";
+import CertificationModal from "../resumebuilder-modal/CertificationModal";
 
 const EducationSection = () => {
   const { setValue, control } = useFormContext();

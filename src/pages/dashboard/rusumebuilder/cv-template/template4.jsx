@@ -1,345 +1,286 @@
-import React, { useRef } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import {
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaEnvelope,
+  FaLinkedin,
+  FaGithub,
+  FaTwitter,
+  FaGlobe,
+} from "react-icons/fa";
+import Template4Pdf from "../download-resume/template4pdf";
 
 export default function Template4({ data }) {
-  const resumeRef = useRef();
+  const profile = data?.user_profile || {};
 
-  if (!data || Object.keys(data).length === 0)
-    return <p className="p-6 text-red-500">No data provided.</p>;
-
-  const {
-    firstName,
-    lastName,
-    email,
-    phone,
-    website,
-    address,
-    city,
-    state,
-    summary,
-    education,
-    experiences,
-    certifications,
-    skills,
-    projects,
-    interests,
-    social_links,
-    profession,
-  } = data;
+  // Split full name into first and last parts for styling
+  const [firstName, ...restName] = (profile.full_name || "").split(" ");
+  const lastName = restName.join(" ");
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 p-6 print:p-0">
-      {/* A4 page container */}
+    <>
+      {/* Download + Print Buttons */}
+      <div className="flex gap-4 justify-center mb-6">
+        <PDFDownloadLink
+          document={<Template4Pdf data={data} />}
+          fileName="resume.pdf"
+          style={{
+            textDecoration: "none",
+            padding: "10px 20px",
+            color: "#fff",
+            backgroundColor: "#4a90e2",
+            borderRadius: 5,
+          }}
+        >
+          {({ loading }) =>
+            loading ? "Preparing document..." : "Download Resume PDF"
+          }
+        </PDFDownloadLink>
+
+        <button
+          onClick={() => window.print()}
+          className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+        >
+          Print
+        </button>
+      </div>{" "}
       <div
-        ref={resumeRef}
-        className="bg-white w-[210mm] h-[297mm] max-w-full shadow-2xl rounded-xl overflow-hidden print:shadow-none print:rounded-none print:w-auto print:h-auto print:m-0 print:p-0"
-        style={{
-          boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
-          fontFamily: "'Inter', sans-serif",
-        }}
+        className="bg-white text-black px-5 py-8 w-[210mm] mx-auto shadow-2xl"
+        style={{ fontFamily: "'Urbanist', sans-serif" }}
       >
-        <div className="md:flex md:space-x-10 h-full p-10 print:p-0">
-          {/* LEFT COLUMN */}
-          <aside className="md:w-1/3 border-r border-gray-300 pr-8 flex flex-col">
-            {/* Name & Profession */}
-            <div className="mb-10">
-              <h1 className="text-5xl font-extrabold tracking-tight text-indigo-900">
-                {firstName} <br /> {lastName}
-              </h1>
-              <p className="text-xl text-indigo-700 mt-2 font-medium">
-                {profession || "Professional"}
+        {/* Header */}
+        <div className="flex w-full justify-between">
+          <div className="w-[60%]">
+            <h1 className="text-[32px] font-bold tracking-[2px] text-[#484848]">
+              {firstName} <span className="font-semibold">{lastName}</span>
+            </h1>
+            {profile.job_title ? (
+              <p className="tracking-[3px] text-[#484848] uppercase leading-[24px]">
+                {profile.job_title}
               </p>
-            </div>
+            ) : (
+              <p className="tracking-[3px] text-[#484848] uppercase leading-[24px]">
+                {/* Fallback title */}
+                Aspiring AI Developer
+              </p>
+            )}
+            {profile.website && (
+              <p className="flex items-center gap-2 leading-[18px]">
+                <FaGlobe className="text-[12px]" />{" "}
+                <a
+                  href={`https://${profile.website}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline text-xs"
+                >
+                  {profile.website}
+                </a>
+              </p>
+            )}
+          </div>
 
-            {/* Contact */}
-            <section className="mb-10">
-              <h2 className="uppercase text-sm font-semibold tracking-widest text-indigo-500 mb-4 border-b border-indigo-300 pb-1">
-                Contact
-              </h2>
-              <ul className="space-y-3 text-indigo-700 text-sm leading-relaxed">
-                {email && (
-                  <li>
-                    <strong>Email:</strong>{" "}
-                    <a
-                      href={`mailto:${email}`}
-                      className="text-indigo-600 hover:underline"
-                    >
-                      {email}
-                    </a>
-                  </li>
-                )}
-                {phone && (
-                  <li>
-                    <strong>Phone:</strong> {phone}
-                  </li>
-                )}
-                {website && (
-                  <li>
-                    <strong>Website:</strong>{" "}
-                    <a
-                      href={website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-indigo-600 hover:underline break-all"
-                    >
-                      {website}
-                    </a>
-                  </li>
-                )}
-                {address && (
-                  <li>
-                    <strong>Address:</strong> {address}
-                  </li>
-                )}
-                {(city || state) && (
-                  <li>
-                    <strong>Location:</strong>{" "}
-                    {[city, state].filter(Boolean).join(", ")}
-                  </li>
-                )}
-              </ul>
-            </section>
-
-            {/* Skills */}
-            {skills?.length > 0 && (
-              <section className="mb-10">
-                <h2 className="uppercase text-sm font-semibold tracking-widest text-indigo-500 mb-4 border-b border-indigo-300 pb-1">
-                  Skills
-                </h2>
-                {skills.map((skill, i) => (
-                  <div
-                    key={i}
-                    className="mb-6 hover:bg-indigo-50 transition-colors rounded-md p-2"
-                  >
-                    <h3 className="font-semibold text-indigo-800">
-                      {skill.title}
-                    </h3>
-                    {skill.description && (
-                      <p className="text-indigo-700 text-sm mb-2 whitespace-pre-line">
-                        {skill.description}
-                      </p>
-                    )}
-                    <div className="flex flex-wrap gap-2">
-                      {skill.badges?.map((badge, idx) => (
-                        <span
-                          key={idx}
-                          className="bg-indigo-200 text-indigo-900 text-xs px-2 py-1 rounded-full"
-                        >
-                          {badge.name} — {badge.level}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </section>
+          <div className="space-y-3 w-[40%] text-xs">
+            {profile.phone && (
+              <p className="flex items-center gap-2 leading-[18px]">
+                <FaPhoneAlt className="text-[12px]" /> {profile.phone}
+              </p>
             )}
 
-            {/* Certifications */}
-            {certifications?.length > 0 && (
-              <section className="mb-10">
-                <h2 className="uppercase text-sm font-semibold tracking-widest text-indigo-500 mb-4 border-b border-indigo-300 pb-1">
-                  Certifications
-                </h2>
-                {certifications.map((cert, i) => (
-                  <div
-                    key={i}
-                    className="mb-6 hover:bg-indigo-50 transition-colors rounded-md p-2"
-                  >
-                    <h3 className="font-semibold text-indigo-800">
-                      {cert.certificationName}
-                    </h3>
-                    <p className="text-indigo-700 text-sm">
-                      {cert.issuingOrganization}
-                    </p>
-                    <p className="text-xs text-indigo-500">
-                      Earned: {cert.dateEarned}{" "}
-                      {cert.expirationDate &&
-                        `• Expires: ${cert.expirationDate}`}
-                    </p>
-                    {cert.credentialId && (
-                      <p className="text-xs">ID: {cert.credentialId}</p>
-                    )}
-                    {cert.certificationURL && (
-                      <a
-                        href={cert.certificationURL}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-indigo-600 hover:underline text-xs"
-                      >
-                        View Credential
-                      </a>
-                    )}
-                    {cert.notes && (
-                      <p className="text-indigo-700 text-sm whitespace-pre-line mt-1">
-                        {cert.notes}
-                      </p>
-                    )}
-                  </div>
-                ))}
-              </section>
+            {profile.email && (
+              <p className="flex items-center gap-2 leading-[18px]">
+                <FaEnvelope className="text-[12px]" /> {profile.email}
+              </p>
             )}
+            {profile.social_links?.linkedin && (
+              <p className="flex items-center gap-2 leading-[18px]">
+                <FaLinkedin className="text-[12px]" />{" "}
+                <a
+                  href={profile.social_links.linkedin}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  linkedin.com/in/{firstName.toLowerCase()}
+                </a>
+              </p>
+            )}
+            {profile.social_links?.github && (
+              <p className="flex items-center gap-2 leading-[18px]">
+                <FaGithub className="text-[12px]" />{" "}
+                <a
+                  href={profile.social_links.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline"
+                >
+                  github.com/{firstName.toLowerCase()}
+                </a>
+              </p>
+            )}
+          </div>
+        </div>
 
-            {/* Social Links */}
-            {social_links && Object.values(social_links).some(Boolean) && (
+        <div className="border-b border-[#D9D9D9] mt-6"></div>
+
+        {/* Body */}
+        <div className="flex justify-between gap-5 mt-6">
+          {/* Left Column */}
+          <div className="w-[45%] space-y-6 bg-[#F5F5F5] p-6 rounded-md">
+            {/* About */}
+            {profile.summary?.profile && (
               <section>
-                <h2 className="uppercase text-sm font-semibold tracking-widest text-indigo-500 mb-4 border-b border-indigo-300 pb-1">
-                  Social Links
+                <h2 className="text-sm tracking-[2px] pb-3 text-[#666]">
+                  ABOUT
                 </h2>
-                <div className="flex flex-col space-y-3 text-indigo-700 text-sm">
-                  {Object.entries(social_links).map(
-                    ([key, value]) =>
-                      value && (
-                        <a
-                          key={key}
-                          href={value}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-indigo-600 hover:underline capitalize break-all"
-                        >
-                          {key}
-                        </a>
-                      )
-                  )}
-                </div>
-              </section>
-            )}
-
-            {/* Interests */}
-            {interests?.length > 0 && (
-              <section className="mt-auto">
-                <h2 className="uppercase text-sm font-semibold tracking-widest text-indigo-500 mb-4 border-t border-indigo-300 pt-4">
-                  Interests
-                </h2>
-                <div className="flex flex-wrap gap-2">
-                  {interests.map((int, i) => (
-                    <span
-                      key={i}
-                      className="bg-indigo-200 text-indigo-900 text-xs px-2 py-1 rounded-full"
-                    >
-                      {int.name}
-                    </span>
-                  ))}
-                </div>
-              </section>
-            )}
-          </aside>
-
-          {/* RIGHT COLUMN */}
-          <main className="md:w-2/3 pl-0 md:pl-10 flex flex-col">
-            {/* Summary */}
-            {summary && (
-              <section className="mb-12">
-                <h2 className="text-3xl font-bold text-indigo-900 border-b border-indigo-300 pb-2 mb-6">
-                  Professional Summary
-                </h2>
-                <p className="text-indigo-800 whitespace-pre-line leading-relaxed text-lg">
-                  {summary}
+                <p className="text-xs leading-[18px] text-[#171717]">
+                  {profile.summary.profile}
                 </p>
               </section>
             )}
 
-            {/* Experience */}
-            {experiences?.length > 0 && (
-              <section className="mb-12">
-                <h2 className="text-3xl font-bold text-indigo-900 border-b border-indigo-300 pb-2 mb-6">
-                  Experience
+            {/* Certifications (Training) */}
+            {profile.certifications?.length > 0 && (
+              <section>
+                <h2 className="text-sm tracking-[2px] pb-3 text-[#666]">
+                  TRAINING & CERTIFICATIONS
                 </h2>
-                {experiences.map((exp, i) => (
-                  <article
-                    key={i}
-                    className="mb-8 border-l-4 border-indigo-500 pl-5 hover:bg-indigo-50 transition-colors rounded-md py-3"
+                {profile.certifications.map((cert, idx) => (
+                  <div key={idx} className="mb-4">
+                    <p className="font-medium leading-[18px] text-xs">
+                      {cert.issuingOrganization}
+                    </p>
+                    <p className="text-xs leading-[18px] font-medium">
+                      {cert.certificationName}
+                    </p>
+                    <p className="text-xs leading-[18px] text-[#555]">
+                      Earned: {cert.dateEarned}
+                    </p>
+                  </div>
+                ))}
+              </section>
+            )}
+
+            {/* Skills */}
+            {profile.skills?.length > 0 && (
+              <section>
+                <h2 className="text-sm tracking-[2px] pb-3 text-[#666]">
+                  SKILLS
+                </h2>
+                <ul className="text-xs space-y-2">
+                  {profile.skills.map((skill, idx) => (
+                    <li key={idx}>
+                      <strong>{skill.title}:</strong>{" "}
+                      {skill.badges.map((b) => b.name).join(", ")}
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Languages */}
+            {profile.languages?.length > 0 && (
+              <section>
+                <h2 className="text-sm tracking-[2px] pb-3 text-[#666]">
+                  LANGUAGES
+                </h2>
+                {profile.languages.map((lang, idx) => (
+                  <p
+                    key={idx}
+                    className="text-xs flex justify-between items-center"
                   >
-                    <h3 className="text-2xl font-semibold">{exp.title}</h3>
-                    <p className="text-indigo-700 text-sm">
-                      {exp.company} • {exp.location}{" "}
-                      {exp.jobType && `(${exp.jobType})`}
+                    {lang.name} <span>{lang.level}</span>
+                  </p>
+                ))}
+              </section>
+            )}
+          </div>
+
+          {/* Right Column */}
+          <div className="w-[55%] space-y-6">
+            {/* Experience */}
+            {profile.experience?.length > 0 && (
+              <section>
+                <h2 className="text-sm tracking-[2px] pb-3 text-[#666]">
+                  EXPERIENCE
+                </h2>
+                {profile.experience.map((exp, idx) => (
+                  <div key={idx} className="mb-4">
+                    <p className="font-medium leading-[18px] text-xs">
+                      {exp.title}
                     </p>
-                    <p className="text-xs text-indigo-500 mb-3">
-                      {exp.startDate} - {exp.endDate}
+                    <p className="text-xs font-medium flex justify-between">
+                      {exp.company}{" "}
+                      <span>
+                        {exp.startDate} – {exp.endDate}
+                      </span>
                     </p>
-                    {exp.points?.length > 0 && (
-                      <ul className="list-disc list-inside text-indigo-700 space-y-1">
-                        {exp.points.map((point, idx) => (
-                          <li key={idx}>{point}</li>
-                        ))}
-                      </ul>
-                    )}
-                    {exp.technologies && (
-                      <p className="text-indigo-600 mt-3 italic text-sm">
-                        Technologies: {exp.technologies}
-                      </p>
-                    )}
-                  </article>
+                    <ul className="list-disc ml-5 mt-2 text-xs">
+                      {exp.points?.map((point, i) => (
+                        <li key={i}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
               </section>
             )}
 
             {/* Education */}
-            {education?.length > 0 && (
-              <section className="mb-12">
-                <h2 className="text-3xl font-bold text-indigo-900 border-b border-indigo-300 pb-2 mb-6">
-                  Education
+            {profile.education?.length > 0 && (
+              <section>
+                <h2 className="text-sm tracking-[2px] pb-3 text-[#666]">
+                  EDUCATION
                 </h2>
-                {education.map((edu, i) => (
-                  <article
-                    key={i}
-                    className="mb-8 border-l-4 border-indigo-400 pl-5 hover:bg-indigo-50 transition-colors rounded-md py-3"
-                  >
-                    <h3 className="text-2xl font-semibold">
-                      {edu.degree} — {edu.institution}
-                    </h3>
-                    <p className="text-indigo-700 text-sm">{edu.location}</p>
-                    <p className="text-xs text-indigo-500 mb-3">
-                      {edu.startDate} - {edu.endDate}
+                {profile.education.map((edu, idx) => (
+                  <div key={idx} className="mb-4">
+                    <p className="font-medium leading-[18px] text-xs">
+                      {edu.institution}
+                    </p>
+                    <p className="text-xs font-medium">
+                      {edu.degree} - {edu.location}
+                    </p>
+                    <p className="text-xs">
+                      {edu.startDate} – {edu.endDate}
                     </p>
                     {edu.description && (
-                      <p className="text-indigo-800 whitespace-pre-line">
-                        {edu.description}
-                      </p>
+                      <p className="text-xs mt-1">{edu.description}</p>
                     )}
-                  </article>
+                  </div>
                 ))}
               </section>
             )}
 
             {/* Projects */}
-            {projects?.length > 0 && (
+            {profile.projects?.length > 0 && (
               <section>
-                <h2 className="text-3xl font-bold text-indigo-900 border-b border-indigo-300 pb-2 mb-6">
-                  Projects
+                <h2 className="text-sm tracking-[2px] pb-3 text-[#666]">
+                  PROJECTS
                 </h2>
-                {projects.map((proj, i) => (
-                  <article
-                    key={i}
-                    className="mb-8 border-l-4 border-indigo-400 pl-5 hover:bg-indigo-50 transition-colors rounded-md py-3"
-                  >
-                    <h3 className="text-2xl font-semibold">{proj.name}</h3>
-                    {proj.url && (
-                      <a
-                        href={proj.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-indigo-600 hover:underline text-sm"
-                      >
-                        {proj.url}
-                      </a>
-                    )}
-                    <p className="text-indigo-800 whitespace-pre-line mt-2">
-                      {proj.description}
+                {profile.projects.map((proj, idx) => (
+                  <div key={idx} className="mb-4">
+                    <p className="font-medium leading-[18px] text-xs">
+                      {proj.name}
                     </p>
-                    {proj.points?.length > 0 && (
-                      <ul className="list-disc list-inside text-indigo-700 mt-3 space-y-1">
-                        {proj.points.map((p, idx) => (
-                          <li key={idx}>{p}</li>
-                        ))}
-                      </ul>
-                    )}
-                  </article>                                                                                                                                                                                                                                                                                                                                                          
+                    <a
+                      href={`https://${proj.url}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs underline"
+                    >
+                      {proj.url}
+                    </a>
+                    <p className="text-xs mt-1">{proj.description}</p>
+                    <ul className="list-disc ml-5 mt-2 text-xs">
+                      {proj.points?.map((point, i) => (
+                        <li key={i}>{point}</li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
               </section>
             )}
-          </main>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

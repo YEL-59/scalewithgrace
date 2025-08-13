@@ -23,7 +23,7 @@ export default function SignIn() {
   const togglePasswordVisibility = () => {
     setShowPassword((prev) => !prev);
   };
-  const googleSignIn = useGoogleSignIn();
+  //const googleSignIn = useGoogleSignIn();
   const { form, mutate } = useSignIn();
   const onSubmit = (data) => {
     mutate(data);
@@ -122,13 +122,13 @@ export default function SignIn() {
           </form>
         </Form>
 
-        <button
+        {/* <button
           onClick={googleSignIn}
           className="w-full border-2 border-[#E4E4E4] text-[#959595] flex items-center gap-3 mt-3 rounded-[60px] py-3 text-center justify-center text-base lg:text-lg mb-8 md:mb-10 lg:mb-12  xl:mb-[54px]"
         >
           <GoogleIcon />
           Sign In with Google
-        </button>
+        </button> */}
 
         <p className="text-[#959595] text-base lg:text-lg text-center">
           Don't have an account?{" "}

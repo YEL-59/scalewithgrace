@@ -7,6 +7,10 @@ import Template5 from "./cv-template/template5";
 import Template6 from "./cv-template/template6";
 import Template7 from "./cv-template/template7";
 import { useResumeById } from "@/hooks/resumebuild.hook";
+import Template8 from "./cv-template/template8";
+import Template9 from "./cv-template/template9";
+import Template10 from "./cv-template/template10";
+import Template11 from "./cv-template/template11";
 
 const templateMap = {
   "template-one": Template1,
@@ -16,6 +20,10 @@ const templateMap = {
   "template-five": Template5,
   "template-six": Template6,
   "template-seven": Template7,
+  "template-eight": Template8,
+  "template-nine": Template9,
+  "template-ten": Template10,
+  "template-eleven": Template11,
 };
 
 const CVTemplatePreview = () => {

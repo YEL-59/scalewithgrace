@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -9,53 +9,50 @@ import InterestsModal from "../resumebuilder-modal/InterestsModal";
 
 const SkillsSection = () => {
   const { setValue, control } = useFormContext();
-
-  // Watch all data
   const skills = useWatch({ control, name: "skills" }) || [];
   const socialLinks = useWatch({ control, name: "social_links" }) || {};
   const interests = useWatch({ control, name: "interests" }) || [];
 
-  // Modals state and edit indices
   const [openSkillsModal, setOpenSkillsModal] = useState(false);
   const [skillsEditIndex, setSkillsEditIndex] = useState(null);
-
   const [openSocialModal, setOpenSocialModal] = useState(false);
-
   const [openInterestsModal, setOpenInterestsModal] = useState(false);
 
-  // Handlers for lists
-  const handleSaveList = (key, data, editIdx, setEditIdx, setOpen) => {
-    const current =
-      key === "skills"
-        ? [...skills]
-        : key === "interests"
-        ? [...interests]
-        : [];
-    if (key === "skills") {
-      if (editIdx !== null) current[editIdx] = data;
-      else current.push(data);
-      setValue(key, current);
-      setEditIdx(null);
-    } else if (key === "interests") {
-      setValue(key, data); // data is whole interests array from modal
-    }
-    setOpen(false);
-  };
+  // Normalize flat string skills → object format for modal use
+  const normalizedSkills = useMemo(
+    () =>
+      skills.map((skill, idx) =>
+        typeof skill === "string"
+          ? {
+              title: `Category ${idx + 1}`,
+              description: "",
+              badges: [{ name: skill, level: "Intermediate" }],
+            }
+          : skill
+      ),
+    [skills]
+  );
 
-  // For social links, just set whole object
-  const handleSaveSocial = (data) => {
-    setValue("social_links", data);
-    setOpenSocialModal(false);
+  const handleSaveSkill = (data) => {
+    const updated = [...skills];
+    if (skillsEditIndex !== null) updated[skillsEditIndex] = data;
+    else updated.push(data);
+    setValue("skills", updated);
+    setSkillsEditIndex(null);
+    setOpenSkillsModal(false);
   };
 
   const handleDelete = (key, index) => {
-    if (key === "skills") {
-      const filtered = skills.filter((_, i) => i !== index);
-      setValue(key, filtered);
-    } else if (key === "interests") {
-      const filtered = interests.filter((_, i) => i !== index);
-      setValue(key, filtered);
-    }
+    if (key === "skills")
+      setValue(
+        key,
+        skills.filter((_, i) => i !== index)
+      );
+    else if (key === "interests")
+      setValue(
+        key,
+        interests.filter((_, i) => i !== index)
+      );
   };
 
   const renderList = (title, items, onEdit, onDelete, fields) => (
@@ -70,7 +67,7 @@ const SkillsSection = () => {
         </button>
       </div>
 
-      {!items || items.length === 0 ? (
+      {!items.length ? (
         <p className="text-gray-500 italic">
           No {title.toLowerCase()} added yet.
         </p>
@@ -102,11 +99,10 @@ const SkillsSection = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Left: Skills List */}
       <div className="space-y-6">
         {renderList(
           "Skills",
-          skills,
+          normalizedSkills,
           (idx) => {
             setSkillsEditIndex(idx);
             setOpenSkillsModal(true);
@@ -127,13 +123,13 @@ const SkillsSection = () => {
                 )}
                 {skillCategory.badges?.length > 0 && (
                   <ul className="flex flex-wrap gap-2">
-                    {skillCategory.badges.map((badge, i) => (
+                    {skillCategory.badges.map((b, i) => (
                       <li
                         key={i}
                         className="bg-gray-200 px-3 py-1 rounded-full text-sm"
                       >
-                        {badge.name}{" "}
-                        <span className="italic text-xs">({badge.level})</span>
+                        {b.name}{" "}
+                        <span className="italic text-xs">({b.level})</span>
                       </li>
                     ))}
                   </ul>
@@ -146,14 +142,11 @@ const SkillsSection = () => {
         {renderList(
           "Interests",
           interests,
-          () => {
-            // Edit interest by opening modal with all interests
-            setOpenInterestsModal(true);
-          },
+          () => setOpenInterestsModal(true),
           (idx) => handleDelete("interests", idx),
           {
             onAdd: () => setOpenInterestsModal(true),
-            render: (interest) => <p className="text-sm">{interest.name}</p>,
+            render: (i) => <p className="text-sm">{i.name}</p>,
           }
         )}
 
@@ -171,8 +164,6 @@ const SkillsSection = () => {
                     LinkedIn:{" "}
                     <a
                       href={links.linkedin}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       className="text-blue-600 underline"
                     >
                       {links.linkedin}
@@ -182,12 +173,7 @@ const SkillsSection = () => {
                 {links.github && (
                   <li>
                     GitHub:{" "}
-                    <a
-                      href={links.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline"
-                    >
+                    <a href={links.github} className="text-blue-600 underline">
                       {links.github}
                     </a>
                   </li>
@@ -195,12 +181,7 @@ const SkillsSection = () => {
                 {links.twitter && (
                   <li>
                     Twitter:{" "}
-                    <a
-                      href={links.twitter}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline"
-                    >
+                    <a href={links.twitter} className="text-blue-600 underline">
                       {links.twitter}
                     </a>
                   </li>
@@ -208,12 +189,7 @@ const SkillsSection = () => {
                 {links.website && (
                   <li>
                     Website:{" "}
-                    <a
-                      href={links.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 underline"
-                    >
+                    <a href={links.website} className="text-blue-600 underline">
                       {links.website}
                     </a>
                   </li>
@@ -224,7 +200,6 @@ const SkillsSection = () => {
         )}
       </div>
 
-      {/* Right: Resume Preview */}
       <div className="bg-white rounded-lg p-6 shadow">
         <h2 className="text-2xl font-bold mb-6 border-b pb-2">
           Resume Preview
@@ -232,38 +207,38 @@ const SkillsSection = () => {
         <ResumePreview />
       </div>
 
-      {/* Modals */}
       <SkillCategoryModal
         open={openSkillsModal}
         onClose={() => {
           setOpenSkillsModal(false);
           setSkillsEditIndex(null);
         }}
-        onSave={(data) =>
-          handleSaveList(
-            "skills",
-            data,
-            skillsEditIndex,
-            setSkillsEditIndex,
-            setOpenSkillsModal
-          )
+        onSave={handleSaveSkill}
+        initialData={
+          skillsEditIndex !== null
+            ? normalizedSkills[skillsEditIndex]
+            : {
+                title: "",
+                description: "",
+                badges: [{ name: "", level: "Intermediate" }],
+              }
         }
-        initialData={skillsEditIndex !== null ? skills[skillsEditIndex] : null}
       />
 
       <SocialLinksModal
         open={openSocialModal}
         onClose={() => setOpenSocialModal(false)}
-        onSave={handleSaveSocial}
+        onSave={(data) => {
+          setValue("social_links", data);
+          setOpenSocialModal(false);
+        }}
         initialData={Object.keys(socialLinks).length ? socialLinks : null}
       />
 
       <InterestsModal
         open={openInterestsModal}
         onClose={() => setOpenInterestsModal(false)}
-        onSave={(data) =>
-          handleSaveList("interests", data, null, null, setOpenInterestsModal)
-        }
+        onSave={(data) => setValue("interests", data)}
         initialData={interests}
       />
     </div>

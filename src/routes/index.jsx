@@ -24,7 +24,7 @@ import CareerGoal from "@/pages/dashboard/creergoal";
 import CareerRoadmap from "@/pages/dashboard/creergoal/careerroadmap";
 import MyDashboard from "@/pages/dashboard/dashboard";
 import Dashboard from "@/pages/dashboard/dashboard";
-import ResumeBuilder from "@/pages/dashboard/rusumebuilder";
+
 import CVPreview from "@/pages/dashboard/rusumebuilder/CvTemplatePreview";
 import CVTemplateGallery from "@/pages/dashboard/rusumebuilder/step/cvtemplategallery";
 import ResumeBuilderStepper from "@/pages/dashboard/rusumebuilder/stepper";
@@ -47,6 +47,9 @@ import CoverLetterGenerator from "@/pages/dashboard/coverletter";
 import CoverLetterDetails from "@/pages/dashboard/coverletter/coverletterdetails";
 import Template3 from "@/pages/dashboard/rusumebuilder/cv-template/template3";
 import CVTemplatePreview from "@/pages/dashboard/rusumebuilder/CvTemplatePreview";
+import ResumeHome from "@/pages/dashboard/rusumebuilder";
+import ResumeBuilder from "@/pages/dashboard/rusumebuilder/resume-builder";
+import ResumeUploadPrompt from "@/pages/dashboard/rusumebuilder/resume-upload";
 
 // List of routes that are considered ready for production deployment.
 // These paths correspond to pages that are presentable for client feedback.
@@ -213,8 +216,16 @@ export const router = createBrowserRouter([
                 element: <CareerRoadmap />,
               },
               {
+                path: "resume-home",
+                element: <ResumeHome />,
+              },
+              {
                 path: "resume-builder",
                 element: <ResumeBuilder />,
+              },
+              {
+                path: "resume-upload",
+                element: <ResumeUploadPrompt />,
               },
               // {
               //   path: "task-manager",

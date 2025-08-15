@@ -263,7 +263,7 @@ const Template2PDF = ({ data }) => {
             ))}
 
             {/* SKILL */}
-            <Text style={[styles.sectionHeader, { marginTop: 12 }]}>SKILL</Text>
+            {/* <Text style={[styles.sectionHeader, { marginTop: 12 }]}>SKILL</Text>
             {profile.skills?.map((skillGroup, idx) => (
               <Text key={idx} style={styles.normalText}>
                 <Text style={{ fontWeight: "bold" }}>{skillGroup.title}:</Text>{" "}
@@ -271,7 +271,27 @@ const Template2PDF = ({ data }) => {
                   ?.map((b) => `${b.name}${b.level ? ` (${b.level})` : ""}`)
                   .join(", ")}
               </Text>
-            ))}
+            ))} */}
+            {/* SKILL */}
+            <Text style={[styles.sectionHeader, { marginTop: 12 }]}>SKILL</Text>
+            {profile.skills?.map((skill, idx) => {
+              if (typeof skill === "string") {
+                return (
+                  <Text key={idx} style={styles.normalText}>
+                    • {skill}
+                  </Text>
+                );
+              }
+
+              return (
+                <Text key={idx} style={styles.normalText}>
+                  <Text style={{ fontWeight: "bold" }}>{skill.title}:</Text>{" "}
+                  {skill.badges
+                    ?.map((b) => `${b.name}${b.level ? ` (${b.level})` : ""}`)
+                    .join(", ")}
+                </Text>
+              );
+            })}
 
             {/* INTEREST */}
             <Text style={[styles.sectionHeader, { marginTop: 12 }]}>

@@ -37,7 +37,7 @@ const menuItems = [
     icon: "WeeklyTaskIcon",
   },
   {
-    path: "/dashboard/resume-builder",
+    path: "/dashboard/resume-home",
     label: "Resume Builder",
     icon: "ResumeBuilderIcon",
   },

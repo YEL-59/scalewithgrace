@@ -15,7 +15,7 @@ const Template2 = ({ data }) => {
   if (!data?.user_profile) return <p>No profile data available</p>;
 
   const profile = data.user_profile;
-
+  console.log({ profile });
   return (
     <>
       {/* Download + Print Buttons */}
@@ -404,19 +404,43 @@ const Template2 = ({ data }) => {
               >
                 SKILL
               </h2>
-              <ul
-                className="text-xs space-y-3 list-disc list-inside"
-                style={{ color: "#475569" }}
-              >
-                {profile.skills?.map((skillGroup, idx) => (
-                  <li key={idx}>
-                    <strong>{skillGroup.title}:</strong>{" "}
-                    {skillGroup.badges
-                      ?.map((b) => `${b.name}${b.level ? ` (${b.level})` : ""}`)
-                      .join(", ")}
-                  </li>
-                ))}
-              </ul>
+
+              {profile.skills?.length > 0 ? (
+                <div
+                  className="text-xs grid grid-cols-1 md:grid-cols-2 gap-2"
+                  style={{ color: "#475569" }}
+                >
+                  {profile.skills.map((skill, idx) => {
+                    // Case 1: Simple string
+                    if (typeof skill === "string") {
+                      return (
+                        <div key={idx} className="flex">
+                          <span className="mr-1">•</span>
+                          <span>{skill}</span>
+                        </div>
+                      );
+                    }
+
+                    // Case 2: Object with title & badges
+                    return (
+                      <div key={idx} className="flex">
+                        <span className="mr-1">•</span>
+                        <span>
+                          <strong>{skill.title}:</strong>{" "}
+                          {skill.badges
+                            ?.map(
+                              (b) =>
+                                `${b.name}${b.level ? ` (${b.level})` : ""}`
+                            )
+                            .join(", ")}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <p className="text-xs text-gray-400">No skills added</p>
+              )}
             </div>
 
             <div className="border-b" style={{ borderColor: "#CBD5E1" }}></div>

@@ -6,520 +6,217 @@ import {
   View,
   StyleSheet,
   Link,
-  Font,
 } from "@react-pdf/renderer";
 
-// Optional: register Urbanist font if you have the font file or use a standard font
-// Font.register({ family: 'Urbanist', src: '/path/to/Urbanist-Regular.ttf' });
-
-const styles = StyleSheet.create({
-  page: {
-    fontFamily: "Helvetica", // Replace with Urbanist if registered
-    fontSize: 10,
-    padding: 20,
-    backgroundColor: "#fff",
-    color: "#171717",
-  },
-  header: {
-    backgroundColor: "#373739",
-    color: "#fff",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    padding: 24,
-    position: "relative",
-  },
-  nameTitleContainer: {
-    flexDirection: "column",
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: "bold",
-    letterSpacing: 2,
-  },
-  jobTitle: {
-    marginTop: 6,
-    fontSize: 12,
-    letterSpacing: 3,
-    textTransform: "uppercase",
-  },
-  profileImageContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 2,
-    borderColor: "#FF4089",
-    position: "absolute",
-    right: 60,
-    bottom: -50,
-    overflow: "hidden",
-  },
-  profileImage: {
-    width: "100%",
-    height: "100%",
-  },
-  body: {
-    flexDirection: "row",
-    marginTop: 70,
-    gap: 10,
-  },
-  column: {
-    flex: 1,
-    paddingHorizontal: 10,
-  },
-  sectionHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 8,
-  },
-  sectionTitle: {
-    fontSize: 12,
-    fontWeight: "bold",
-    letterSpacing: 2,
-    flexShrink: 0,
-  },
-  sectionUnderline: {
-    flexGrow: 1,
-    height: 2,
-    backgroundColor: "#D9D9D9",
-    marginLeft: 6,
-    maxWidth: 100,
-  },
-  borderLeftAccent: {
-    borderLeftWidth: 3,
-    borderLeftColor: "#FF4089",
-    paddingLeft: 8,
-  },
-  experienceItem: {
-    marginBottom: 12,
-  },
-  expTitle: {
-    fontWeight: "bold",
-    fontSize: 10,
-  },
-  expCompany: {
-    fontSize: 9,
-    fontWeight: "bold",
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  expDescription: {
-    fontSize: 9,
-    marginTop: 4,
-  },
-  aboutSection: {
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  contactSection: {
-    marginBottom: 20,
-  },
-  contactRow: {
-    flexDirection: "row",
-    marginBottom: 6,
-    alignItems: "center",
-    justifyContent: "flex-start",
-  },
-  contactIconPlaceholder: {
-    width: 18,
-    height: 18,
-    marginRight: 8,
-    textAlign: "center",
-    fontSize: 12,
-    color: "#79819A",
-  },
-  contactText: {
-    fontSize: 9,
-  },
-  contactLink: {
-    fontSize: 9,
-    color: "#FF4089",
-    textDecoration: "underline",
-  },
-  skillsList: {
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  skillGroup: {
-    marginBottom: 10,
-    width: "100%",
-    maxWidth: 300,
-  },
-  skillTitle: {
-    fontWeight: "bold",
-    marginBottom: 6,
-  },
-  skillBadgesContainer: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "center",
-    gap: 6,
-  },
-  skillBadge: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#f5f5f5",
-    borderRadius: 4,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    fontSize: 9,
-  },
-  skillDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    marginRight: 4,
-  },
-  languageRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    marginBottom: 4,
-  },
-  divider: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#D9D9D9",
-    marginVertical: 12,
-  },
-});
-
-// Skill level to color
+// Map skill level to color
 const levelToColor = (level) => {
   switch ((level || "").toLowerCase()) {
     case "beginner":
-      return "#FBBF24"; // yellow-400
+      return "#FACC15"; // yellow
     case "intermediate":
-      return "#3B82F6"; // blue-500
+      return "#3B82F6"; // blue
     case "advanced":
     case "expert":
-      return "#16A34A"; // green-600
+      return "#16A34A"; // green
     default:
-      return "#9CA3AF"; // gray-400
+      return "#9CA3AF"; // gray
   }
 };
 
-const iconPlaceholders = {
-  phone: "📞",
-  address: "📍",
-  email: "✉️",
-  website: "🌐",
-  linkedin: "in",
-  github: "gh",
-};
+// PDF styles
+const styles = StyleSheet.create({
+  page: {
+    padding: 30,
+    fontSize: 11,
+    fontFamily: "Helvetica",
+    color: "#1F2937",
+  },
+  section: { marginBottom: 10 },
+  header: { fontSize: 18, fontWeight: "bold", marginBottom: 4 },
+  subHeader: {
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#4F46E5",
+    marginBottom: 4,
+    marginTop: 8,
+  },
+  text: { marginBottom: 2 },
+  skill: {
+    display: "inline-block",
+    padding: 4,
+    marginRight: 4,
+    marginBottom: 4,
+    borderRadius: 4,
+    color: "white",
+    fontSize: 10,
+  },
+  link: { color: "#4F46E5" },
+  smallText: { fontSize: 10, color: "#6B7280" },
+  list: { marginLeft: 12, marginBottom: 4 },
+});
 
-export function Template7pdf({ data, userImage }) {
+export const Template7pdf = ({ data }) => {
   const profile = data?.user_profile || {};
 
-  const formatDate = (dateStr) => {
-    if (!dateStr) return "";
-    // Example simple format: "1-apr-2018" -> "Apr 2018"
-    try {
-      const d = new Date(dateStr);
-      if (!isNaN(d)) {
-        return d.toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-        });
-      }
-      // fallback for strings like "1-apr-2018"
-      const parts = dateStr.split("-");
-      if (parts.length === 3) {
-        return `${parts[1].charAt(0).toUpperCase() + parts[1].slice(1)} ${
-          parts[2]
-        }`;
-      }
-      return dateStr;
-    } catch {
-      return dateStr;
-    }
-  };
+  // Map skills (strings or badges) to objects
+  const skills = profile.skills
+    ?.map((skill) => {
+      if (typeof skill === "string") return { name: skill, level: null };
+      if (skill?.badges)
+        return skill.badges.map((b) => ({ name: b.name, level: b.level }));
+      return [];
+    })
+    .flat();
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
         {/* Header */}
-        <View style={styles.header}>
-          <View style={styles.nameTitleContainer}>
-            <Text style={styles.name}>
-              {profile.full_name || "ALEX STEVENS"}
+        <View style={styles.section}>
+          <Text style={styles.header}>{profile.full_name}</Text>
+          {profile.phone && (
+            <Text style={styles.text}>Phone: {profile.phone}</Text>
+          )}
+          {profile.email && (
+            <Text style={styles.text}>Email: {profile.email}</Text>
+          )}
+          {profile.address && (
+            <Text style={styles.text}>Address: {profile.address}</Text>
+          )}
+          {profile.website && (
+            <Text style={styles.text}>
+              Website:{" "}
+              <Link src={profile.website} style={styles.link}>
+                {profile.website}
+              </Link>
             </Text>
-            <Text style={styles.jobTitle}>
-              {profile.job_title || "PROJECT MANAGER"}
+          )}
+          {profile.social_links?.linkedin && (
+            <Text style={styles.text}>
+              LinkedIn:{" "}
+              <Link src={profile.social_links.linkedin} style={styles.link}>
+                LinkedIn
+              </Link>
             </Text>
-          </View>
-          {userImage && (
-            <View style={styles.profileImageContainer}>
-              <Image src={userImage} style={styles.profileImage} />
-            </View>
+          )}
+          {profile.social_links?.github && (
+            <Text style={styles.text}>
+              GitHub:{" "}
+              <Link src={profile.social_links.github} style={styles.link}>
+                GitHub
+              </Link>
+            </Text>
           )}
         </View>
 
-        {/* Body */}
-        <View style={styles.body}>
-          {/* Left Column */}
-          <View style={styles.column}>
-            {/* Experience */}
-            <View>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>EXPERIENCE</Text>
-                <View style={styles.sectionUnderline} />
-              </View>
-              <View style={styles.borderLeftAccent}>
-                {(profile.experience?.length ?? 0) > 0 ? (
-                  profile.experience.map((exp, i) => (
-                    <View key={i} style={styles.experienceItem}>
-                      <Text style={styles.expTitle}>{exp.title}</Text>
-                      <View style={styles.expCompany}>
-                        <Text>{`${exp.company}, ${exp.location || ""}`}</Text>
-                        <Text>
-                          {formatDate(exp.startDate)} –{" "}
-                          {formatDate(exp.endDate)}
-                        </Text>
-                      </View>
-                      <Text style={styles.expDescription}>
-                        {exp.points?.join(" ")}
-                      </Text>
-                    </View>
-                  ))
-                ) : (
-                  <Text style={{ fontStyle: "italic" }}>
-                    No experience data available.
-                  </Text>
-                )}
-              </View>
-            </View>
+        {/* Professional Summary */}
+        {profile.summary?.profile && (
+          <View style={styles.section}>
+            <Text style={styles.subHeader}>Professional Summary</Text>
+            <Text style={styles.text}>{profile.summary.profile}</Text>
+          </View>
+        )}
 
-            {/* Education */}
-            <View>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>EDUCATION</Text>
-                <View style={styles.sectionUnderline} />
-              </View>
-              <View style={styles.borderLeftAccent}>
-                {(profile.education?.length ?? 0) > 0 ? (
-                  profile.education.map((edu, i) => (
-                    <View key={i} style={{ marginBottom: i > 0 ? 12 : 0 }}>
-                      <Text style={styles.expTitle}>{edu.institution}</Text>
-                      <View style={styles.expCompany}>
-                        <Text>{edu.degree}</Text>
-                        <Text>{edu.location || ""}</Text>
-                      </View>
-                      <Text>
-                        {formatDate(edu.startDate)} – {formatDate(edu.endDate)}
-                      </Text>
-                      {edu.description && (
-                        <Text style={{ marginTop: 4 }}>{edu.description}</Text>
-                      )}
-                    </View>
-                  ))
-                ) : (
-                  <Text style={{ fontStyle: "italic" }}>
-                    No education data available.
-                  </Text>
+        {/* Experience */}
+        {profile.experience?.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.subHeader}>Experience</Text>
+            {profile.experience.map((job, i) => (
+              <View key={i} style={styles.section}>
+                <Text style={{ fontWeight: "bold" }}>
+                  {job.position || job.title} – {job.company}
+                </Text>
+                <Text style={styles.smallText}>
+                  {job.location || job.city} | {job.startDate || job.duration} -{" "}
+                  {job.endDate || job.duration}
+                </Text>
+                {job.description && (
+                  <Text style={styles.text}>{job.description}</Text>
+                )}
+                {job.points?.length > 0 && (
+                  <View style={styles.list}>
+                    {job.points.map((point, idx) => (
+                      <Text key={idx}>• {point}</Text>
+                    ))}
+                  </View>
                 )}
               </View>
-            </View>
+            ))}
+          </View>
+        )}
 
-            {/* Training/Certifications */}
-            <View>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>TRAINING</Text>
-                <View style={styles.sectionUnderline} />
-              </View>
-              <View style={styles.borderLeftAccent}>
-                {(profile.certifications?.length ?? 0) > 0 ? (
-                  profile.certifications.map((cert, i) => (
-                    <View key={i} style={{ marginBottom: i > 0 ? 12 : 0 }}>
-                      <Text style={styles.expTitle}>
-                        {cert.issuingOrganization}
-                      </Text>
-                      <Text style={styles.expCompany}>
-                        {cert.certificationName}
-                      </Text>
-                      <Text>{formatDate(cert.dateEarned)}</Text>
-                    </View>
-                  ))
-                ) : (
-                  <Text style={{ fontStyle: "italic" }}>
-                    No training data available.
-                  </Text>
+        {/* Education */}
+        {profile.education?.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.subHeader}>Education</Text>
+            {profile.education.map((edu, i) => (
+              <View key={i} style={styles.section}>
+                <Text style={{ fontWeight: "bold" }}>
+                  {edu.degree} {edu.study_field ? `in ${edu.study_field}` : ""}
+                </Text>
+                <Text style={styles.smallText}>
+                  {edu.institution} | {edu.year || edu.startDate} -{" "}
+                  {edu.endDate}
+                </Text>
+                {edu.description && (
+                  <Text style={styles.text}>{edu.description}</Text>
                 )}
               </View>
+            ))}
+          </View>
+        )}
+
+        {/* Skills */}
+        {skills.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.subHeader}>Skills</Text>
+            <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+              {skills.map((skill, i) => (
+                <Text
+                  key={i}
+                  style={{
+                    ...styles.skill,
+                    backgroundColor: levelToColor(skill.level),
+                  }}
+                >
+                  {skill.name}
+                </Text>
+              ))}
             </View>
           </View>
+        )}
 
-          {/* Divider */}
-          <View style={{ width: 1, backgroundColor: "#D9D9D9" }} />
-
-          {/* Right Column */}
-          <View style={styles.column}>
-            {/* About Me */}
-            <View style={styles.aboutSection}>
-              <Text style={[styles.sectionTitle, { textAlign: "center" }]}>
-                ABOUT ME
-              </Text>
-              <Text>
-                {profile.summary?.profile ||
-                  "Experienced Senior Project Manager with over 10 years in the German tech industry. Specializing in agile methodologies, cross-functional team leadership, and delivering complex software solutions. Passionate about driving innovation and exceeding client expectations."}
-              </Text>
-            </View>
-
-            <View style={styles.divider} />
-
-            {/* Contact */}
-            <View style={styles.contactSection}>
-              <Text style={[styles.sectionTitle, { textAlign: "center" }]}>
-                CONTACT
-              </Text>
-              <View>
-                {profile.phone && (
-                  <View style={styles.contactRow}>
-                    <Text style={styles.contactIconPlaceholder}>
-                      {iconPlaceholders.phone}
-                    </Text>
-                    <Link
-                      src={`tel:${profile.phone}`}
-                      style={styles.contactLink}
-                    >
-                      {profile.phone}
-                    </Link>
-                  </View>
+        {/* Projects */}
+        {profile.projects?.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.subHeader}>Projects</Text>
+            {profile.projects.map((proj, i) => (
+              <Text key={i} style={styles.text}>
+                • <Text style={{ fontWeight: "bold" }}>{proj.name}</Text>:{" "}
+                {proj.description}{" "}
+                {proj.url && (
+                  <Link src={proj.url} style={styles.link}>
+                    [Link]
+                  </Link>
                 )}
-                {profile.address && (
-                  <View style={styles.contactRow}>
-                    <Text style={styles.contactIconPlaceholder}>
-                      {iconPlaceholders.address}
-                    </Text>
-                    <Text style={styles.contactText}>{profile.address}</Text>
-                  </View>
-                )}
-                {profile.email && (
-                  <View style={styles.contactRow}>
-                    <Text style={styles.contactIconPlaceholder}>
-                      {iconPlaceholders.email}
-                    </Text>
-                    <Link
-                      src={`mailto:${profile.email}`}
-                      style={styles.contactLink}
-                    >
-                      {profile.email}
-                    </Link>
-                  </View>
-                )}
-                {profile.website && (
-                  <View style={styles.contactRow}>
-                    <Text style={styles.contactIconPlaceholder}>
-                      {iconPlaceholders.website}
-                    </Text>
-                    <Link
-                      src={
-                        profile.website.startsWith("http")
-                          ? profile.website
-                          : `https://${profile.website}`
-                      }
-                      style={styles.contactLink}
-                    >
-                      {profile.website.replace(/^https?:\/\//, "")}
-                    </Link>
-                  </View>
-                )}
-                {/* Social links */}
-                {(profile.social_links?.linkedin ||
-                  profile.social_links?.github) && (
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "center",
-                      marginTop: 8,
-                      gap: 10,
-                    }}
-                  >
-                    {profile.social_links.linkedin && (
-                      <Link
-                        src={profile.social_links.linkedin}
-                        style={[styles.contactLink, { marginRight: 10 }]}
-                      >
-                        LinkedIn
-                      </Link>
-                    )}
-                    {profile.social_links.github && (
-                      <Link
-                        src={profile.social_links.github}
-                        style={styles.contactLink}
-                      >
-                        GitHub
-                      </Link>
-                    )}
-                  </View>
-                )}
-              </View>
-            </View>
-
-            <View style={styles.divider} />
-
-            {/* Skills */}
-            <View style={{ alignItems: "center" }}>
-              <Text style={[styles.sectionTitle, { textAlign: "center" }]}>
-                SKILL
               </Text>
-              {profile.skills?.length > 0 ? (
-                profile.skills.map((skill, i) => (
-                  <View key={i} style={styles.skillGroup}>
-                    <Text style={styles.skillTitle}>{skill.title}</Text>
-                    <View style={styles.skillBadgesContainer}>
-                      {skill.badges?.map((badge, j) => (
-                        <View
-                          key={j}
-                          style={styles.skillBadge}
-                          title={`${badge.name} - ${badge.level}`}
-                        >
-                          <View
-                            style={[
-                              styles.skillDot,
-                              { backgroundColor: levelToColor(badge.level) },
-                            ]}
-                          />
-                          <Text style={{ textTransform: "capitalize" }}>
-                            {badge.name}
-                          </Text>
-                        </View>
-                      ))}
-                    </View>
-                  </View>
-                ))
-              ) : (
-                <Text style={{ fontStyle: "italic" }}>No skills listed</Text>
-              )}
-            </View>
-
-            <View style={styles.divider} />
-
-            {/* Languages */}
-            <View>
-              <Text style={[styles.sectionTitle, { textAlign: "center" }]}>
-                LANGUAGE
-              </Text>
-              {(profile.languages?.length ?? 0) > 0 ? (
-                profile.languages.map((lang, i) => (
-                  <View key={i} style={styles.languageRow}>
-                    <Text>{lang.name}</Text>
-                    <Text>{lang.level || ""}</Text>
-                  </View>
-                ))
-              ) : (
-                <>
-                  <View style={styles.languageRow}>
-                    <Text>German</Text>
-                    <Text>Native</Text>
-                  </View>
-                  <View style={styles.languageRow}>
-                    <Text>English</Text>
-                    <Text>Fluent</Text>
-                  </View>
-                </>
-              )}
-            </View>
+            ))}
           </View>
-        </View>
+        )}
+
+        {/* Certifications */}
+        {profile.certifications?.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.subHeader}>Certifications</Text>
+            {profile.certifications.map((cert, i) => (
+              <Text key={i} style={styles.text}>
+                • <Text style={{ fontWeight: "bold" }}>{cert.name}</Text> –{" "}
+                {cert.issuer} ({cert.year})
+              </Text>
+            ))}
+          </View>
+        )}
       </Page>
     </Document>
   );
-}
+};

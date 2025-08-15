@@ -10,7 +10,7 @@ const Template1 = ({ data = {} }) => {
     if (!data?.user_profile) return {};
 
     const profile = data.user_profile;
-
+    console.log({ profile });
     const nameParts = profile.full_name ? profile.full_name.split(" ") : [];
     const firstName = nameParts[0] || "First";
     const lastName = nameParts.slice(1).join(" ") || "Last";
@@ -18,7 +18,7 @@ const Template1 = ({ data = {} }) => {
     return {
       firstName,
       lastName,
-      title: profile.job_title || "Professional Title",
+      job_title: profile.job_title || "Professional Title",
       email: profile.email || "",
       phone: profile.phone || "",
       website: profile.social_links?.website || profile.website || "",
@@ -56,13 +56,24 @@ const Template1 = ({ data = {} }) => {
         notes: cert.notes || "",
       })),
 
-      skills: (profile.skills || []).map((skillGroup) => ({
-        title: skillGroup.title || "",
-        badges: (skillGroup.badges || []).map((b) => ({
-          name: b.name || "",
-          level: b.level || null,
-        })),
-      })),
+      skills: (profile.skills || []).map((skillGroup) => {
+        if (typeof skillGroup === "string") {
+          // plain string → treat as a badge-only group
+          return {
+            title: "",
+            badges: [{ name: skillGroup, level: null }],
+          };
+        }
+
+        // object with title/badges
+        return {
+          title: skillGroup.title || "",
+          badges: (skillGroup.badges || []).map((b) => ({
+            name: b.name || "",
+            level: b.level || null,
+          })),
+        };
+      }),
 
       interests: profile.interests || [],
     };
@@ -71,7 +82,7 @@ const Template1 = ({ data = {} }) => {
   const {
     firstName,
     lastName,
-    title,
+    job_title,
     email,
     phone,
     website,
@@ -148,7 +159,7 @@ const Template1 = ({ data = {} }) => {
                 {firstName} <span className="font-semibold">{lastName}</span>
               </h1>
               <p className="text-gray-600 mt-1">
-                {title || "Professional Title"}
+                {job_title || "Professional Title"}
               </p>
             </div>
 
@@ -272,33 +283,52 @@ const Template1 = ({ data = {} }) => {
           {/* Right sidebar */}
           <aside className="flex flex-col justify-start ">
             {/* Skills */}
-            {skills.length > 0 && (
+            {skills?.length > 0 && (
               <section className="mb-6">
                 <h2 className="uppercase text-xs font-semibold tracking-widest text-gray-600 border-b border-gray-300 pb-1 mb-3">
                   Skills
                 </h2>
-                {skills.map((group, i) => (
-                  <div key={i} className="mb-3">
-                    <p className="font-semibold text-gray-700 text-sm">
-                      {group.title}
-                    </p>
-                    <div className="flex flex-wrap gap-1 mt-1">
-                      {group.badges.map((b, bi) => (
-                        <Badge
-                          key={bi}
-                          className="bg-gray-200 text-gray-800 px-2 py-0.5 text-xs"
-                        >
-                          {b.name}
-                          {b.level && (
-                            <span className="ml-1 text-xs text-gray-600">
-                              ({b.level})
+
+                {skills.map((item, i) => {
+                  // If item is a simple string → render directly as badge
+                  if (typeof item === "string") {
+                    return (
+                      <div key={i} className="flex flex-wrap gap-1 mb-2">
+                        <span className="bg-gray-200 text-gray-800 px-2 py-0.5 text-xs rounded">
+                          {item}
+                        </span>
+                      </div>
+                    );
+                  }
+
+                  // If item is an object with title & badges
+                  if (item && typeof item === "object") {
+                    return (
+                      <div key={i} className="mb-3">
+                        <p className="font-semibold text-gray-700 text-sm">
+                          {item.title}
+                        </p>
+                        <div className="flex flex-wrap gap-1 mt-1">
+                          {item.badges?.map((b, bi) => (
+                            <span
+                              key={bi}
+                              className="bg-gray-200 text-gray-800 px-2 py-0.5 text-xs rounded"
+                            >
+                              {b.name}
+                              {b.level && (
+                                <span className="ml-1 text-xs text-gray-600">
+                                  ({b.level})
+                                </span>
+                              )}
                             </span>
-                          )}
-                        </Badge>
-                      ))}
-                    </div>
-                  </div>
-                ))}
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  return null;
+                })}
               </section>
             )}
 

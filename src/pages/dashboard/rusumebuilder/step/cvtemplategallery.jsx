@@ -2,51 +2,81 @@ import { useFormContext } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { useCallback } from "react";
 
-import templateImg from "@/assets/cvtemplate/Template1.jpg";
+import templateImg1 from "@/assets/cvtemplate/Template1.png";
+import templateImg2 from "@/assets/cvtemplate/Template2.png";
+import templateImg3 from "@/assets/cvtemplate/Template3.png";
+import templateImg4 from "@/assets/cvtemplate/Template4.png";
+import templateImg5 from "@/assets/cvtemplate/Template5.png";
+import templateImg6 from "@/assets/cvtemplate/Template6.png";
+import templateImg7 from "@/assets/cvtemplate/Template7.png";
 import { useCreateResume } from "@/hooks/resumebuild.hook";
 
 const templates = [
   {
     id: 1,
     name: "Classic Design 1",
-    image: templateImg,
+    image: templateImg1,
     slug: "template-one",
   },
   {
     id: 2,
     name: "Modern Design 2",
-    image: templateImg,
+    image: templateImg2,
     slug: "template-two",
   },
   {
     id: 3,
     name: "Modern Design 3",
-    image: templateImg,
+    image: templateImg3,
     slug: "template-three",
   },
   {
     id: 4,
     name: "Modern Design 4",
-    image: templateImg,
+    image: templateImg4,
     slug: "template-four",
   },
   {
     id: 5,
     name: "Modern Design 5",
-    image: templateImg,
+    image: templateImg5,
     slug: "template-five",
   },
   {
     id: 6,
     name: "Modern Design 6",
-    image: templateImg,
+    image: templateImg6,
     slug: "template-six",
   },
   {
     id: 7,
     name: "Modern Design 7",
-    image: templateImg,
+    image: templateImg7,
     slug: "template-seven",
+  },
+  {
+    id: 8,
+    name: "Fashionable 8",
+    image: templateImg7,
+    slug: "template-eight",
+  },
+  {
+    id: 9,
+    name: "Minimalist 9",
+    image: templateImg7,
+    slug: "template-nine",
+  },
+  {
+    id: 10,
+    name: "Modern 10",
+    image: templateImg7,
+    slug: "template-ten",
+  },
+  {
+    id: 11,
+    name: "Modern 10",
+    image: templateImg7,
+    slug: "template-eleven",
   },
 ];
 
@@ -66,6 +96,7 @@ const CVTemplateGallery = () => {
           profile: formData.summary,
         },
         title: formData?.title || "Untitled Resume",
+        job_title: formData?.job_title,
         experience: formData.experiences || [],
         certifications: formData.certifications || [],
         languages: formData.languages || [],

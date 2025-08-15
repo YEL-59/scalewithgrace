@@ -161,18 +161,31 @@ export default function Template4({ data }) {
             )}
 
             {/* Skills */}
+            {/* Skills */}
             {profile.skills?.length > 0 && (
               <section>
                 <h2 className="text-sm tracking-[2px] pb-3 text-[#666]">
                   SKILLS
                 </h2>
                 <ul className="text-xs space-y-2">
-                  {profile.skills.map((skill, idx) => (
-                    <li key={idx}>
-                      <strong>{skill.title}:</strong>{" "}
-                      {skill.badges.map((b) => b.name).join(", ")}
-                    </li>
-                  ))}
+                  {profile.skills.map((skill, idx) => {
+                    // If skill is a string, just display it
+                    if (typeof skill === "string") {
+                      return <li key={idx}>{skill}</li>;
+                    }
+
+                    // If skill is an object with badges
+                    if (skill.badges?.length > 0) {
+                      return (
+                        <li key={idx}>
+                          <strong>{skill.title}:</strong>{" "}
+                          {skill.badges.map((b) => b.name).join(", ")}
+                        </li>
+                      );
+                    }
+
+                    return null;
+                  })}
                 </ul>
               </section>
             )}

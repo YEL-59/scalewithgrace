@@ -109,29 +109,50 @@ export default function Template6({ data = {} }) {
               <h2 className="text-sm font-semibold tracking-[2px] pb-3 text-[#0D0D0D] leading-[24px]">
                 SKILLS
               </h2>
+
               {profile.skills?.length > 0 ? (
-                profile.skills.map((skill, i) => (
-                  <div key={i} className="mb-4 text-center w-full">
-                    <p className="font-semibold text-xs mb-1 uppercase tracking-wide">
-                      {skill.title}
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2">
-                      {skill.badges?.length > 0 ? (
-                        skill.badges.map((badge, idx) => (
+                profile.skills.map((skill, i) => {
+                  // If skill is a string, treat it as a single badge
+                  if (typeof skill === "string") {
+                    return (
+                      <div key={i} className="mb-4 text-center w-full">
+                        <div className="flex flex-wrap justify-center gap-2">
                           <span
-                            key={idx}
                             className="text-xs px-2 py-1 border border-gray-400 rounded-md bg-gray-100"
-                            title={`${badge.name} - ${badge.level}`}
+                            title={skill}
                           >
-                            {badge.name} ({badge.level})
+                            {skill}
                           </span>
-                        ))
-                      ) : (
-                        <NA />
-                      )}
-                    </div>
-                  </div>
-                ))
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  // If skill is an object with badges
+                  if (skill.badges?.length > 0) {
+                    return (
+                      <div key={i} className="mb-4 text-center w-full">
+                        <p className="font-semibold text-xs mb-1 uppercase tracking-wide">
+                          {skill.title}
+                        </p>
+                        <div className="flex flex-wrap justify-center gap-2">
+                          {skill.badges.map((badge, idx) => (
+                            <span
+                              key={idx}
+                              className="text-xs px-2 py-1 border border-gray-400 rounded-md bg-gray-100"
+                              title={`${badge.name} - ${badge.level}`}
+                            >
+                              {badge.name} ({badge.level})
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  }
+
+                  // Fallback if no badges
+                  return <NA key={i} />;
+                })
               ) : (
                 <NA />
               )}

@@ -49,12 +49,14 @@ const YourDetails = () => {
       }
     );
   };
-  // const handleImageUpload = (e) => {
-  //   const file = e.target.files?.[0];
-  //   if (file) {
-  //     setValue("image", file); // File object, not base64
-  //   }
-  // };
+  const handleImageUpload = (e) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setValue("image", file); // Keep File object
+      const previewUrl = URL.createObjectURL(file);
+      setValue("imagePreview", previewUrl);
+    }
+  };
 
   const onSubmit = (data) => {
     console.log("YourDetails submitted:", data);
@@ -69,7 +71,7 @@ const YourDetails = () => {
       <div className="space-y-4 bg-white rounded p-6 h-full">
         <h1 className="text-2xl font-bold mb-6">Contact Information</h1>
         {/* Image Upload */}
-        {/* <div>
+        <div>
           <FormLabel>Profile Image</FormLabel>
           <input
             name="image"
@@ -78,14 +80,14 @@ const YourDetails = () => {
             onChange={handleImageUpload}
             className="mt-1"
           />
-          {values?.image && (
+          {values?.imagePreview && (
             <img
-              src={values.image}
+              src={values.imagePreview}
               alt="Profile Preview"
               className="mt-2 w-24 h-24 object-cover rounded-full border"
             />
           )}
-        </div> */}
+        </div>
 
         {/* Basic Info */}
         <div className="grid grid-cols-2 gap-4">
@@ -106,7 +108,11 @@ const YourDetails = () => {
           <TextInput name="phone" label="Phone*" placeholder="88017724999675" />
         </div>
 
-        <TextInput name="title" label="Title" placeholder="Web Developer" />
+        <TextInput
+          name="job_title"
+          label="Job Title"
+          placeholder="Web Developer"
+        />
         <TextInput
           name="linkedin"
           label="LinkedIn"

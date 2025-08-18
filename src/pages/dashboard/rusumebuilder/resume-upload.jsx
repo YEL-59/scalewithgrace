@@ -10,7 +10,7 @@ const ResumeUploadPrompt = () => {
   const [prompt, setPrompt] = useState("");
   const [generatedResume, setGeneratedResume] = useState(null);
 
-  const mutation = useGenerateResumeByFilePrompt();
+  const { mutate, isLoading } = useGenerateResumeByFilePrompt();
 
   const handleFileChange = (e) => {
     if (e.target.files.length > 0) {
@@ -24,7 +24,7 @@ const ResumeUploadPrompt = () => {
       return;
     }
 
-    mutation.mutate(
+    mutate(
       { file, prompt_text: prompt },
       {
         onSuccess: (data) => {
@@ -33,7 +33,7 @@ const ResumeUploadPrompt = () => {
         },
         onError: (error) => {
           console.error("Error generating resume:", error);
-          alert("Failed to generate resume. Check console for details.");
+          //alert("Failed to generate resume. Check console for details.");
         },
       }
     );
@@ -115,8 +115,34 @@ const ResumeUploadPrompt = () => {
         <Button variant="outline" onClick={handleSamplePrompt}>
           Sample Prompt
         </Button>
-        <Button onClick={handleGenerate} disabled={mutation.isLoading}>
-          {mutation.isLoading ? "Generating..." : "Generate Resume"}
+        <Button
+          className="bg-gradient-to-r from-primary to-secondary flex items-center justify-center gap-2"
+          onClick={handleGenerate}
+          disabled={isLoading}
+        >
+          {isLoading && (
+            <svg
+              className="animate-spin h-5 w-5 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v8H4z"
+              ></path>
+            </svg>
+          )}
+          {isLoading ? "Generating..." : "Generate Resume"}
         </Button>
       </div>
 

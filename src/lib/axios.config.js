@@ -38,11 +38,7 @@ axiosPrivate.interceptors.response.use(
     const status = error.response?.status;
 
     if (status === 403) {
-      toast({
-        title: "Subscription Required",
-        description: "You are not subscribed. Please subscribe first.",
-        variant: "destructive",
-      });
+      toast.error("You are not subscribed. Please subscribe first.");
 
       setTimeout(() => {
         window.location.href = "/pricing";

@@ -14,19 +14,19 @@ import { useCreateResume } from "@/hooks/resumebuild.hook";
 const templates = [
   {
     id: 1,
-    name: "Classic Design 1",
+    name: "Professional",
     image: templateImg1,
     slug: "template-one",
   },
   {
     id: 2,
-    name: "Modern Design 2",
+    name: "Modern",
     image: templateImg2,
     slug: "template-two",
   },
   {
     id: 3,
-    name: "Modern Design 3",
+    name: "Minimal",
     image: templateImg3,
     slug: "template-three",
   },
@@ -132,7 +132,7 @@ const CVTemplateGallery = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-6">Choose a CV Template</h2>
+      <h2 className="text-2xl font-bold mb-6">Choose a Resume Template</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {templates.map((template) => (
           <div

@@ -57,12 +57,12 @@ export default function Template7({ data }) {
           {({ loading }) => (loading ? "Generating PDF..." : "Download PDF")}
         </PDFDownloadLink>
 
-        <button
+        {/* <button
           onClick={() => window.print()}
           className="px-5 py-2 bg-green-600 text-white rounded-md shadow hover:bg-green-700 transition"
         >
           Print
-        </button>
+        </button> */}
       </div>
 
       {/* Resume Layout */}

@@ -5,312 +5,241 @@ import {
   Text,
   View,
   StyleSheet,
-  Font,
   Link,
 } from "@react-pdf/renderer";
 
-// Define styles similar to your Tailwind-based layout
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
-    fontSize: 10,
-    fontFamily: "Helvetica",
+    padding: 20, // A4 margin
+    fontSize: 10, // Base readable font size
+    lineHeight: 1.5,
     color: "#333",
-    lineHeight: 1.4,
-  },
-  header: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#bbb",
-    borderBottomStyle: "solid",
-    paddingBottom: 10,
-    marginBottom: 15,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: "column",
   },
   name: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
+    marginBottom: 6,
   },
-  lastName: {
-    fontWeight: "normal",
-  },
-  title: {
-    marginTop: 4,
-    color: "#666",
-  },
-  contactRow: {
-    flexDirection: "row",
-    flexWrap: "wrap",
-    maxWidth: 250,
-    justifyContent: "flex-end",
-  },
-  contactItem: {
-    marginLeft: 8,
-    borderLeftWidth: 1,
-    borderLeftColor: "#ccc",
-    borderLeftStyle: "solid",
-    paddingLeft: 6,
+  contact: {
+    textAlign: "center",
+    fontSize: 8,
     color: "#555",
-  },
-  section: {
     marginBottom: 12,
   },
-  sectionHeader: {
-    fontSize: 11,
+  sectionTitle: {
+    flexDirection: "row",
+    alignItems: "center",
     fontWeight: "bold",
-    letterSpacing: 1,
-    borderBottomWidth: 1,
-    borderBottomColor: "#ccc",
-    borderBottomStyle: "solid",
-    paddingBottom: 4,
-    marginBottom: 6,
     textTransform: "uppercase",
+    fontSize: 10,
+    marginTop: 12,
+    marginBottom: 6,
   },
+  sectionLine: {
+    flexGrow: 1,
+    borderBottomWidth: 1,
+    borderBottomColor: "#000",
+    marginLeft: 6,
+  },
+  text: { marginBottom: 4 },
+  listItem: { marginBottom: 3 },
+  bold: { fontWeight: "bold" },
+  italic: { fontStyle: "italic" },
   twoColumn: {
     flexDirection: "row",
     justifyContent: "space-between",
+    gap: 10,
+    marginTop: 4,
   },
-  mainColumn: {
-    width: "60%",
-    borderRightWidth: 1,
-    borderRightColor: "#ccc",
-    borderRightStyle: "solid",
-    paddingRight: 10,
-  },
-  sideColumn: {
-    width: "35%",
-    paddingLeft: 10,
-  },
-  experienceItem: {
-    marginBottom: 6,
-  },
-  experienceTitleRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-  },
-  experienceTitle: {
-    fontWeight: "bold",
-  },
-  experienceTime: {
-    fontSize: 9,
-    fontFamily: "Courier",
-    color: "#888",
-  },
-  experienceCompany: {
-    fontStyle: "italic",
-    fontSize: 9,
-    color: "#666",
-    marginBottom: 4,
-  },
-  bulletList: {
-    marginLeft: 12,
-  },
-  bulletPoint: {
-    marginBottom: 2,
-  },
-  skillBadge: {
-    fontSize: 9,
-    paddingHorizontal: 4,
-    paddingVertical: 1,
-    backgroundColor: "#ddd",
-    color: "#333",
-    marginRight: 4,
-    marginBottom: 4,
-    borderRadius: 2,
-  },
+  column: { flex: 1 },
+  link: { color: "blue", textDecoration: "underline" },
+  subsection: { marginBottom: 10 },
 });
 
 const Template1PDF = ({ data }) => {
-  if (!data?.user_profile) return null;
-
+  if (!data?.user_profile) return <Text>No profile data available</Text>;
   const profile = data.user_profile;
 
-  const nameParts = profile.full_name ? profile.full_name.split(" ") : [];
-  const firstName = nameParts[0] || "First";
-  const lastName = nameParts.slice(1).join(" ") || "Last";
+  const stringSkills =
+    profile.skills?.filter((skill) => typeof skill === "string") || [];
+  const objectSkills =
+    profile.skills?.filter(
+      (skill) => typeof skill === "object" && skill.title
+    ) || [];
+
+  const splitInTwo = (arr) => {
+    const mid = Math.ceil(arr.length / 2);
+    return [arr.slice(0, mid), arr.slice(mid)];
+  };
+
+  const [skillsCol1, skillsCol2] = splitInTwo(stringSkills);
+  const [eduCol1, eduCol2] = splitInTwo(profile.education || []);
+  const [projCol1, projCol2] = splitInTwo(profile.projects || []);
+
+  const renderTwoColumnList = (col1, col2, renderItem) => (
+    <View style={styles.twoColumn}>
+      <View style={styles.column}>{col1.map(renderItem)}</View>
+      <View style={styles.column}>{col2.map(renderItem)}</View>
+    </View>
+  );
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.name}>
-              {firstName} <Text style={styles.lastName}>{lastName}</Text>
-            </Text>
-            <Text style={styles.title}>
-              {profile.job_title || "Professional Title"}
-            </Text>
+        {/* Name */}
+        <Text style={styles.name}>{profile.full_name}</Text>
+
+        {/* Contact */}
+        <Text style={styles.contact}>
+          {profile.address} {"\n"}
+          {profile.phone} · {profile.email}
+        </Text>
+
+        {/* Professional Summary */}
+        {profile.summary?.profile && (
+          <View style={styles.subsection}>
+            <View style={styles.sectionTitle}>
+              <Text>Professional Summary</Text>
+              <View style={styles.sectionLine} />
+            </View>
+            <Text style={styles.text}>{profile.summary.profile}</Text>
           </View>
-          <View style={styles.contactRow}>
-            {profile.email && (
-              <Text style={[styles.contactItem]}>{profile.email}</Text>
-            )}
-            {profile.phone && (
-              <Text style={styles.contactItem}>{profile.phone}</Text>
-            )}
-            {profile.social_links?.website && (
-              <Link
-                style={styles.contactItem}
-                src={profile.social_links.website}
-              >
-                {profile.social_links.website.replace(/^https?:\/\//, "")}
-              </Link>
-            )}
-            {profile.social_links?.linkedin && (
-              <Link
-                style={styles.contactItem}
-                src={profile.social_links.linkedin}
-              >
-                LinkedIn
-              </Link>
+        )}
+
+        {/* Websites / Social Links */}
+        {(profile.website ||
+          profile.social_links?.github ||
+          profile.social_links?.linkedin) && (
+          <View style={styles.subsection}>
+            <View style={styles.sectionTitle}>
+              <Text>Websites & Profiles</Text>
+              <View style={styles.sectionLine} />
+            </View>
+            {profile.website && (
+              <Text>
+                <Link style={styles.link} src={profile.website}>
+                  {profile.website}
+                </Link>
+              </Text>
             )}
             {profile.social_links?.github && (
-              <Link
-                style={styles.contactItem}
-                src={profile.social_links.github}
-              >
-                GitHub
-              </Link>
+              <Text>
+                <Link style={styles.link} src={profile.social_links.github}>
+                  {profile.social_links.github}
+                </Link>
+              </Text>
             )}
-            {profile.social_links?.twitter && (
-              <Link
-                style={styles.contactItem}
-                src={profile.social_links.twitter}
-              >
-                Twitter
-              </Link>
+            {profile.social_links?.linkedin && (
+              <Text>
+                <Link style={styles.link} src={profile.social_links.linkedin}>
+                  {profile.social_links.linkedin}
+                </Link>
+              </Text>
             )}
           </View>
-        </View>
+        )}
 
-        {/* Two columns */}
-        <View style={styles.twoColumn}>
-          {/* Left main */}
-          <View style={styles.mainColumn}>
-            {/* Summary */}
-            {profile.summary?.profile && (
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Professional Summary</Text>
-                <Text>{profile.summary.profile}</Text>
-              </View>
-            )}
-
-            {/* Experience */}
-            {profile.experience && profile.experience.length > 0 && (
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Experience</Text>
-                {profile.experience.map((exp, i) => (
-                  <View key={i} style={styles.experienceItem}>
-                    <View style={styles.experienceTitleRow}>
-                      <Text style={styles.experienceTitle}>{exp.title}</Text>
-                      <Text style={styles.experienceTime}>
-                        {[exp.startDate, exp.endDate]
-                          .filter(Boolean)
-                          .join(" – ")}
+        {/* Technical Skills */}
+        {(stringSkills.length > 0 || objectSkills.length > 0) && (
+          <View style={styles.subsection}>
+            <View style={styles.sectionTitle}>
+              <Text>Technical Skills</Text>
+              <View style={styles.sectionLine} />
+            </View>
+            {renderTwoColumnList(skillsCol1, skillsCol2, (skill, i) => (
+              <Text key={i} style={styles.listItem}>
+                • {skill}
+              </Text>
+            ))}
+            {objectSkills.length > 0 && (
+              <View style={{ marginTop: 4 }}>
+                {objectSkills.map((skill, idx) => (
+                  <View key={idx} style={{ marginBottom: 4 }}>
+                    <Text style={styles.bold}>{skill.title}</Text>
+                    {skill.badges?.map((b, i) => (
+                      <Text key={i} style={styles.listItem}>
+                        {b.name} ({b.level})
                       </Text>
-                    </View>
-                    <Text style={styles.experienceCompany}>
-                      {exp.company} • {exp.location} • {exp.jobType}
-                    </Text>
-                    {exp.points && exp.points.length > 0 && (
-                      <View style={styles.bulletList}>
-                        {exp.points.map((p, idx) => (
-                          <Text key={idx} style={styles.bulletPoint}>
-                            • {p}
-                          </Text>
-                        ))}
-                      </View>
-                    )}
-                  </View>
-                ))}
-              </View>
-            )}
-
-            {/* Education */}
-            {profile.education && profile.education.length > 0 && (
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Education</Text>
-                {profile.education.map((edu, i) => (
-                  <View key={i} style={styles.experienceItem}>
-                    <View style={styles.experienceTitleRow}>
-                      <Text style={styles.experienceTitle}>{edu.degree}</Text>
-                      <Text style={styles.experienceTime}>
-                        {[edu.startDate, edu.endDate]
-                          .filter(Boolean)
-                          .join(" – ")}
-                      </Text>
-                    </View>
-                    <Text style={styles.experienceCompany}>
-                      {edu.institution} • {edu.location}
-                    </Text>
-                    {edu.description && <Text>{edu.description}</Text>}
-                  </View>
-                ))}
-              </View>
-            )}
-
-            {/* Certifications */}
-            {profile.certifications && profile.certifications.length > 0 && (
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Certifications</Text>
-                {profile.certifications.map((cert, i) => (
-                  <View key={i} style={{ marginBottom: 4 }}>
-                    <Text style={{ fontWeight: "bold" }}>
-                      {cert.certificationName}
-                    </Text>
-                    <Text style={{ fontStyle: "italic", fontSize: 9 }}>
-                      {cert.issuingOrganization} • {cert.dateEarned}
-                    </Text>
-                    {cert.notes && <Text>{cert.notes}</Text>}
+                    ))}
+                    {skill.description && <Text>{skill.description}</Text>}
                   </View>
                 ))}
               </View>
             )}
           </View>
+        )}
 
-          {/* Right sidebar */}
-          <View style={styles.sideColumn}>
-            {/* Skills */}
-            {profile.skills && profile.skills.length > 0 && (
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Skills</Text>
-                {profile.skills.map((group, i) => (
-                  <View key={i} style={{ marginBottom: 6 }}>
-                    <Text
-                      style={{
-                        fontWeight: "bold",
-                        fontSize: 10,
-                        marginBottom: 4,
-                      }}
-                    >
-                      {group.title}
-                    </Text>
-                    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
-                      {group.badges.map((b, bi) => (
-                        <Text key={bi} style={styles.skillBadge}>
-                          {b.name} {b.level ? `(${b.level})` : ""}
-                        </Text>
-                      ))}
-                    </View>
-                  </View>
+        {/* Experience */}
+        {profile.experience?.length > 0 && (
+          <View style={styles.subsection}>
+            <View style={styles.sectionTitle}>
+              <Text>Experience</Text>
+              <View style={styles.sectionLine} />
+            </View>
+            {profile.experience.map((job, i) => (
+              <View key={i} style={{ marginBottom: 6 }}>
+                <Text style={{ fontSize: 10, color: "#555" }}>
+                  {job.duration ||
+                    `${job.startDate} - ${job.endDate || "Present"}`}
+                </Text>
+                <Text style={styles.bold}>{job.position || job.title}</Text>
+                <Text style={styles.italic}>
+                  {job.company} {job.location ? `– ${job.location}` : ""}
+                </Text>
+                {job.description && <Text>{job.description}</Text>}
+                {job.points?.map((p, idx) => (
+                  <Text key={idx}>• {p}</Text>
                 ))}
               </View>
-            )}
-
-            {/* Interests */}
-            {profile.interests && profile.interests.length > 0 && (
-              <View style={styles.section}>
-                <Text style={styles.sectionHeader}>Interests</Text>
-                {profile.interests.map((interest, idx) => (
-                  <Text key={idx} style={{ marginBottom: 2 }}>
-                    • {interest.name}
-                  </Text>
-                ))}
-              </View>
-            )}
+            ))}
           </View>
-        </View>
+        )}
+
+        {/* Education */}
+        {profile.education?.length > 0 && (
+          <View style={styles.subsection}>
+            <View style={styles.sectionTitle}>
+              <Text>Education</Text>
+              <View style={styles.sectionLine} />
+            </View>
+            {renderTwoColumnList(eduCol1, eduCol2, (edu, i) => (
+              <View key={i} style={{ marginBottom: 6 }}>
+                <Text style={styles.bold}>{edu.degree}</Text>
+                <Text style={styles.italic}>{edu.institution}</Text>
+                {edu.year && <Text>{edu.year}</Text>}
+                {edu.description && <Text>{edu.description}</Text>}
+              </View>
+            ))}
+          </View>
+        )}
+
+        {/* Projects */}
+        {profile.projects?.length > 0 && (
+          <View style={styles.subsection}>
+            <View style={styles.sectionTitle}>
+              <Text>Projects</Text>
+              <View style={styles.sectionLine} />
+            </View>
+            {renderTwoColumnList(projCol1, projCol2, (proj, i) => (
+              <View key={i} style={{ marginBottom: 6 }}>
+                <Text style={styles.bold}>
+                  {proj.name}{" "}
+                  {proj.url && (
+                    <Link style={styles.link} src={proj.url}>
+                      (Link)
+                    </Link>
+                  )}
+                </Text>
+                {proj.description && <Text>{proj.description}</Text>}
+                {proj.points?.map((p, idx) => (
+                  <Text key={idx}>• {p}</Text>
+                ))}
+              </View>
+            ))}
+          </View>
+        )}
       </Page>
     </Document>
   );

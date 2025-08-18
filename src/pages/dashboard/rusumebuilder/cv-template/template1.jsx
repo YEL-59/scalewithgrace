@@ -1,123 +1,27 @@
-import React, { useRef } from "react";
-import { Badge } from "@/components/ui/badge";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import Template1PDF from "../download-resume/template1pdf";
 
-const Template1 = ({ data = {} }) => {
-  const resumeRef = useRef();
+const Template1 = ({ data }) => {
+  if (!data?.user_profile) return <p>No profile data available</p>;
+  const profile = data.user_profile;
 
-  const mapApiToTemplateProps = (data) => {
-    if (!data?.user_profile) return {};
+  // Separate skills into strings and object-based skills
+  const stringSkills =
+    profile.skills?.filter((skill) => typeof skill === "string") || [];
+  const objectSkills =
+    profile.skills?.filter(
+      (skill) => typeof skill === "object" && skill.title
+    ) || [];
 
-    const profile = data.user_profile;
-    console.log({ profile });
-    const nameParts = profile.full_name ? profile.full_name.split(" ") : [];
-    const firstName = nameParts[0] || "First";
-    const lastName = nameParts.slice(1).join(" ") || "Last";
-
-    return {
-      firstName,
-      lastName,
-      job_title: profile.job_title || "Professional Title",
-      email: profile.email || "",
-      phone: profile.phone || "",
-      website: profile.social_links?.website || profile.website || "",
-      linkedin: profile.social_links?.linkedin || "",
-      github: profile.social_links?.github || "",
-      twitter: profile.social_links?.twitter || "",
-      address: profile.address || "",
-
-      summary: profile.summary?.profile || "",
-
-      experiences: (profile.experience || []).map((exp) => ({
-        title: exp.title || "",
-        company: exp.company || "",
-        location: exp.location || "",
-        startDate: exp.startDate || "",
-        endDate: exp.endDate || "",
-        points: exp.points || [],
-        jobType: exp.jobType || "",
-        technologies: exp.technologies || "",
-      })),
-
-      education: (profile.education || []).map((edu) => ({
-        degree: edu.degree || "",
-        institution: edu.institution || "",
-        location: edu.location || "",
-        startDate: edu.startDate || "",
-        endDate: edu.endDate || "",
-        description: edu.description || "",
-      })),
-
-      certifications: (profile.certifications || []).map((cert) => ({
-        name: cert.certificationName || "",
-        issuer: cert.issuingOrganization || "",
-        date: cert.dateEarned || "",
-        notes: cert.notes || "",
-      })),
-
-      skills: (profile.skills || []).map((skillGroup) => {
-        if (typeof skillGroup === "string") {
-          // plain string → treat as a badge-only group
-          return {
-            title: "",
-            badges: [{ name: skillGroup, level: null }],
-          };
-        }
-
-        // object with title/badges
-        return {
-          title: skillGroup.title || "",
-          badges: (skillGroup.badges || []).map((b) => ({
-            name: b.name || "",
-            level: b.level || null,
-          })),
-        };
-      }),
-
-      interests: profile.interests || [],
-    };
+  // Helper function to split array into two columns
+  const splitInTwo = (arr) => {
+    const mid = Math.ceil(arr.length / 2);
+    return [arr.slice(0, mid), arr.slice(mid)];
   };
 
-  const {
-    firstName,
-    lastName,
-    job_title,
-    email,
-    phone,
-    website,
-    linkedin,
-    github,
-    twitter,
-    summary,
-    experiences,
-    education,
-    certifications,
-    skills,
-    interests,
-  } = mapApiToTemplateProps(data);
-
-  // Helper to render contact items with optional link & left border
-  const ContactItem = ({ children, href, first }) => (
-    <span
-      className={`flex items-center text-xs text-gray-600 px-2 ${
-        !first ? "border-l border-gray-300" : ""
-      }`}
-    >
-      {href ? (
-        <a
-          href={href}
-          target="_blank"
-          rel="noreferrer"
-          className="underline hover:text-gray-900"
-        >
-          {children}
-        </a>
-      ) : (
-        children
-      )}
-    </span>
-  );
+  const [skillsCol1, skillsCol2] = splitInTwo(stringSkills);
+  const [eduCol1, eduCol2] = splitInTwo(profile.education || []);
+  const [projCol1, projCol2] = splitInTwo(profile.projects || []);
 
   return (
     <>
@@ -139,214 +43,233 @@ const Template1 = ({ data = {} }) => {
           }
         </PDFDownloadLink>
 
-        <button
+        {/* <button
           onClick={() => window.print()}
           className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
         >
           Print
-        </button>
+        </button> */}
       </div>{" "}
-      <div
-        ref={resumeRef}
-        className="max-w-[794px] mx-auto bg-white text-gray-800 shadow-2xl font-sans p-8 text-sm leading-relaxed"
-        style={{ minHeight: "1123px" }}
-      >
-        {/* Header */}
-        <header className="border-b border-gray-300 pb-3 mb-5">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-3xl font-bold tracking-wide leading-tight">
-                {firstName} <span className="font-semibold">{lastName}</span>
-              </h1>
-              <p className="text-gray-600 mt-1">
-                {job_title || "Professional Title"}
-              </p>
+      <div className="max-w-3xl mx-auto p-6 font-serif text-gray-800 leading-relaxed shadow-lg rounded">
+        {/* Name */}
+        <h1 className="text-2xl font-bold text-center">{profile?.full_name}</h1>
+
+        {/* Contact */}
+        <p className="text-center mt-1">
+          {profile?.address} <br />
+          {profile?.phone} - {profile?.email}
+        </p>
+
+        {/* Professional Summary */}
+        {profile?.summary?.profile && (
+          <section className="mt-6">
+            <h2 className="flex items-end font-bold uppercase text-gray-800 mt-6">
+              Professional Summary
+              <span className="flex-grow border-b-2 border-black ml-2"></span>
+            </h2>
+            <p className="mt-2 text-gray-700">{profile.summary.profile}</p>
+          </section>
+        )}
+
+        {/* Websites / Social Links */}
+        <section className="mt-6">
+          <h2 className="flex items-end font-bold uppercase text-gray-800 mt-6">
+            Websites, Portfolios, Profiles
+            <span className="flex-grow border-b-2 border-black ml-2"></span>
+          </h2>
+          <ul className="list-disc list-inside mt-2">
+            {profile.website && <li>{profile.website}</li>}
+            {profile.social_links?.github && (
+              <li>{profile.social_links.github}</li>
+            )}
+            {profile.social_links?.linkedin && (
+              <li>{profile.social_links.linkedin}</li>
+            )}
+          </ul>
+        </section>
+
+        {/* Technical Skills */}
+        {(stringSkills.length > 0 || objectSkills.length > 0) && (
+          <section className="mt-6">
+            <h2 className="flex items-end font-bold uppercase text-gray-800 mt-6">
+              Technical Skills
+              <span className="flex-grow border-b-2 border-black ml-2"></span>
+            </h2>
+            <div className="grid grid-cols-2 gap-4 mt-2 text-gray-700">
+              <ul className="list-disc list-inside space-y-1">
+                {skillsCol1.map((skill, index) => (
+                  <li key={index}>{skill}</li>
+                ))}
+              </ul>
+              <ul className="list-disc list-inside space-y-1">
+                {skillsCol2.map((skill, index) => (
+                  <li key={index}>{skill}</li>
+                ))}
+              </ul>
             </div>
 
-            {/* New inline contact info row */}
-            <div className="flex flex-wrap gap-2 max-w-xs justify-end">
-              {email && <ContactItem first={true}>{email}</ContactItem>}
-              {phone && <ContactItem>{phone}</ContactItem>}
-              {website && (
-                <ContactItem
-                  href={
-                    website.startsWith("http") ? website : "https://" + website
-                  }
-                >
-                  {website.replace(/^https?:\/\//, "")}
-                </ContactItem>
-              )}
-              {linkedin && <ContactItem href={linkedin}>LinkedIn</ContactItem>}
-              {github && <ContactItem href={github}>GitHub</ContactItem>}
-              {twitter && <ContactItem href={twitter}>Twitter</ContactItem>}
+            {/* Object-based skills */}
+            {objectSkills.length > 0 && (
+              <div className="mt-4">
+                {objectSkills.map((skill, idx) => (
+                  <div key={idx} className="mb-2">
+                    <p className="font-semibold">{skill.title}</p>
+                    {skill.badges?.map((b, i) => (
+                      <p key={i}>
+                        {b.name} ({b.level})
+                      </p>
+                    ))}
+                    {skill.description && (
+                      <p className="text-gray-700">{skill.description}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
+        {/* Experience */}
+        {profile?.experience?.length > 0 && (
+          <section className="mt-6">
+            <h2 className="flex items-end font-bold uppercase text-gray-800 mt-6">
+              Experience
+              <span className="flex-grow border-b-2 border-black ml-2"></span>
+            </h2>
+            {profile.experience.map((job, index) => (
+              <div key={index} className="mt-4">
+                <p className="text-sm text-gray-600">
+                  {job.duration ||
+                    `${job.startDate} - ${job.endDate || "Present"}`}
+                </p>
+                <p className="font-bold">{job.position || job.title}</p>
+                <p className="italic">
+                  {job.company} {job.location ? `– ${job.location}` : ""}
+                </p>
+                {job.description && (
+                  <p className="mt-1 text-gray-700">{job.description}</p>
+                )}
+                {job.points?.length > 0 && (
+                  <ul className="list-disc list-inside mt-2 text-gray-700">
+                    {job.points.map((point, i) => (
+                      <li key={i}>{point}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </section>
+        )}
+
+        {/* Education */}
+        {profile?.education?.length > 0 && (
+          <section className="mt-6">
+            <h2 className="flex items-end font-bold uppercase text-gray-800 mt-6">
+              Education
+              <span className="flex-grow border-b-2 border-black ml-2"></span>
+            </h2>
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                {eduCol1.map((edu, index) => (
+                  <div key={index} className="mb-4">
+                    <p className="font-bold">{edu.degree}</p>
+                    <p className="italic">{edu.institution}</p>
+                    {edu.year && (
+                      <p className="text-sm text-gray-600">{edu.year}</p>
+                    )}
+                    {edu.description && (
+                      <p className="text-gray-700">{edu.description}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div>
+                {eduCol2.map((edu, index) => (
+                  <div key={index} className="mb-4">
+                    <p className="font-bold">{edu.degree}</p>
+                    <p className="italic">{edu.institution}</p>
+                    {edu.year && (
+                      <p className="text-sm text-gray-600">{edu.year}</p>
+                    )}
+                    {edu.description && (
+                      <p className="text-gray-700">{edu.description}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
-        </header>
+          </section>
+        )}
 
-        {/* Two column grid */}
-        <div className="grid grid-cols-[3fr_2fr] gap-6">
-          {/* Left: main content */}
-          <main className="space-y-6 border-r border-gray-300 pr-6">
-            {/* Summary */}
-            {summary && (
-              <section>
-                <h2 className="uppercase text-xs font-semibold tracking-widest text-gray-600 border-b border-gray-300 pb-1 mb-2">
-                  Professional Summary
-                </h2>
-                <p>{summary}</p>
-              </section>
-            )}
-
-            {/* Experience */}
-            {experiences.length > 0 && (
-              <section>
-                <h2 className="uppercase text-xs font-semibold tracking-widest text-gray-600 border-b border-gray-300 pb-1 mb-3">
-                  Experience
-                </h2>
-                <div className="space-y-4">
-                  {experiences.map((exp, i) => (
-                    <article key={i}>
-                      <div className="flex justify-between">
-                        <h3 className="font-semibold">{exp.title}</h3>
-                        <time className="text-xs text-gray-500 font-mono">
-                          {[exp.startDate, exp.endDate]
-                            .filter(Boolean)
-                            .join(" – ")}
-                        </time>
-                      </div>
-                      <p className="italic text-gray-600 text-xs mb-1">
-                        {exp.company} • {exp.location} • {exp.jobType}
-                      </p>
-                      {exp.points.length > 0 && (
-                        <ul className="list-disc list-inside text-gray-700 text-xs space-y-1">
-                          {exp.points.map((p, idx) => (
-                            <li key={idx}>{p}</li>
-                          ))}
-                        </ul>
+        {/* Projects */}
+        {profile?.projects?.length > 0 && (
+          <section className="mt-6">
+            <h2 className="flex items-end font-bold uppercase text-gray-800 mt-6">
+              Projects
+              <span className="flex-grow border-b-2 border-black ml-2"></span>
+            </h2>
+            <div className="grid grid-cols-2 gap-4 mt-2">
+              <div>
+                {projCol1.map((project, index) => (
+                  <div key={index} className="mb-4">
+                    <p className="font-bold">
+                      {project.name}{" "}
+                      {project.url && (
+                        <a
+                          href={project.url}
+                          className="text-blue-600 underline ml-2"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          (Link)
+                        </a>
                       )}
-                    </article>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Education */}
-            {education.length > 0 && (
-              <section>
-                <h2 className="uppercase text-xs font-semibold tracking-widest text-gray-600 border-b border-gray-300 pb-1 mb-3">
-                  Education
-                </h2>
-                <div className="space-y-4">
-                  {education.map((edu, i) => (
-                    <article key={i}>
-                      <div className="flex justify-between">
-                        <h3 className="font-semibold">{edu.degree}</h3>
-                        <time className="text-xs text-gray-500 font-mono">
-                          {[edu.startDate, edu.endDate]
-                            .filter(Boolean)
-                            .join(" – ")}
-                        </time>
-                      </div>
-                      <p className="italic text-gray-600 text-xs mb-1">
-                        {edu.institution} • {edu.location}
-                      </p>
-                      {edu.description && (
-                        <p className="text-xs">{edu.description}</p>
+                    </p>
+                    {project.description && (
+                      <p className="text-gray-700">{project.description}</p>
+                    )}
+                    {project.points?.length > 0 && (
+                      <ul className="list-disc list-inside mt-1 text-gray-700">
+                        {project.points.map((point, i) => (
+                          <li key={i}>{point}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+              <div>
+                {projCol2.map((project, index) => (
+                  <div key={index} className="mb-4">
+                    <p className="font-bold">
+                      {project.name}{" "}
+                      {project.url && (
+                        <a
+                          href={project.url}
+                          className="text-blue-600 underline ml-2"
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          (Link)
+                        </a>
                       )}
-                    </article>
-                  ))}
-                </div>
-              </section>
-            )}
-
-            {/* Certifications */}
-            {certifications.length > 0 && (
-              <section>
-                <h2 className="uppercase text-xs font-semibold tracking-widest text-gray-600 border-b border-gray-300 pb-1 mb-3">
-                  Certifications
-                </h2>
-                <ul className="space-y-2 text-xs">
-                  {certifications.map((cert, i) => (
-                    <li key={i}>
-                      <div className="font-semibold">{cert.name}</div>
-                      <div className="italic text-gray-600">
-                        {cert.issuer} • {cert.date}
-                      </div>
-                      {cert.notes && <p>{cert.notes}</p>}
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </main>
-
-          {/* Right sidebar */}
-          <aside className="flex flex-col justify-start ">
-            {/* Skills */}
-            {skills?.length > 0 && (
-              <section className="mb-6">
-                <h2 className="uppercase text-xs font-semibold tracking-widest text-gray-600 border-b border-gray-300 pb-1 mb-3">
-                  Skills
-                </h2>
-
-                {skills.map((item, i) => {
-                  // If item is a simple string → render directly as badge
-                  if (typeof item === "string") {
-                    return (
-                      <div key={i} className="flex flex-wrap gap-1 mb-2">
-                        <span className="bg-gray-200 text-gray-800 px-2 py-0.5 text-xs rounded">
-                          {item}
-                        </span>
-                      </div>
-                    );
-                  }
-
-                  // If item is an object with title & badges
-                  if (item && typeof item === "object") {
-                    return (
-                      <div key={i} className="mb-3">
-                        <p className="font-semibold text-gray-700 text-sm">
-                          {item.title}
-                        </p>
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {item.badges?.map((b, bi) => (
-                            <span
-                              key={bi}
-                              className="bg-gray-200 text-gray-800 px-2 py-0.5 text-xs rounded"
-                            >
-                              {b.name}
-                              {b.level && (
-                                <span className="ml-1 text-xs text-gray-600">
-                                  ({b.level})
-                                </span>
-                              )}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  }
-
-                  return null;
-                })}
-              </section>
-            )}
-
-            {/* Interests below skills */}
-            {interests.length > 0 && (
-              <section>
-                <h2 className="uppercase text-xs font-semibold tracking-widest text-gray-600 border-b border-gray-300 pb-1 mb-2">
-                  Interests
-                </h2>
-                <ul className="list-disc list-inside text-xs text-gray-700 space-y-1">
-                  {interests.map((i, idx) => (
-                    <li key={idx}>{i.name}</li>
-                  ))}
-                </ul>
-              </section>
-            )}
-          </aside>
-        </div>
+                    </p>
+                    {project.description && (
+                      <p className="text-gray-700">{project.description}</p>
+                    )}
+                    {project.points?.length > 0 && (
+                      <ul className="list-disc list-inside mt-1 text-gray-700">
+                        {project.points.map((point, i) => (
+                          <li key={i}>{point}</li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
       </div>
     </>
   );

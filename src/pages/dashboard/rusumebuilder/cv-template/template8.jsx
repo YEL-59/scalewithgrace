@@ -59,12 +59,12 @@ const Template8 = ({ data }) => {
             loading ? "Preparing document..." : "Download Resume PDF"
           }
         </PDFDownloadLink>
-        <button
+        {/* <button
           onClick={() => window.print()}
           className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
         >
           Print
-        </button>
+        </button> */}
       </div>
 
       <div

@@ -12,7 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { useGetUser } from "@/hooks/auth.hook";
+import { useGetUser, useLogout } from "@/hooks/auth.hook";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -26,7 +26,7 @@ import { User2 } from "lucide-react";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const { user, isLoading } = useGetUser();
-
+  const { logout } = useLogout();
   const linksRef = useRef(null);
 
   const handleClick = (e) => {
@@ -115,8 +115,13 @@ export default function Navbar() {
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   onClick={() => {
-                    localStorage.removeItem("token");
-                    window.location.href = "/sign-in";
+                    //sessionStorage.removeItem("login_token");
+                    logout();
+
+                    // You are calling logout() but immediately doing window.location.href = "/sign-in".
+                    //This forces the page to reload before the mutation can run, so the API call never happens.
+
+                    // window.location.href = "/sign-in";
                   }}
                 >
                   Logout

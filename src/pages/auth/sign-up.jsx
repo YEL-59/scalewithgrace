@@ -31,10 +31,10 @@ function SignUp() {
       {/* Sign-in form */}
       <div className="mx-auto my-4 ">
         <h2 className="text-2xl md:text-3xl lg:[text-4xl] xl:text-5xl text-[#1E1E1E] leading-12 md:leading-14 lg:leading-16  xl:leading-[72px] text-center font-bold">
-          Welcome Back
+          Create Your Account
         </h2>
         <p className="text-[#959595] text-xs md:text-sm lg:text-base xl:text-lg text-center pb-7">
-          enter your email and password to access your account
+          Join Karially to start your career journey today.
         </p>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -49,7 +49,7 @@ function SignUp() {
                   <FormControl>
                     <Input
                       type="text"
-                      placeholder="Enter your email address"
+                      placeholder="Enter your full name"
                       className="bg-[#EDFCFF] p-4 rounded-full w-full focus-visible:ring-0 shadow-none mt-2 py-5"
                       {...field}
                     />
@@ -125,7 +125,7 @@ function SignUp() {
                       <Input
                         type={showPassword1 ? "text" : "password"}
                         className="bg-[#EDFCFF] p-4 rounded-full w-full focus-visible:ring-0 shadow-none  py-5"
-                        placeholder="Enter your password"
+                        placeholder="Re-enter your password"
                         {...field}
                       />
                       <button
@@ -151,7 +151,7 @@ function SignUp() {
               <label className="flex items-center gap-3">
                 <input type="checkbox"></input>
                 <p className="text-[#717171] text-xs lg:text-sm">
-                  I have read an agree to Karially{" "}
+                  I have read and agree to the Karially
                   <span className="text-[#191919]">Terms</span> and{" "}
                   <span className="text-[#191919]">Privacy Policy</span>
                 </p>
@@ -173,7 +173,7 @@ function SignUp() {
         </button> */}
 
         <p className="text-[#959595] text-base lg:text-lg text-center">
-          Already have an account?{" "}
+          Already have an account?
           <Link to="/sign-in" className="text-[#1E1E1E]">
             Sign In
           </Link>

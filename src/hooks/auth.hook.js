@@ -109,8 +109,11 @@ export const useSignIn = () => {
     onSuccess: (data) => {
       if (data?.status) {
         toast.success(data?.message || "Sign in successfully");
-        localStorage.setItem("token", data?.token);
-        localStorage.setItem("user", JSON.stringify(data?.data));
+        // localStorage.setItem("token", data?.token);
+        // localStorage.setItem("user", JSON.stringify(data?.data));
+        // ✅ Store in sessionStorage instead of localStorage
+        sessionStorage.setItem("login_token", data?.token);
+        sessionStorage.setItem("user", JSON.stringify(data?.data));
         navigate("/dashboard");
       } else {
         // ✅ Handle unverified email
@@ -199,10 +202,14 @@ export const useSignUp = () => {
     onSuccess: (data) => {
       if (data?.status) {
         toast.success(data?.message || "User created successfully");
+        //const token = data?.data?.token;
+        //localStorage.setItem("token", token);
+        // ✅ Store in sessionStorage instead of localStorage
         const token = data?.data?.token;
-        localStorage.setItem("token", token);
+        sessionStorage.setItem("login_token", token);
+        sessionStorage.setItem("user", JSON.stringify(data?.data));
         const user = data?.data;
-        localStorage.setItem("usersignup", JSON.stringify(user));
+        sessionStorage.setItem("usersignup", JSON.stringify(user));
         navigate("/otp-verify", {
           state: { email: form.watch("email") },
         });
@@ -666,4 +673,35 @@ export const useGetLoginStaticInfo = () => {
   });
 
   return { signininfostatic: data?.data, isLoading };
+};
+
+export const useLogout = () => {
+  const navigate = useNavigate();
+
+  const { mutate: logout, isLoading } = useMutation({
+    mutationFn: async () => {
+      const res = await axiosPrivate.post("/logout");
+      return res.data;
+    },
+    onSuccess: (data) => {
+      if (data?.status) {
+        // ✅ Clear session storage
+        sessionStorage.removeItem("login_token");
+        sessionStorage.removeItem("user");
+        sessionStorage.removeItem("redirectAfterSub"); // optional, if using redirect logic
+
+        toast.success(data?.message || "Logged out successfully");
+
+        // ✅ Redirect to sign-in page
+        navigate("/sign-in");
+      }
+    },
+    onError: (error) => {
+      toast.error(
+        error?.response?.data?.message || error?.message || "Logout failed"
+      );
+    },
+  });
+
+  return { logout, isLoading };
 };

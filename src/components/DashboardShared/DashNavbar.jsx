@@ -12,7 +12,7 @@ import { Check, ChevronDown } from "lucide-react";
 import logo from "../../assets/images/logosvg.svg";
 
 import { Input } from "../ui/input";
-import { useGetUser } from "@/hooks/auth.hook";
+import { useGetUser, useLogout } from "@/hooks/auth.hook";
 import { User } from "lucide-react";
 import { useLocation } from "react-router";
 const workspaces = [
@@ -38,10 +38,12 @@ const routeTitles = [
 function DashNavbar({ collapsed, onMobileMenuClick }) {
   const [selectedWorkspace, setSelectedWorkspace] = useState(workspaces[0]);
   const { user, isLoading } = useGetUser();
+  const { logout } = useLogout();
   const handleWorkspaceAction = (workspace) => {
     if (workspace.name === "Logout") {
-      localStorage.removeItem("token");
-      window.location.href = "/sign-in";
+      // sessionStorage.removeItem("login_token");
+      logout();
+      //window.location.href = "/sign-in";
     } else if (workspace.name === "Home") {
       window.location.href = "/";
     } else {

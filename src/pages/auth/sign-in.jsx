@@ -43,7 +43,7 @@ export default function SignIn() {
           Welcome Back
         </h2>
         <p className="text-[#959595] text-xs md:text-sm lg:text-base xl:text-lg text-center pb-10">
-          enter your email and password to access your account
+          Enter your email and password to access your account.
         </p>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -58,7 +58,7 @@ export default function SignIn() {
                   <FormControl>
                     <Input
                       type="email"
-                      placeholder="Enter your email address"
+                      placeholder=" Enter your email address"
                       className="bg-[#EDFCFF] p-4 rounded-full w-full focus-visible:ring-0 shadow-none mt-2 py-5"
                       {...field}
                     />
@@ -105,11 +105,11 @@ export default function SignIn() {
             <div className="flex items-center justify-between mt-3  text-[#1E1E1E] text-base font-medium leading-none">
               <label className="flex items-center gap-3 ">
                 <input type="checkbox"></input>
-                remember me
+                Remember me
               </label>
 
               <button>
-                <Link to="/forgot-password">Forget Password?</Link>
+                <Link to="/forgot-password">Forgot Password?</Link>
               </button>
             </div>
 
@@ -131,7 +131,7 @@ export default function SignIn() {
         </button> */}
 
         <p className="text-[#959595] text-base lg:text-lg text-center">
-          Don't have an account?{" "}
+          Don’t have an account?
           <Link to="/sign-up" className="text-[#1E1E1E]">
             Sign Up
           </Link>

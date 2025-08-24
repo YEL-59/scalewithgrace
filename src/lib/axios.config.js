@@ -22,7 +22,7 @@ const axiosPrivate = axios.create({
 // Combined request and response interceptor setup
 axiosPrivate.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("login_token");
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -38,11 +38,18 @@ axiosPrivate.interceptors.response.use(
     const status = error.response?.status;
 
     if (status === 403) {
-      toast.error("You are not subscribed. Please subscribe first.");
+      // toast.error("You are not subscribed. Please subscribe first.");
+      // check current route
+      const currentPath = window.location.pathname;
 
-      setTimeout(() => {
-        window.location.href = "/pricing";
-      }, 1200);
+      // only redirect if inside dashboard routes
+      if (currentPath.startsWith("/dashboard")) {
+        toast.error("You are not subscribed. Please subscribe first.");
+
+        setTimeout(() => {
+          window.location.href = "/pricing";
+        }, 0);
+      }
     }
 
     return Promise.reject(error);
